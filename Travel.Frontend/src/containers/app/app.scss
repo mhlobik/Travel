@@ -1,0 +1,11 @@
+@import './../../assets/styles/variables';
+
+.app__container {
+    height: 100vh;
+}
+
+.app__window-browser {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}

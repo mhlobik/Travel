@@ -1,0 +1,31 @@
+@import './../../assets/styles/variables';
+
+.home-page__container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: 100%;
+    height: calc(100% - 50px);
+
+    .main-window-container {
+        flex-grow: 100;
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 250px);
+
+        & > div:last-child {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-window-container__no-selected-executable {
+            width: 100%;
+            height: calc(100% - 50px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
