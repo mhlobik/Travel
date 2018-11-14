@@ -215,7 +215,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseConnection.cs" />
+    <Compile Include="Enums\PointsOfInterestCategoriesEnum.cs" />
+    <Compile Include="Enums\RecommenderModelEnum.cs" />
+    <Compile Include="Model\Address.cs" />
+    <Compile Include="Model\Amenity.cs" />
+    <Compile Include="Model\Analysis.cs" />
+    <Compile Include="Model\City.cs" />
+    <Compile Include="Model\CityRating.cs" />
+    <Compile Include="Model\Contact.cs" />
+    <Compile Include="Model\AirportInfo.cs" />
+    <Compile Include="Model\Fare.cs" />
+    <Compile Include="Model\Flight.cs" />
+    <Compile Include="Model\FlightDetails.cs" />
+    <Compile Include="Model\Hotel.cs" />
+    <Compile Include="Model\MinDailyRate.cs" />
+    <Compile Include="Model\PointsOfInterest.cs" />
+    <Compile Include="Model\Recommendation.cs" />
+    <Compile Include="Model\RecommenderModelRating.cs" />
+    <Compile Include="Model\UserProfile.cs" />
+    <Compile Include="Model\FacebookEvent.cs" />
+    <Compile Include="Model\FacebookGroup.cs" />
+    <Compile Include="Model\FacebookLike.cs" />
+    <Compile Include="Model\FacebookPermission.cs" />
+    <Compile Include="Model\FacebookTaggedPlace.cs" />
+    <Compile Include="Model\Preference.cs" />
+    <Compile Include="Model\User.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Grpc.Core.1.7.1\build\net45\Grpc.Core.targets" Condition="Exists('..\packages\Grpc.Core.1.7.1\build\net45\Grpc.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
