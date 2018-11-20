@@ -69,6 +69,14 @@ module.exports = {
             rules.png
         ]
     },
+
+    node: {
+        console: true,
+        fs: 'empty',
+        net: 'empty',
+        tls: 'empty'
+      },
+
     target: process.NODE_ENV == 'production' ? 'electron-renderer' : undefined,
     externals: baseExternals,
 }

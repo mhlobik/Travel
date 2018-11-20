@@ -6,7 +6,7 @@ const _PORT: string = '44231';
 const _APP_VERSION: string = '1.0.0';
 
 declare global {
-  interface Window { TOOLTIP_DELAY: number; }
+  interface Window { TOOLTIP_DELAY: number; FB: any; fbAsyncInit: any; }
 }
 
 class AppSettings {

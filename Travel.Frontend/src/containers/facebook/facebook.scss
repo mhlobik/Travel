@@ -1,0 +1,44 @@
+@import './../../assets/styles/variables';
+
+.facebook{
+    width: 220px!important;
+    height: 40px!important;
+    border-radius: 5px!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $facebook-color;
+
+    .spinner {
+        .spinner-circle {
+            border-top: 1.4em solid white;
+            border-right: 1.4em solid white;
+            border-bottom: 1.4em solid white;
+            border-left: 1.4em solid lightblue;
+        }
+    }
+
+    .facebook__button-wrapper {
+        background: $facebook-color;
+        width: 220px;
+        border-radius: 5px!important;
+        padding: 5px 5px 5px 5px;
+        display: flex;
+        align-items: center;
+
+        .facebook__button {
+            background:$facebook-color!important;
+            color: white;        
+            border: none;
+            font-family: Helvetica, Arial, sans-serif;
+            letter-spacing: .25px;
+            overflow: hidden;
+            text-align: center;
+            text-overflow: clip;
+            white-space: nowrap;
+            font-size: 16px;
+            width: 200px;
+            cursor: pointer;
+        }
+    }
+}
