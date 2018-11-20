@@ -52,7 +52,6 @@ namespace Travel.Backend.Console
                 + "7.and plenty of surprises you will have to discover yourself";
 
             #region Natural Language Understanding API
-            //var apiKEy = "cyeSqi4k-nQmC374EYgvHkPMz8mldxLfqx24m0yKKmVl";
             //var url = "https://gateway-fra.watsonplatform.net/natural-language-understanding/api";
 
             //TokenOptions iamAssistantTokenOptions = new TokenOptions()
