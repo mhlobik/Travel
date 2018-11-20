@@ -5,6 +5,10 @@ declare const __DEV__: boolean; // from webpack
 const _PORT: string = '44231';
 const _APP_VERSION: string = '1.0.0';
 
+declare global {
+  interface Window { TOOLTIP_DELAY: number; }
+}
+
 class AppSettings {
   public port: string;
   public appVersion: string;

@@ -20,7 +20,7 @@ namespace Travel.Backend.Console
     public class Program
     {
         private static HttpClient Client { get; set; }
-        public static string AppSecret = "AIzaSyDeym1wUQyYFmUTN4RZeBmSAtDwrHOJTlU"; // Google App Key
+        public static string AppSecret = ""; // Google App Key
 
         public static void Main(string[] args)
         {
