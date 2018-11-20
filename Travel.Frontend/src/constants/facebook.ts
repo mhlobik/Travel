@@ -1,2 +1,1 @@
-export const FACEBOOK_LOGIN = '@Facebook/FACEBOOK_LOGIN';
-export const FACEBOOK_INIT = '@Facebook/FACEBOOK_INIT';
+export const MANAGE_FACEBOOK_DATA = '@Facebook/MANAGE_FACEBOOK_DATA';

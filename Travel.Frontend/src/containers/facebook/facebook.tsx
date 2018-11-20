@@ -5,14 +5,18 @@ import { facabookAppId } from './config';
 import { Button, Spinner, SpinnerType } from 'quick-react-ts';
 import './facebook.scss';
 import * as FacebookLogo from '../../assets/images/facebook.png';
-import { FacebookLoginStatusEmum } from '../../common/facebookUtilities';
+import * as FacebookUtilities from '../../common/facebookUtilities';
+import * as facebookActions from '../../action/facebook';
 
 interface IFacebookProps {
+    onManageFacebookData?(userProfile: FacebookUtilities.IUserProfile, user: FacebookUtilities.IUser): void;
 }
 
 interface IFacebookState {
     userLoggedIn?: boolean;
     isLoadingStatus?: boolean;
+    userProfile?: FacebookUtilities.IUserProfile;
+    user?: FacebookUtilities.IUser;
 }
 
 function mapStateToProps(state: IRootReducerState): IFacebookProps {
@@ -21,6 +25,8 @@ function mapStateToProps(state: IRootReducerState): IFacebookProps {
 
 function mapDispatchToProps(dispatch: any): IFacebookProps {
     return {
+        onManageFacebookData: (userProfile: FacebookUtilities.IUserProfile, user: FacebookUtilities.IUser) =>
+            dispatch(facebookActions.manageFacebookData(userProfile, user))
     };
 }
 
@@ -40,7 +46,9 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
 
         this.state = {
             userLoggedIn: false,
-            isLoadingStatus: true
+            isLoadingStatus: true,
+            userProfile: null,
+            user: null
         };
     }
 
@@ -77,7 +85,7 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
         window.FB.login(
             function (resp: any) {
                 this.statusChangeCallback(resp);
-            }.bind(this), { scope: 'public_profile' });
+            }.bind(this), { scope: 'public_profile,user_friends,user_likes,user_posts,user_events,user_tagged_places' });
     }
 
     private facebookLogOut = () => {
@@ -91,18 +99,16 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
     private checkLoginState() {
         this.setState({ isLoadingStatus: true });
         window.FB.getLoginStatus(function (response: any) {
-            console.log('checkLoginState', response);
             this.statusChangeCallback(response);
         }.bind(this));
     }
 
     private statusChangeCallback(response: any) {
-        console.log('statusChangeCallback', response);
-        if (response.status === FacebookLoginStatusEmum.connected) {
+        if (response.status === FacebookUtilities.FacebookLoginStatusEmum.connected) {
             this.setState({ userLoggedIn: true, isLoadingStatus: false });
             // Logged into your app and Facebook.
             this.fetchDataFacebook();
-        } else if (response.status === FacebookLoginStatusEmum.not_authorized) {
+        } else if (response.status === FacebookUtilities.FacebookLoginStatusEmum.not_authorized) {
             this.setState({ userLoggedIn: false, isLoadingStatus: false });
         } else {
             this.setState({ userLoggedIn: false, isLoadingStatus: false });
@@ -111,9 +117,34 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
 
     private fetchDataFacebook = () => {
         // tslint:disable-next-line:only-arrow-functions
-        window.FB.api('/me', function (user: any) {
-            console.log('fetchDataFacebook', user);
+        window.FB.api('/me?fields=id,name,likes,groups,tagged_places,posts,events,email,first_name,last_name', (response: any) => {
+            const userEvents = FacebookUtilities.mapResponseToIFacebookEvent(response.events);
+            const userLikes = FacebookUtilities.mapResponseToIFacebookLike(response.likes);
+            const userGroups = FacebookUtilities.mapResponseToIFacebookGroup(response.groups);
+            const userTaggedPlaces = FacebookUtilities.mapResponseToIFacebookTaggedPlace(response.tagged_places);
+
+            this.setState({
+                userProfile: {
+                    userId: response.id,
+                    facebookEvents: userEvents,
+                    facebookGroups: userGroups,
+                    facebookLikes: userLikes,
+                    facebookTaggedPlaces: userTaggedPlaces
+                },
+                user: {
+                    email: response.email,
+                    firstName: response.first_name,
+                    lastName: response.last_name,
+                    userId: response.id
+                }
+            });
+
+            this.onHandleFacebookData();
         });
+    }
+
+    private onHandleFacebookData() {
+        this.props.onManageFacebookData(this.state.userProfile, this.state.user);
     }
 
     public render() {

@@ -52,7 +52,9 @@ module.exports = {
     devServer: {
         historyApiFallback: {
             index: '/'
-        }
+        },
+        port: 3000
+
     },
 
     module: {

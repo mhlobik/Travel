@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 
 declare const __DEV__: boolean; // from webpack
 
-const _PORT: string = '44231';
+const _PORT: string = '58266';
 const _APP_VERSION: string = '1.0.0';
 
 declare global {
