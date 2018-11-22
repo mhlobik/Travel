@@ -164,3 +164,17 @@ D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Grpc.Cor
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\System.Diagnostics.DiagnosticSource.xml
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\System.Interactive.Async.xml
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\System.Net.Http.Formatting.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsoft.Owin.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsoft.Owin.Host.HttpListener.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsoft.Owin.Hosting.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Owin.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\System.Web.Http.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\System.Web.Http.Owin.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Travel.Application.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Travel.Application.pdb
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Travel.Application.dll.config
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsoft.Owin.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsoft.Owin.Host.HttpListener.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsoft.Owin.Hosting.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\System.Web.Http.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\System.Web.Http.Owin.xml

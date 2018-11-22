@@ -1,18 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Google.Cloud.Language.V1;
+﻿using Google.Cloud.Language.V1;
 using Google.Protobuf.Collections;
-using static Google.Cloud.Language.V1.AnnotateTextRequest.Types;
-using IBM.WatsonDeveloperCloud.NaturalLanguageUnderstanding.v1.Model;
-using IBM.WatsonDeveloperCloud.NaturalLanguageUnderstanding.v1;
-using IBM.WatsonDeveloperCloud.Util;
+using System.Collections.Generic;
+using System.Net.Http;
+using Travel.Application;
 using Travel.Database;
 
 namespace Travel.Backend.Console
@@ -24,8 +14,15 @@ namespace Travel.Backend.Console
 
         public static void Main(string[] args)
         {
+            #region Web api hosting
+
+            var app = new TravelApplication();
+            app.StartApplication();
+
+            #endregion
+            
             DatabaseConnection test = new DatabaseConnection();
-            test.TestCon();
+            //test.TestCon();
 
             // The text to analyze.
             string text = "Always dreamed of a movielike summer experience on one of the most beautiful coasts in the world?"
@@ -182,6 +179,7 @@ namespace Travel.Backend.Console
 
             //}
             #endregion
+
             System.Console.ReadLine();
         }
 

@@ -1,4 +1,3 @@
-D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\obj\Debug\Travel.Database.csprojAssemblyReference.cache
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\obj\Debug\Travel.Database.csproj.CoreCompileInputs.cache
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Travel.Database.dll.config
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Travel.Database.dll

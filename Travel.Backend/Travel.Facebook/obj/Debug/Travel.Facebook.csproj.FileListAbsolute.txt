@@ -1,0 +1,12 @@
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\obj\Debug\Travel.Facebook.csproj.CoreCompileInputs.cache
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\bin\Debug\Travel.Facebook.dll.config
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\bin\Debug\Travel.Facebook.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\bin\Debug\Travel.Facebook.pdb
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\bin\Debug\System.Net.Http.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\bin\Debug\System.Security.Cryptography.Algorithms.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\bin\Debug\System.Security.Cryptography.Encoding.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\bin\Debug\System.Security.Cryptography.Primitives.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\bin\Debug\System.Security.Cryptography.X509Certificates.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\obj\Debug\Travel.Facebook.csproj.CopyComplete
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\obj\Debug\Travel.Facebook.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Facebook\obj\Debug\Travel.Facebook.pdb

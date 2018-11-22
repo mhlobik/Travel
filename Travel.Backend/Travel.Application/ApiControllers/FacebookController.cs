@@ -3,10 +3,9 @@ using System.Web.Http;
 
 namespace Travel.Application.ApiControllers
 {
-    [RoutePrefix("facebook")]
     public class FacebookController : ApiController
     {
-        [Route("manage-facebook-data")]
+        [Route("api/facebook/manage-facebook-data")]
         [HttpPost]
         public IHttpActionResult ManageFacebookData([FromBody] User user)
         {
@@ -14,7 +13,7 @@ namespace Travel.Application.ApiControllers
             return Ok();
         }
 
-        [Route("test")]
+        [Route("api/facebook/test")]
         [HttpGet]
         public IHttpActionResult Test()
         {
