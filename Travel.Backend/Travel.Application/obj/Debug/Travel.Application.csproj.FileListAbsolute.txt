@@ -9,16 +9,13 @@ D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\libgrpc_csha
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Travel.Application.dll.config
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Travel.Application.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Travel.Application.pdb
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.Cors.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.Host.HttpListener.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.Hosting.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Newtonsoft.Json.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Owin.dll
-D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Net.Http.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Net.Http.Formatting.dll
-D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Security.Cryptography.Algorithms.dll
-D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Security.Cryptography.Encoding.dll
-D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Security.Cryptography.Primitives.dll
-D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Security.Cryptography.X509Certificates.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Web.Cors.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Web.Http.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Web.Http.Owin.dll
@@ -34,6 +31,8 @@ D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Runti
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Travel.Database.pdb
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Travel.Database.dll.config
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.Cors.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.Host.HttpListener.xml
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.Hosting.xml
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Newtonsoft.Json.xml
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Net.Http.Formatting.xml
@@ -47,5 +46,5 @@ D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Runti
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\obj\Debug\Travel.Application.csproj.CopyComplete
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\obj\Debug\Travel.Application.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\obj\Debug\Travel.Application.pdb
-D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.Host.HttpListener.dll
-D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.Owin.Host.HttpListener.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Web.Http.Cors.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Web.Http.Cors.xml

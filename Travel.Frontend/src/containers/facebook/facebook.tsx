@@ -9,7 +9,8 @@ import * as FacebookUtilities from '../../common/facebookUtilities';
 import * as facebookActions from '../../action/facebook';
 
 interface IFacebookProps {
-    onManageFacebookData?(userProfile: FacebookUtilities.IUserProfile, user: FacebookUtilities.IUser): void;
+    onManageUserFacebookData?(user: FacebookUtilities.IUser): void;
+    onManageUserProfileFacebookData?(userProfile: FacebookUtilities.IUserProfile): void;
 }
 
 interface IFacebookState {
@@ -25,8 +26,9 @@ function mapStateToProps(state: IRootReducerState): IFacebookProps {
 
 function mapDispatchToProps(dispatch: any): IFacebookProps {
     return {
-        onManageFacebookData: (userProfile: FacebookUtilities.IUserProfile, user: FacebookUtilities.IUser) =>
-            dispatch(facebookActions.manageFacebookData(userProfile, user))
+        onManageUserFacebookData: (user: FacebookUtilities.IUser) => dispatch(facebookActions.manageUserFacebookData(user)),
+        onManageUserProfileFacebookData: (userProfile: FacebookUtilities.IUserProfile) =>
+            dispatch(facebookActions.manageUserProfileFacebookData(userProfile))
     };
 }
 
@@ -138,13 +140,13 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
                     userId: response.id
                 }
             });
-
             this.onHandleFacebookData();
         });
     }
 
     private onHandleFacebookData() {
-        this.props.onManageFacebookData(this.state.userProfile, this.state.user);
+        this.props.onManageUserFacebookData(this.state.user);
+        this.props.onManageUserProfileFacebookData(this.state.userProfile);
     }
 
     public render() {

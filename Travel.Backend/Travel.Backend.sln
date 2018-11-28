@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travel.Backend.Console", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travel.Database", "Travel.Database\Travel.Database.csproj", "{8375F4BE-629A-4EAD-AA0A-410DB1C44EE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travel.Application", "Travel.Application\Travel.Application.csproj", "{60F5569F-8587-4CEE-934B-DEF70C4621C7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travel.Application", "Travel.Application\Travel.Application.csproj", "{7B4A1C9D-2F3C-4B45-BA2A-F27848E75E5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{8375F4BE-629A-4EAD-AA0A-410DB1C44EE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8375F4BE-629A-4EAD-AA0A-410DB1C44EE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8375F4BE-629A-4EAD-AA0A-410DB1C44EE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60F5569F-8587-4CEE-934B-DEF70C4621C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60F5569F-8587-4CEE-934B-DEF70C4621C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60F5569F-8587-4CEE-934B-DEF70C4621C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60F5569F-8587-4CEE-934B-DEF70C4621C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B4A1C9D-2F3C-4B45-BA2A-F27848E75E5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B4A1C9D-2F3C-4B45-BA2A-F27848E75E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B4A1C9D-2F3C-4B45-BA2A-F27848E75E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B4A1C9D-2F3C-4B45-BA2A-F27848E75E5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

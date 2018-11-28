@@ -11,7 +11,7 @@ namespace Travel.Application
         public TravelApplication()
         {
             var globalSettings = GlobalSettings.Instance;
-            _listeningPort = globalSettings.Port;           
+            _listeningPort = globalSettings.Port;
         }
 
         public TravelApplication(int listeningPort)

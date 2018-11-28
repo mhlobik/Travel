@@ -243,18 +243,3 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 
-# SysKit specific
-/Acceleratio.Common
-/TSL/Acceleratio.Reporting.Web/Scripts/TS/**/*.js
-/TSL/Acceleratio.Reporting.Web/Scripts/TS/**/*.js.map
-*.jfm
-/Acceleratio.SPDocKit/SharedAssemblyInfo/Product.txt
-
-
-# Event Viewer specific
-/Acceleratio.SPDocKit/EventCollectionReactViewer/npm-debug.log.*
-.csscomb.json
-
-/Common/
-/SysKit.SecurityManager.FrontEnd/dev-build/SysKitSecurityManager-win32-x64
-/SysKit.SecurityManager.FrontEnd/dev-build/SysKit Security Manager-win32-x64

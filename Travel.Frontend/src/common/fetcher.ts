@@ -15,9 +15,9 @@ class Fetcher {
     private readonly init: RequestInit = {
         mode: 'cors',
         credentials: 'include',
-        headers: {
+        headers:  new Headers({
             'Content-Type': 'application/json'
-        }
+        })
     };
 
     public fetch(url: RequestInfo, requestInit?: RequestInit): Promise<Response> {
