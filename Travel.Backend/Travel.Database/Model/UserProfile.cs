@@ -10,6 +10,7 @@ namespace Travel.Database.Model
         public List<FacebookTaggedPlace> FacebookTaggedPlaces { get; set; }
         public List<Preference> Preferences { get; set; }
         public string UserId { get; set; }
+        public List<string> VisitedCityIds { get; set; }
     }
 
 }

@@ -4,7 +4,7 @@ import fetcher from '../common/fetcher';
 
 const facebookBaseUrl = 'api/facebook';
 
-export function manageUserFacebookData(user: IUser) {
+export function manageUserFacebookData(user: IUser, userProfile: IUserProfile) {
     console.log('manageUserFacebookData', user);
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
@@ -15,6 +15,8 @@ export function manageUserFacebookData(user: IUser) {
                 method: 'POST',
                 body: JSON.stringify(user)
             }
+        }).then(() => {
+            dispatch(manageUserProfileFacebookData(userProfile));
         });
     };
 }
