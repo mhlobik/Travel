@@ -160,3 +160,15 @@ D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\obj\Debug\Travel.Database
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\obj\Debug\Travel.Database.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\obj\Debug\Travel.Database.pdb
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\obj\Debug\Travel.Database.csprojAssemblyReference.cache
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Songhay.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\SonghayCore.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\SonghayCore.MSTest.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\Songhay.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Database\bin\Debug\SonghayCore.xml

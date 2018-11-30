@@ -32,7 +32,7 @@ export interface IFacebookTaggedPlace {
     latitude: string;
     longitude: string;
     name: string;
-    id: string;
+    taggedPlaceId: string;
 }
 
 export interface IUserProfile {
@@ -91,7 +91,7 @@ export function mapResponseToIFacebookGroup(groups: any): Array<IFacebookGroup> 
 export function mapResponseToIFacebookTaggedPlace(taggedPlaces: any): Array<IFacebookTaggedPlace> {
     const mappedEvents: Array<IFacebookTaggedPlace> = taggedPlaces.data.map((taggedPlace) => {
         const result: IFacebookTaggedPlace = {
-                id: taggedPlace.id,
+                taggedPlaceId: taggedPlace.id,
                 name: taggedPlace.place.name,
                 city: taggedPlace.place.location.city,
                 country: taggedPlace.place.location.country,

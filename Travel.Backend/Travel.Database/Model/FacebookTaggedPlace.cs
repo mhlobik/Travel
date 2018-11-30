@@ -8,5 +8,6 @@
         public string Longitude { get; set; }
         public string Name { get; set; }
         public TextAnalysis NameAnalysis { get; set; }
+        public string TaggedPlaceId { get; set; }
     }
 }

@@ -48,3 +48,7 @@ D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\obj\Debug\Travel.Appli
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\obj\Debug\Travel.Application.pdb
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Web.Http.Cors.dll
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.Web.Http.Cors.xml
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Application\bin\Debug\System.IO.Compression.dll

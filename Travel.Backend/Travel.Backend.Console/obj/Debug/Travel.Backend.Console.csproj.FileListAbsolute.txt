@@ -181,3 +181,6 @@ D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsof
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\obj\Debug\Travel.Backend.Console.csproj.CopyComplete
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\obj\Debug\Travel.Backend.Console.exe
 D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\obj\Debug\Travel.Backend.Console.pdb
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+D:\Diplomski Rad\Travel\Travel.Backend\Travel.Backend.Console\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
