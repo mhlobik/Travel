@@ -1,2 +1,4 @@
 export const MANAGE_USER_FACEBOOK_DATA = '@Facebook/MANAGE_USER_FACEBOOK_DATA';
 export const MANAGE_USER_PROFILE_FACEBOOK_DATA = '@Facebook/MANAGE_USER_PROFILE_FACEBOOK_DATA';
+export const GET_USERS = '@Facebook/GET_USERS';
+export const SET_USER_FLAGS = '@Facebook/SET_USER_FLAGS';

@@ -9,7 +9,9 @@ import * as FacebookUtilities from '../../common/facebookUtilities';
 import * as facebookActions from '../../action/facebook';
 
 interface IFacebookProps {
+    allUsers?: Array<FacebookUtilities.IUser>;
     onManageUserFacebookData?(user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile): void;
+    onMarkIsUserExists?(userExists: boolean, loggedIn: boolean, user: FacebookUtilities.IUser): void;
 }
 
 interface IFacebookState {
@@ -20,13 +22,17 @@ interface IFacebookState {
 }
 
 function mapStateToProps(state: IRootReducerState): IFacebookProps {
-    return {};
+    return {
+        allUsers: state.facebook.allUsers
+    };
 }
 
 function mapDispatchToProps(dispatch: any): IFacebookProps {
     return {
-        onManageUserFacebookData: (user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile) => 
-            dispatch(facebookActions.manageUserFacebookData(user, userProfile))
+        onManageUserFacebookData: (user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile) =>
+            dispatch(facebookActions.manageUserFacebookData(user, userProfile)),
+        onMarkIsUserExists: (userExists: boolean, loggedIn: boolean, user: FacebookUtilities.IUser) =>
+            dispatch(facebookActions.markIsUserExists(userExists, loggedIn, user))
     };
 }
 
@@ -143,34 +149,29 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
     }
 
     private onHandleFacebookData() {
-        this.props.onManageUserFacebookData(this.state.user, this.state.userProfile);
+        const userExist = this.props.allUsers.find((user) => user.userId === this.state.user.userId);
+
+        if (!userExist) {
+            this.props.onManageUserFacebookData(this.state.user, this.state.userProfile);
+        }
+
+        this.props.onMarkIsUserExists(userExist !== null, this.state.userLoggedIn, this.state.user);
     }
 
     public render() {
         return (
-            <div className="facebook">
-                {this.state.isLoadingStatus && <Spinner type={SpinnerType.small}></Spinner>}
-                {!this.state.userLoggedIn && !this.state.isLoadingStatus &&
-                    <span className="facebook__button-wrapper">
-                        <img src={FacebookLogo} className="facebook__logo" height="32" width="32" />
-                        <button
-                            className="facebook__button"
-                            onClick={() => this.facebookLogin()}
-                        >Login With Facebook
-                    </button>
-                    </span>
-                }
-                {this.state.userLoggedIn && !this.state.isLoadingStatus &&
-                    <span className="facebook__button-wrapper">
-                        <img src={FacebookLogo} className="facebook__logo" height="32" width="32" />
-                        <button
-                            className="facebook__button"
-                            onClick={() => this.facebookLogOut()}
-                        >Log Out
-                    </button>
-                    </span>
-                }
+            <div
+                className="fb-login-button"
+                data-width="200"
+                data-max-rows="1"
+                data-size="large"
+                data-button-type="login_with"
+                data-show-faces="false"
+                data-auto-logout-link="true"
+                data-use-continue-as="true"
+            >
             </div>
+
         );
     }
 }

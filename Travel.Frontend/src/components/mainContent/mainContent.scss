@@ -1,0 +1,11 @@
+@import './../../assets/styles/variables';
+
+.main-content__container{
+    display: flex;
+    height: calc(100% - 90px);
+    max-width: 978px;
+    margin: 0 auto 15px;
+    padding: 20px 3% 60px;
+    justify-content: center;
+    // background-color: $primary-light;
+}

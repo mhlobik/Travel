@@ -1,0 +1,18 @@
+@import './../../assets/styles/variables';
+
+    .header__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $primary-middle;
+        height: 90px !important;
+        padding-right: 100px;
+        border-bottom: 1px solid $secondary-green;
+
+        .header__title {
+            color: $secondary-green;
+            font-size: 45px;
+            font-weight: bold;
+            padding-left: 100px;
+        }
+    }

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travel.Database", "Travel.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travel.Application", "Travel.Application\Travel.Application.csproj", "{7B4A1C9D-2F3C-4B45-BA2A-F27848E75E5B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travel.Business", "Travel.Business\Travel.Business.csproj", "{A3D48721-E6FB-4CD5-AE52-0FE9C7996336}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{7B4A1C9D-2F3C-4B45-BA2A-F27848E75E5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B4A1C9D-2F3C-4B45-BA2A-F27848E75E5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B4A1C9D-2F3C-4B45-BA2A-F27848E75E5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3D48721-E6FB-4CD5-AE52-0FE9C7996336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D48721-E6FB-4CD5-AE52-0FE9C7996336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D48721-E6FB-4CD5-AE52-0FE9C7996336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D48721-E6FB-4CD5-AE52-0FE9C7996336}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

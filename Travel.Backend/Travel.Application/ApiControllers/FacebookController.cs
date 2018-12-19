@@ -3,6 +3,9 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Travel.Database;
 using Travel.Database.Utilities;
+using Travel.Business.Watson;
+using Travel.Business.Facebook;
+using Travel.Application.DTO;
 
 namespace Travel.Application.ApiControllers
 {
@@ -14,24 +17,25 @@ namespace Travel.Application.ApiControllers
         {
             ManageUserFacebookData databaseManager = new ManageUserFacebookData();
             databaseManager.StoreUser(user);
-            return Ok();
+            return Ok(user);
         }
 
         [Route("api/facebook/manage-user-profile-facebook-data")]
         [HttpPost]
         public IHttpActionResult ManageUserProfileFacebookData([FromBody] UserProfile userProfile)
         {
-            ManageUserFacebookData databaseManager = new ManageUserFacebookData();
-            databaseManager.StoreUserProfile(userProfile);
+            var userPofileManager = new UserProfileManager();
+            var isStored = userPofileManager.ParseAndStoreUserProfile(userProfile);
             return Ok();
         }
 
-        [Route("api/facebook/test")]
+        [Route("api/facebook/get-users")]
         [HttpGet]
-        public IHttpActionResult Test()
+        public IHttpActionResult GetUsers()
         {
-            var test = "bla";
-            return Ok();
+            ManageUserFacebookData databaseManager = new ManageUserFacebookData();
+            var allUsers = databaseManager.GetAllUsers();
+            return Ok(allUsers);
         }
     }
 }

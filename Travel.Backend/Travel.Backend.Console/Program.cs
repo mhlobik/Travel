@@ -1,15 +1,15 @@
 ﻿using Google.Cloud.Language.V1;
 using Google.Protobuf.Collections;
 using System.Collections.Generic;
-using System.Net.Http;
 using Travel.Application;
-using Travel.Database;
+using Travel.Business.Foursquare;
+using Travel.Business.Utilities;
 
 namespace Travel.Backend.Console
 {
     public class Program
     {
-        private static HttpClient Client { get; set; }
+        private static System.Net.Http.HttpClient Client { get; set; }
         public static string AppSecret = ""; // Google App Key
 
         public static void Main(string[] args)
@@ -20,40 +20,106 @@ namespace Travel.Backend.Console
             app.StartApplication();
 
             #endregion
-            
-            DatabaseConnection test = new DatabaseConnection();
+
+            #region read xls
+            //Excel.Application xlApp;
+            //Excel.Workbook xlWorkBook;
+            //Excel.Worksheet xlWorkSheet;
+            //Excel.Range range;
+
+            //string str;
+            //int rCnt;
+            //int cCnt;
+            //int rw = 0;
+            //int cl = 0;
+            //System.Console.WriteLine($"start excell thing");
+            //xlApp = new Excel.Application();
+            //xlWorkBook = xlApp.Workbooks.Open(@"C:\Users\Marija\Downloads\iata-airport-codes\airport-codes.csv", 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+            //xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
+
+            //range = xlWorkSheet.UsedRange;
+            //rw = range.Rows.Count;
+            //cl = range.Columns.Count;
+
+            //for (rCnt = 1; rCnt <= rw; rCnt++)
+            //{
+            //    for (cCnt = 1; cCnt <= cl; cCnt++)
+            //    {
+            //        str = (string)(range.Cells[rCnt, cCnt] as Excel.Range).Value2;
+            //        var splitedRow = str.Replace("\"", "").Split(',');
+
+            //        var airport = new Airport()
+            //        {
+            //            City = splitedRow[0],
+            //            Name = splitedRow[1],
+            //            Country = splitedRow[1].Split('-')[0],
+            //            IATA = splitedRow[2]
+            //        };
+            //        System.Console.WriteLine($"\texcell: {str}");
+
+            //        IDocumentStore store;
+            //        using (store = DatabaseConnection.DocumentStoreInitialization())
+            //        {
+            //            using (IDocumentSession session = store.OpenSession())
+            //            {
+            //                session.Store(airport);
+            //                session.SaveChanges();
+            //            }
+            //        }
+            //    }
+            //}
+
+            //xlWorkBook.Close(true, null, null);
+            //xlApp.Quit();
+
+            //Marshal.ReleaseComObject(xlWorkSheet);
+            //Marshal.ReleaseComObject(xlWorkBook);
+            //Marshal.ReleaseComObject(xlApp);
+            #endregion
+
+            #region Foursquare API
+            //var foursquareManager = new CityPointsOfInterestManager();
+
+            //var cities111 = foursquareManager.GetCityPointsOfInterest(3537, 3538);
+            //System.Console.WriteLine("GetCityPointsOfInterest(3357, 3538)");
+
+
+            #endregion
+
+            //DatabaseConnection test = new DatabaseConnection();
             //test.TestCon();
 
             // The text to analyze.
-            string text = "Always dreamed of a movielike summer experience on one of the most beautiful coasts in the world?"
-                + "Are you too sober for starting a new academic year ? Do you need a proper mental preparation for it?"
-                + "Why don't you join us on a PearlJAM in Croatia from 22nd to 25th of September?"
-                + "What is PearlJAM? 	An amazing opportunity to:  1.see some gluteus maximus tanning on the beach"
-                + "2.get a perfect tan for your gluteus maximus"
-                + "3.eat some good food"
-                + "4.explore Croatian beautiful coast"
-                + "5.find a boyfriend"
-                + "6.find a girlfriend"
-                + "7.find both"
-                + "8.turn into a mermaid"
-                + "9.attend crazy beach parties"
-                + "10.attend more crazy boat party"
-                + "11.meet some great people just like you"
-                + "What it has to offer ?"
-                + "1.partyanimal organisers ready to blow your mind"
-                + "2.a bed for 3 nights which you won't need because you will party all night and sleep on the beach"
-                + "3.melt -in-your - mouth food"
-                + "4.boat party"
-                + "5.breathtaking beaches"
-                + "6.sky - blue sea"
-                + "7.and plenty of surprises you will have to discover yourself";
+            //string text = "Always dreamed of a movielike summer experience on one of the most beautiful coasts in the world?"
+            //    + "Are you too sober for starting a new academic year ? Do you need a proper mental preparation for it?"
+            //    + "Why don't you join us on a PearlJAM in Croatia from 22nd to 25th of September?"
+            //    + "What is PearlJAM? 	An amazing opportunity to:  1.see some gluteus maximus tanning on the beach"
+            //    + "2.get a perfect tan for your gluteus maximus"
+            //    + "3.eat some good food"
+            //    + "4.explore Croatian beautiful coast"
+            //    + "5.find a boyfriend"
+            //    + "6.find a girlfriend"
+            //    + "7.find both"
+            //    + "8.turn into a mermaid"
+            //    + "9.attend crazy beach parties"
+            //    + "10.attend more crazy boat party"
+            //    + "11.meet some great people just like you"
+            //    + "What it has to offer ?"
+            //    + "1.partyanimal organisers ready to blow your mind"
+            //    + "2.a bed for 3 nights which you won't need because you will party all night and sleep on the beach"
+            //    + "3.melt -in-your - mouth food"
+            //    + "4.boat party"
+            //    + "5.breathtaking beaches"
+            //    + "6.sky - blue sea"
+            //    + "7.and plenty of surprises you will have to discover yourself";
 
             #region Natural Language Understanding API
             //var url = "https://gateway-fra.watsonplatform.net/natural-language-understanding/api";
+            ////string text = "Always dreamed of a movielike summer exper Kako postati državni uhljeb? Seminar + Neradionica";
 
             //TokenOptions iamAssistantTokenOptions = new TokenOptions()
             //{
-            //    IamApiKey = apiKEy,
+            //    IamApiKey = apiKey,
             //    ServiceUrl = url
             //};
 
@@ -144,13 +210,13 @@ namespace Travel.Backend.Console
 
 
             //    Client = new HttpClient();
-            //Client.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/place/");
+            //    Client.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/place/");
 
-            //var query = "Zagreb";
-            //var resp = Task.Run(async () => await Client.GetAsync(String.Format("textsearch/json?key={0}&query={1}", AppSecret, query))).ConfigureAwait(false).GetAwaiter().GetResult();
-            //if (resp.IsSuccessStatusCode)
-            //{
-            //    var result = JsonConvert.DeserializeObject(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult(), typeof(Response)) as Response;
+            //    var query = "Zagreb";
+            //    var resp = Task.Run(async () => await Client.GetAsync(String.Format("textsearch/json?key={0}&query={1}", AppSecret, query))).ConfigureAwait(false).GetAwaiter().GetResult();
+            //    if (resp.IsSuccessStatusCode)
+            //    {
+            //        var result = JsonConvert.DeserializeObject(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult(), typeof(Response)) as Response;
             //    var placeID = result.Places.FirstOrDefault().PlaceId;
             //    var details = Task.Run(async () => await Client.GetAsync(String.Format("details/json?key={0}&placeid={1}", AppSecret, placeID))).ConfigureAwait(false).GetAwaiter().GetResult();
             //    var content = Task.Run(async () => await details.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();

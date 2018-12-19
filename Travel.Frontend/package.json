@@ -43,6 +43,7 @@
         "webpack-split-by-path": "2.0.0"
     },
     "dependencies": {
+        "@devexpress/dx-react-chart": "^1.9.1",
         "@types/react-highlighter": "^0.3.4",
         "@types/react-redux": "^5.0.15",
         "babel-polyfill": "6.23.0",
@@ -53,7 +54,8 @@
         "moment": "^2.22.2",
         "node-sass": "4.5.3",
         "prop-types": "15.6.2",
-        "quick-react-ts": "^0.13.20",
+        "quick-react-ts": "^0.14.1",
+        "rc-input-number": "^4.3.7",
         "react": "16.2.0",
         "react-dom": "16.4.2",
         "react-facebook-login": "^4.1.1",

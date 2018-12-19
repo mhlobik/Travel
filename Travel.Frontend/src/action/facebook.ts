@@ -5,12 +5,11 @@ import fetcher from '../common/fetcher';
 const facebookBaseUrl = 'api/facebook';
 
 export function manageUserFacebookData(user: IUser, userProfile: IUserProfile) {
-    console.log('manageUserFacebookData', user);
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${facebookBaseUrl}/manage-user-facebook-data`,
             requestActionName: facebookActions.MANAGE_USER_FACEBOOK_DATA,
-            jsonResponseExpected: false,
+            jsonResponseExpected: true,
             requestInit: {
                 method: 'POST',
                 body: JSON.stringify(user)
@@ -22,7 +21,6 @@ export function manageUserFacebookData(user: IUser, userProfile: IUserProfile) {
 }
 
 export function manageUserProfileFacebookData(userProfile: IUserProfile) {
-    console.log('manageUserProfileFacebookData', userProfile);
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${facebookBaseUrl}/manage-user-profile-facebook-data`,
@@ -33,5 +31,25 @@ export function manageUserProfileFacebookData(userProfile: IUserProfile) {
                 body: JSON.stringify(userProfile)
             }
         });
+    };
+}
+
+export function getUsers() {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${facebookBaseUrl}/get-users`,
+            requestActionName: facebookActions.GET_USERS,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'GET'
+            }
+        });
+    };
+}
+
+export function markIsUserExists(exists: boolean, loggedIn: boolean, user: IUser) {
+    return {
+        type: facebookActions.SET_USER_FLAGS,
+        payload: { userExists: exists, userLoggedIn: loggedIn, user: user }
     };
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Travel.Database.Model;
@@ -9,6 +10,22 @@ namespace Travel.Database.Utilities
 {
     public class ManageUserFacebookData
     {
+        public List<User> GetAllUsers()
+        {
+            IDocumentStore store;
+            var users = new List<User>();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    users = session.Query<User>().ToList();
+                }
+            }
+
+            return users;
+        }
+
         public void StoreUser(User user)
         {
             IDocumentStore store;
@@ -17,7 +34,7 @@ namespace Travel.Database.Utilities
                 using (IDocumentSession session = store.OpenSession())
                 {
                     var existingUser = session.Query<User>().Any(x => x.UserId == user.UserId);
-                    if(!existingUser)
+                    if (!existingUser)
                     {
                         session.Store(user);
                         session.SaveChanges();
@@ -26,7 +43,7 @@ namespace Travel.Database.Utilities
             }
         }
 
-        public void StoreUserProfile(UserProfile userProfile)
+        public bool StoreUserProfile(UserProfile userProfile)
         {
             IDocumentStore store;
             using (store = DatabaseConnection.DocumentStoreInitialization())
@@ -80,7 +97,7 @@ namespace Travel.Database.Utilities
                         #region Update Preferences
                         var existingPreferences = existingUserProfile.Preferences;
                         var newPreferences = userProfile.Preferences;
-                        var arePreferencesEqual = existingPreferences.SequenceEqual(newPreferences);
+                        var arePreferencesEqual = (existingPreferences != null) && (newPreferences != null) ? existingPreferences.Equals(newPreferences) : false;
                         if (!arePreferencesEqual)
                         {
                             session.Advanced.Patch(existingUserProfile, x => x.Preferences, userProfile.Preferences);
@@ -96,9 +113,58 @@ namespace Travel.Database.Utilities
                         session.Store(userProfile);
                     }
 
-                    session.SaveChanges();
+                    try
+                    {
+                        session.SaveChanges();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        return false;
+                    }
                 }
             }
         }
+
+        public bool StoreUserPreferences(UserProfile userProfile)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingUserProfile = session.Query<UserProfile>().FirstOrDefault(x => x.UserId == userProfile.UserId);
+                    if (existingUserProfile != null)
+                    {
+                        #region Update Preferences
+                        var existingPreferences = existingUserProfile.Preferences;
+                        var newPreferences = userProfile.Preferences;
+                        var arePreferencesEqual = (existingPreferences != null) && (newPreferences != null) ? existingPreferences.Equals(newPreferences) : false;
+                        if (!arePreferencesEqual)
+                        {
+                            session.Advanced.Patch(existingUserProfile, x => x.Preferences, userProfile.Preferences);
+                            session.Advanced.Patch(existingUserProfile, x => x.MaxFlightPrice, userProfile.MaxFlightPrice);
+                            session.Advanced.Patch(existingUserProfile, x => x.MaxTravelPrice, userProfile.MaxTravelPrice);
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        session.Store(userProfile);
+                    }
+
+                    try
+                    {
+                        session.SaveChanges();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
     }
 }

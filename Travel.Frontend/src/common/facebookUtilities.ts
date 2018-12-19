@@ -41,7 +41,7 @@ export interface IUserProfile {
     facebookLikes: Array<IFacebookLike>;
     facebookTaggedPlaces: Array<IFacebookTaggedPlace>;
     userId: string;
-    // add posts
+    preferences?: Array<number>;
 }
 
 export interface IUser {

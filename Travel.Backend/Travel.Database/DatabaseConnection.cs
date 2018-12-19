@@ -1,10 +1,5 @@
 ﻿using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Travel.Database.Model;
 
 namespace Travel.Database

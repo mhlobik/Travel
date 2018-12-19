@@ -1,0 +1,22 @@
+@import './../../assets/styles/variables';
+
+.city-chooser-tile__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $primary-light;
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    color: $primary-grey;
+    cursor: pointer;
+    margin: 10px;
+    
+    &:hover {
+        background-color: #7fd3c2;
+    }
+
+    &.is-selected {
+        background-color: #7fd3c2;
+    }
+}

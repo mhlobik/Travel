@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
-    height: 100vh;
+    height: 100%;
 }
 
 @mixin disableUserSelection() {
@@ -20,5 +20,46 @@ body {
 }
 
 #root {
-    height: 100vh;
+    height: 100%;
 }
+
+.checkbox {
+    .checkbox-label {
+        color: $primary-grey;
+    }
+
+    &.checked {
+        .checkbox-label::before {
+            border-color: $secondary-green!important;
+            background-color: $secondary-green!important;
+        }
+    }
+
+    .checkbox-label::before {
+        border-color: $primary-grey!important;
+    }
+}
+
+.textField-field {
+    &:active,
+    &:focus {
+        border-color: $secondary-green!important;
+    }
+}
+
+  .virtualized-tree-filter-checkbox .virtualized-tree-filter-checkbox-label.is-checked:before {
+    border-color: $secondary-green!important;
+    background-color: $secondary-green!important;
+  }
+  
+  .ReactVirtualized__Grid,
+  .ReactVirtualized__Collection {
+      &:focus {
+          /* stylelint-disable-next-line declaration-no-important */
+          outline: none !important;
+      }
+  }
+
+  .treeview .treeview-item .treeview-content .checkbox.partial-selected label:after  {
+    color: $secondary-green!important;
+  }

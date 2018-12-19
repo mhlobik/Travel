@@ -40,7 +40,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiControllers\CityController.cs" />
     <Compile Include="ApiControllers\FacebookController.cs" />
+    <Compile Include="ApiControllers\MainController.cs" />
+    <Compile Include="DTO\UserPreferencesDTO.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="TravelApplication.cs" />
@@ -87,6 +90,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Travel.Business\Travel.Business.csproj">
+      <Project>{a3d48721-e6fb-4cd5-ae52-0fe9c7996336}</Project>
+      <Name>Travel.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Travel.Database\Travel.Database.csproj">
       <Project>{8375f4be-629a-4ead-aa0a-410db1c44ee9}</Project>
       <Name>Travel.Database</Name>

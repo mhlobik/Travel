@@ -1,0 +1,65 @@
+@import './../../assets/styles/variables';
+
+.user-preferences__container {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+
+    .user-preferences__title {
+        font-size: 34px;
+        color: $primary-grey;
+    }
+
+    .user-preferences__subtitle {
+        padding: 5px;
+        font-size: 16px;
+        color: $primary-grey;
+    }
+
+    .user-preferences__choices {
+        padding: 30px;
+        display: flex;
+    }
+
+    .user-preferences__button-wraper {
+        padding: 30px;
+        display: flex;
+        justify-content: flex-end;
+
+        .user-preferences__button {
+            color: $secondary-green;
+            background: $secondary-green;
+            font-size: 16px;
+            padding: 5px;
+        }
+    }
+
+    .user-preferences__price-choices {
+        display: flex;
+        padding-top: 30px;
+        padding-bottom: 30px;
+
+        .max-travel-number-input {
+            width: 150px;
+            color: $primary-grey;
+            padding-left: 30px;
+        }
+
+        .max-fligt-number-input {
+            width: 150px;
+            color: $primary-grey;
+            padding-left: 200px;
+        }
+    }
+
+    .treeview-container {
+        height: 280px;
+        color: $primary-grey;
+        border: none!important;
+        overflow-y: scroll;
+        padding-left: 30px;
+        padding-top: 30px;
+
+    }
+}
