@@ -16,7 +16,8 @@ function mapStateToProps(state: IRootReducerState): IHomePageProps {
     userLoggedIn: state.facebook.userLoggedIn,
     user: state.facebook.user,
     continueClicked: state.main.continueClicked,
-    gettingUsers: state.facebook.isGettingUsers
+    gettingUsers: state.facebook.isGettingUsers,
+    userPreferencesSaved: state.main.userPreferencesSaved
   };
 }
 
@@ -44,6 +45,7 @@ interface IHomePageProps {
   user?: IUser;
   continueClicked?: boolean;
   gettingUsers?: boolean;
+  userPreferencesSaved?: boolean;
   onGetAllUSers?(): void;
   onGetCitiesChooser?(): void;
 }
@@ -74,6 +76,7 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           user={this.props.user}
           userLoggedIn={this.props.userLoggedIn}
           continueClicked={this.props.continueClicked}
+          userPreferencesSaved={this.props.userPreferencesSaved}
         />
       </div>
     );

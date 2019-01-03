@@ -2,6 +2,7 @@ import { IUser } from '../common/facebookUtilities';
 import fetcher from '../common/fetcher';
 import * as mainActions from './../constants/main';
 import { ICityRating } from '../common/city';
+import * as recommendationActionCreators from '../action/recommendation';
 
 const mainBaseUrl = 'api/main';
 const cityBaseUrl = 'api/city';
@@ -20,7 +21,6 @@ export function getCitiesChooser() {
 }
 
 export function saveUserPreferences(userPreferences: Array<string>, maxTravelPrice: number, maxFlightPrice: number, user: IUser) {
-    console.log(userPreferences);
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${mainBaseUrl}/save-user-preferences`,
@@ -35,6 +35,8 @@ export function saveUserPreferences(userPreferences: Array<string>, maxTravelPri
                     userId: user.userId
                 })
             }
+        }).then(() => {
+            dispatch(recommendationActionCreators.getKnowledgeBased(user.userId));
         });
     };
 }

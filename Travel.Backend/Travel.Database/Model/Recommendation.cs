@@ -5,9 +5,10 @@ namespace Travel.Database.Model
 {
     public class Recommendation
     {
-        public int UserId { get; set; }
-        public int RecommendationId { get; set; }
+        public string UserId { get; set; }
+        public string RecommendationId { get; set; }
         public RecommenderModelEnum RecommenderModel { get; set; }
-        public List<int> RecommendedCityId { get; set; }
+        public City RecommendedCity { get; set; }
+        public double Similarity { get; set; }
     }
 }

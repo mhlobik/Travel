@@ -125,5 +125,21 @@ namespace Travel.Database.Utilities
                 }
             }
         }
+
+        public List<City> GetAllCities()
+        {
+            IDocumentStore store;
+            var cities = new List<City>();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    cities = session.Query<City>().ToList();
+                }
+            }
+
+            return cities;
+        }
     }
 }

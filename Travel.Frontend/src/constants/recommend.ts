@@ -1,0 +1,1 @@
+export const GET_KNOWLEDGE_BASED = '@Recommendation/GET_KNOWLEDGE_BASED';

@@ -1,0 +1,109 @@
+@import './../../assets/styles/variables';
+     
+// SASS variable for media query breakpoint
+$breakpoint-desktop: 992px;
+ 
+.carousel {
+  position: relative;
+
+    // Resetting default styles
+    .carousel__slides {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        display: flex;
+
+        // Carousel slides
+        .carousel__slide {
+            margin-right: auto;
+            margin-left: auto;
+            display: none;
+            max-width: 900px;
+            list-style-type: none;
+            text-align: center;
+            padding-right: 10px;
+            padding-left: 10px;
+
+            @media (max-width: 991px) {
+            padding-right: 60px;
+            padding-left: 60px;
+            }
+        
+            &--active {
+                display: flex;
+                width: 25%;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+        
+        // Content of slides
+        .carousel-slide__content {
+            margin-bottom: 19px;
+            font-family: 'Open Sans', 'Trebuchet MS', sans-serif;
+            font-size: 16px;
+        
+            @media (max-width: $breakpoint-desktop - 1px) {
+            font-size: 18px;
+            }
+        }
+        
+        .carousel-slide__author,
+        .carousel-slide__source {
+            font-family: 'Roboto', arial, sans-serif;
+            font-size: 14px;
+        
+            @media (min-width: $breakpoint-desktop) {
+            font-size: 16px;
+            }
+        }
+        
+        .carousel-slide__source {
+            font-style: italic;
+            color: #888;
+        }
+    }
+
+    // Carousel arrows
+    .carousel__arrow {
+    position: absolute;
+    top: 70px;
+    display: block;
+    cursor: pointer;
+
+
+    &:focus {
+        outline: 0;
+    }
+
+    &:hover {
+        opacity: .5;
+    }
+
+    &--left {
+        left: -100px;
+    }
+
+    &--right {
+        right: -100px;
+    }
+    
+    i {
+        border: solid black;
+        border-width: 0 3px 3px 0;
+        display: inline-block;
+        padding: 3px;
+      }
+      
+      .left {
+        transform: rotate(135deg);
+        -webkit-transform: rotate(135deg);
+      }
+
+      .right {
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+      }
+      
+    }
+}

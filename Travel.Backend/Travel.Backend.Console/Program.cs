@@ -3,6 +3,7 @@ using Google.Protobuf.Collections;
 using System.Collections.Generic;
 using Travel.Application;
 using Travel.Business.Foursquare;
+using Travel.Business.Recommenders;
 using Travel.Business.Utilities;
 
 namespace Travel.Backend.Console
@@ -76,6 +77,12 @@ namespace Travel.Backend.Console
             //Marshal.ReleaseComObject(xlWorkBook);
             //Marshal.ReleaseComObject(xlApp);
             #endregion
+
+            #region Test Knowledge Based RS
+            var kbrsManager = new KnowledgeBased();
+            //var test = kbrsManager.GetKnowledgeBasedRecommendations("10217668859972898");
+            #endregion
+
 
             #region Foursquare API
             //var foursquareManager = new CityPointsOfInterestManager();

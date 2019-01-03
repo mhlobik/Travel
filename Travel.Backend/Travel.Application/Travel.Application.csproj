@@ -43,6 +43,7 @@
     <Compile Include="ApiControllers\CityController.cs" />
     <Compile Include="ApiControllers\FacebookController.cs" />
     <Compile Include="ApiControllers\MainController.cs" />
+    <Compile Include="ApiControllers\RecommendationController.cs" />
     <Compile Include="DTO\UserPreferencesDTO.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="Startup.cs" />

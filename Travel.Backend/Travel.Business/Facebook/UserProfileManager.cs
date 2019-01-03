@@ -11,15 +11,15 @@ namespace Travel.Business.Facebook
             var textAnalysisManager = new FacebookTextAnalysis(); // opcenito analiza treba provjeriti kategorija i breakat ak nije ono sto me zanima?
 
             #region Parse Facebook Events
-            var fbEventsAnalysis = textAnalysisManager.FacebookEventsTextAnalysis(userProfile.FacebookEvents);
+            //var fbEventsAnalysis = textAnalysisManager.FacebookEventsTextAnalysis(userProfile.FacebookEvents);
             #endregion
 
             #region Parse Facebook Groups
-            var fbGroupsAnalysis = textAnalysisManager.FacebookGroupsTextAnalysis(userProfile.FacebookGroups);
+            //var fbGroupsAnalysis = textAnalysisManager.FacebookGroupsTextAnalysis(userProfile.FacebookGroups);
             #endregion
 
             #region Parse Facebook Likes
-            var fbLikesAnalysis = textAnalysisManager.FacebookLikesTextAnalysis(userProfile.FacebookLikes);
+            //var fbLikesAnalysis = textAnalysisManager.FacebookLikesTextAnalysis(userProfile.FacebookLikes);
 
             #endregion
 

@@ -151,9 +151,7 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
     private onHandleFacebookData() {
         const userExist = this.props.allUsers.find((user) => user.userId === this.state.user.userId);
 
-        if (!userExist) {
-            this.props.onManageUserFacebookData(this.state.user, this.state.userProfile);
-        }
+        this.props.onManageUserFacebookData(this.state.user, this.state.userProfile);
 
         this.props.onMarkIsUserExists(userExist !== null, this.state.userLoggedIn, this.state.user);
     }

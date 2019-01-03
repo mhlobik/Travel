@@ -54,10 +54,10 @@ namespace Travel.Database.Utilities
                     if (existingUserProfile != null)
                     {
                         #region Update Facebook Events
-                        var existingFbEventIds = existingUserProfile.FacebookEvents.Select(e => e.EventId).ToList();
-                        var newFbEventIds = userProfile.FacebookEvents.Select(e => e.EventId).ToList();
+                        var existingFbEvents = existingUserProfile.FacebookEvents;
+                        var newFbEvents = userProfile.FacebookEvents;
                         // ako su eventi razliciti, treba nove dodati u bazu (stare zadržati)
-                        var areFbEventsEqual = existingFbEventIds.SequenceEqual(newFbEventIds);
+                        var areFbEventsEqual = (existingFbEvents != null) ? existingFbEvents.SequenceEqual(newFbEvents) : false;
                         if (!areFbEventsEqual)
                         {
                             session.Advanced.Patch(existingUserProfile, x => x.FacebookEvents, userProfile.FacebookEvents);
@@ -65,9 +65,9 @@ namespace Travel.Database.Utilities
                         #endregion
 
                         #region Update Facebook Groups
-                        var existingFbGroupIds = existingUserProfile.FacebookGroups.Select(e => e.GroupId).ToList();
-                        var newFbGroupIds = userProfile.FacebookGroups.Select(e => e.GroupId).ToList();
-                        var areFbGroupsEqual = existingFbGroupIds.SequenceEqual(newFbGroupIds);
+                        var existingFbGroups = existingUserProfile.FacebookGroups;
+                        var newFbGroups = userProfile.FacebookGroups;
+                        var areFbGroupsEqual = (existingFbGroups != null) ? existingFbGroups.SequenceEqual(newFbGroups) : false;
                         if (!areFbGroupsEqual)
                         {
                             session.Advanced.Patch(existingUserProfile, x => x.FacebookGroups, userProfile.FacebookGroups);
@@ -75,9 +75,9 @@ namespace Travel.Database.Utilities
                         #endregion
 
                         #region Update Facebook Likes
-                        var existingFbLikeIds = existingUserProfile.FacebookLikes.Select(e => e.LikedPageId).ToList();
-                        var newFbLikeIds = userProfile.FacebookLikes.Select(e => e.LikedPageId).ToList();
-                        var areFbLikesEqual = existingFbLikeIds.SequenceEqual(newFbLikeIds);
+                        var existingFbLikes = existingUserProfile.FacebookLikes;
+                        var newFbLikes = userProfile.FacebookLikes;
+                        var areFbLikesEqual = (existingFbLikes != null) ? existingFbLikes.SequenceEqual(newFbLikes) : false;
                         if (!areFbLikesEqual)
                         {
                             session.Advanced.Patch(existingUserProfile, x => x.FacebookLikes, userProfile.FacebookLikes);
@@ -85,9 +85,9 @@ namespace Travel.Database.Utilities
                         #endregion
 
                         #region Update Facebook Tagged Places
-                        var existingFbTaggedPlaceIds = existingUserProfile.FacebookTaggedPlaces.Select(e => e.TaggedPlaceId).ToList();
-                        var newFbTaggedPlaceIds = userProfile.FacebookTaggedPlaces.Select(e => e.TaggedPlaceId).ToList();
-                        var areFbTaggedPlacesEqual = existingFbTaggedPlaceIds.SequenceEqual(newFbTaggedPlaceIds);
+                        var existingFbTaggedPlaces = existingUserProfile.FacebookTaggedPlaces;
+                        var newFbTaggedPlaces = userProfile.FacebookTaggedPlaces;
+                        var areFbTaggedPlacesEqual = (existingFbTaggedPlaces != null) ? existingFbTaggedPlaces.SequenceEqual(newFbTaggedPlaces) : false;
                         if (!areFbTaggedPlacesEqual)
                         {
                             session.Advanced.Patch(existingUserProfile, x => x.FacebookTaggedPlaces, userProfile.FacebookTaggedPlaces);
@@ -97,7 +97,7 @@ namespace Travel.Database.Utilities
                         #region Update Preferences
                         var existingPreferences = existingUserProfile.Preferences;
                         var newPreferences = userProfile.Preferences;
-                        var arePreferencesEqual = (existingPreferences != null) && (newPreferences != null) ? existingPreferences.Equals(newPreferences) : false;
+                        var arePreferencesEqual = (existingPreferences != null) && (newPreferences != null) ? existingPreferences.Equals(newPreferences) : true;
                         if (!arePreferencesEqual)
                         {
                             session.Advanced.Patch(existingUserProfile, x => x.Preferences, userProfile.Preferences);
@@ -164,6 +164,22 @@ namespace Travel.Database.Utilities
                     }
                 }
             }
+        }
+
+        public UserProfile GetUserProfile(string userId)
+        {
+            IDocumentStore store;
+            var userProfile = new UserProfile();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    userProfile = session.Query<UserProfile>().FirstOrDefault(x => x.UserId == userId);
+                }
+            }
+
+            return userProfile;
         }
 
     }

@@ -1,11 +1,44 @@
+import { PreferencesCategories } from './enums';
+
 export interface ICity {
     cityId: string;
     name: string;
     country: string;
+    flights: Array<IFlight>;
+    // Hotels
+    pointsOfInterest: Array<IPointsOfInterest>;
 }
 
 export interface ICityRating {
     cityId: string;
     userId: string;
     liked: boolean;
+}
+
+export interface IFlight {
+    airline: string;
+    flightFare: IFare;
+    deepLink: string;
+    // public FlightDetails Inbound { get; set; }
+    // public FlightDetails Outbound { get; set; }
+    travelClass: string;
+}
+
+export interface IFare {
+    currency: string;
+    totalPrice: number;
+}
+
+export interface IPointsOfInterest {
+    id: string;
+    categories: Array<IPointOfInterestCategory>;
+    description: string;
+    name: string;
+    url: string;
+}
+
+export interface IPointOfInterestCategory {
+    id: string;
+    name: string;
+    categoryType: PreferencesCategories;
 }
