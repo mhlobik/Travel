@@ -13,6 +13,7 @@ import { ICity } from '../../common/city';
 interface ICarouselProps {
     //slides?: Array<ICarouselData>;
     knowledgeBasedRecommendations: Array<IRecommendation>;
+    handleOnItemClick(recommendedCity: ICity): void;
 }
 
 interface ICarouselState {
@@ -75,11 +76,6 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
         });
     }
 
-    @autobind
-    private handleOnItemClick(recommendedCity: ICity) {
-        console.log('carousel handleOnItemClick', recommendedCity);
-    }
-
     public render() {
         return (
             <div className="carousel">
@@ -92,7 +88,7 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
                             index={index}
                             recommendedCity={rec.recommendedCity}
                             activeIndexes={this.state.activeIndexesTest}
-                            onItemClick={this.handleOnItemClick}
+                            onItemClick={this.props.handleOnItemClick}
                         />
                     )}
                 </ul>

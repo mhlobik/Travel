@@ -20,7 +20,7 @@ export function getKnowledgeBased(userId: string) {
 export function openRecommendedItem(recommendedCity: ICity) {
     return {
         type: recommendationActions.OPEN_RECOMMENDED_ITEM,
-        payload: { openRecommendedItem: true, recommendedCity: recommendedCity}
+        payload: { recommendedCity: recommendedCity}
     };
 }
 

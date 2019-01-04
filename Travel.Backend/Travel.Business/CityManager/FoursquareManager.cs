@@ -11,7 +11,6 @@ namespace Travel.Business.CityManager
     public class FoursquareManager
     {
 
-
         public List<PointsOfInterest> GetVenuesForCity(string cityName)
         {
             var urlWithCity = baseUrl + cityName;

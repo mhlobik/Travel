@@ -5,11 +5,13 @@ import { autobind } from 'quick-react-ts';
 import { IRootReducerState } from '../../reducers/rootReducer';
 import Facebook from '../facebook/facebook';
 import * as facebookActions from '../../action/facebook';
+import * as mainActions from '../../action/main';
+import * as recommendationActions from '../../action/recommendation';
 import { IUser } from '../../common/facebookUtilities';
 import Header from '../../components/header/header';
 import MainContent from '../../components/mainContent/mainContent';
-import * as mainActions from '../../action/main';
 import { IRecommendation } from '../../common/recommendationUtilities';
+import { ICity } from '../../common/city';
 
 function mapStateToProps(state: IRootReducerState): IHomePageProps {
   return {
@@ -19,14 +21,18 @@ function mapStateToProps(state: IRootReducerState): IHomePageProps {
     continueClicked: state.main.continueClicked,
     gettingUsers: state.facebook.isGettingUsers,
     userPreferencesSaved: state.main.userPreferencesSaved,
-    knowledgeBasedRecommendations: state.recommendation.knowledgeBasedRecommendations
+    knowledgeBasedRecommendations: state.recommendation.knowledgeBasedRecommendations,
+    selectedRecommendedCity: state.recommendation.selectedRecommendedCity,
+    openRecommendedItem: state.recommendation.openRecommendedItem
   };
 }
 
 function mapDispatchToProps(dispatch: any): IHomePageProps {
   return {
     onGetAllUSers: () => dispatch(facebookActions.getUsers()),
-    onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser())
+    onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser()),
+    handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity))
+
   };
 }
 
@@ -49,8 +55,11 @@ interface IHomePageProps {
   gettingUsers?: boolean;
   userPreferencesSaved?: boolean;
   knowledgeBasedRecommendations?: Array<IRecommendation>;
+  selectedRecommendedCity?: ICity;
+  openRecommendedItem?: boolean;
   onGetAllUSers?(): void;
   onGetCitiesChooser?(): void;
+  handleOnItemClick?(recommendedCity: ICity): void;
 }
 
 interface IHomePageState {
@@ -71,7 +80,14 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
     this.props.onGetCitiesChooser();
   }
 
+  @autobind
+  private onHandleOnItemClick(recommendedCity: ICity) {
+    this.props.handleOnItemClick(recommendedCity);
+  }
+
   public render() {
+    console.log('HomePage', this.props.selectedRecommendedCity);
+
     return (
       <div className="home-page__container">
         <Header />
@@ -81,6 +97,9 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           continueClicked={this.props.continueClicked}
           userPreferencesSaved={this.props.userPreferencesSaved}
           knowledgeBasedRecommendations={this.props.knowledgeBasedRecommendations}
+          handleOnItemClick={this.onHandleOnItemClick}
+          openRecommendedItem={this.props.openRecommendedItem}
+          selectedRecommendedCity={this.props.selectedRecommendedCity}
         />
       </div>
     );

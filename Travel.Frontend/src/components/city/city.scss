@@ -1,0 +1,11 @@
+@import './../../assets/styles/variables';
+
+.city__container {
+    .city__title {
+        height: 40px;
+        font-family: $primary-font;
+        font-size: 20px;
+        background-color: $secondary-green;
+        color: white;
+    }
+}
