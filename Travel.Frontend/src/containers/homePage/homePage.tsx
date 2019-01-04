@@ -31,8 +31,8 @@ function mapDispatchToProps(dispatch: any): IHomePageProps {
   return {
     onGetAllUSers: () => dispatch(facebookActions.getUsers()),
     onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser()),
-    handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity))
-
+    handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity)),
+    onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem())
   };
 }
 
@@ -60,6 +60,7 @@ interface IHomePageProps {
   onGetAllUSers?(): void;
   onGetCitiesChooser?(): void;
   handleOnItemClick?(recommendedCity: ICity): void;
+  onCloseRecommendedItem?(): void;
 }
 
 interface IHomePageState {
@@ -85,10 +86,13 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
     this.props.handleOnItemClick(recommendedCity);
   }
 
-  public render() {
-    console.log('HomePage', this.props.selectedRecommendedCity);
+  @autobind
+  private handleOnCloseRecommendedItem() {
+    this.props.onCloseRecommendedItem();
+  }
 
-    return (
+  public render() {
+        return (
       <div className="home-page__container">
         <Header />
         <MainContent
@@ -100,6 +104,7 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           handleOnItemClick={this.onHandleOnItemClick}
           openRecommendedItem={this.props.openRecommendedItem}
           selectedRecommendedCity={this.props.selectedRecommendedCity}
+          onCloseRecommendedItem={this.handleOnCloseRecommendedItem}
         />
       </div>
     );

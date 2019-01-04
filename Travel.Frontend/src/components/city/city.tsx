@@ -12,8 +12,8 @@ export default class City extends React.PureComponent<ICityProps, {}> {
         console.log('City', this.props.selectedRecommendedCity);
         return (
             <div className="city__container">
-                <img src={this.props.selectedRecommendedCity.imageUrl} height="298" width="298"></img>
-                <span className="city__title">bla</span>
+                <span className="city__title">{this.props.selectedRecommendedCity.name}</span>
+                <span className="close" onClick={this.props.closeCityDetails}></span>
             </div>
         );
     }

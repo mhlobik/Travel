@@ -2,11 +2,12 @@
 
 .knowledge-based__container {
     margin-top: 30px;
+    margin-left: -250px;
+    margin-right: -250px;
 
     .knowledge-based__title {
         font-size: 28px;
         color: $primary-grey;
-        margin-left: -100px;
     }
 
     // Fix for jumping arrows

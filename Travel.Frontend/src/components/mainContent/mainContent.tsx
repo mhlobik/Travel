@@ -18,6 +18,7 @@ interface IMainContentProps {
     selectedRecommendedCity: ICity;
     openRecommendedItem: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
+    onCloseRecommendedItem(): void;
 }
 
 export interface ICarouselData {
@@ -27,28 +28,20 @@ export interface ICarouselData {
 }
 
 export default class MainContent extends React.PureComponent<IMainContentProps, {}> {
-    @autobind
-    private onCloseRecommendedItem() {
-        console.log('onCloseRecommendedItem');
-    }
     public render() {
-        console.log('MainContent', this.props.selectedRecommendedCity);
-
         return (
             <div key="container" className="main-content__container">
                 {this.props.user !== null && this.props.continueClicked && !this.props.userPreferencesSaved && <UserPreferences />}
                 {this.props.user !== null && !this.props.continueClicked && <CityChooser />}
 
-                {this.props.user !== null && this.props.continueClicked
-                    && this.props.userPreferencesSaved && !this.props.openRecommendedItem &&
+                {this.props.user !== null && this.props.continueClicked && this.props.userPreferencesSaved &&
                     <KnowledgeBased
                         knowledgeBasedRecommendations={this.props.knowledgeBasedRecommendations}
                         handleOnItemClick={this.props.handleOnItemClick}
+                        openRecommendedItem={this.props.openRecommendedItem}
+                        selectedRecommendedCity={this.props.selectedRecommendedCity}
+                        onCloseRecommendedItem={this.props.onCloseRecommendedItem}
                     />
-                }
-
-                {this.props.openRecommendedItem && this.props.selectedRecommendedCity !== null &&
-                    <City selectedRecommendedCity={this.props.selectedRecommendedCity} closeCityDetails={this.onCloseRecommendedItem}/>
                 }
             </div>
         );

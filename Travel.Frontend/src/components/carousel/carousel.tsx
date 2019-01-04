@@ -28,7 +28,7 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
         this.goToNextSlide = this.goToNextSlide.bind(this);
 
         this.state = {
-            activeIndexesTest: [0, 1, 2, 3]
+            activeIndexesTest: [0, 1, 2, 3, 4]
         };
     }
 

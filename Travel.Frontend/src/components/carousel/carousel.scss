@@ -6,6 +6,9 @@ $breakpoint-desktop: 992px;
 .carousel {
   position: relative;
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
     // Resetting default styles
     .carousel__slides {
@@ -25,7 +28,7 @@ $breakpoint-desktop: 992px;
         
             &--active {
                 display: flex;
-                width: 25%;
+                width: 306px;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -41,7 +44,7 @@ $breakpoint-desktop: 992px;
         // Content of slides
         .carousel-slide__content {
             height: 40px;
-            width: 298px;
+            width: 306px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -69,11 +72,11 @@ $breakpoint-desktop: 992px;
     }
 
     &--left {
-        left: -100px;
+        left: -50px;
     }
 
     &--right {
-        right: -100px;
+        right: -50px;
     }
     
     i {

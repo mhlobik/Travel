@@ -26,7 +26,7 @@ export default class CarouselSlide extends React.PureComponent<ICarouselSlidePro
                 }
                 onClick={this.handleOnItemClick}
             >
-                <img src={this.props.recommendedCity.imageUrl} height="298" width="298"></img>
+                <img src={this.props.recommendedCity.imageUrl} height="306" width="306"></img>
                 <span className="carousel-slide__content">
                     {this.props.recommendedCity.name}
                 </span>

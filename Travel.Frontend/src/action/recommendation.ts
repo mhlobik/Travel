@@ -20,13 +20,13 @@ export function getKnowledgeBased(userId: string) {
 export function openRecommendedItem(recommendedCity: ICity) {
     return {
         type: recommendationActions.OPEN_RECOMMENDED_ITEM,
-        payload: { recommendedCity: recommendedCity}
+        payload: recommendedCity
     };
 }
 
 export function closeRecommendedItem() {
     return {
         type: recommendationActions.CLOSE_RECOMMENDED_ITEM,
-        payload: { openRecommendedItem: false }
+        payload: false
     };
 }
