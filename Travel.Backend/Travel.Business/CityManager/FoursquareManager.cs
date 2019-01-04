@@ -10,9 +10,7 @@ namespace Travel.Business.CityManager
 {
     public class FoursquareManager
     {
-        string clientId = "C0GQ3YIR3Z0PDVBN2OJZL0SWYYA4HDDOC5PXILZ2JICZVYAG";
-        string clientSecret = "QIVHWTUNWECJ5OB3ZYPS1KUFPS4HU2VZDEW4UJ3U4KZWN0ZV";
-        string baseUrl = "https://api.foursquare.com/v2/venues/search?near=";
+
 
         public List<PointsOfInterest> GetVenuesForCity(string cityName)
         {
