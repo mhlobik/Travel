@@ -7,13 +7,15 @@ import CarouselLeftArrow from '../../components/carousel/carouselLeftArrow';
 import CarouselRightArrow from '../../components/carousel/carouselRightArrow';
 import CarouselSlide from '../../components/carousel/carouselSlide';
 import { ICarouselData } from '../mainContent/mainContent';
+import { IRecommendation } from '../../common/recommendationUtilities';
+import { ICity } from '../../common/city';
 
 interface ICarouselProps {
-    slides?: Array<ICarouselData>;
+    //slides?: Array<ICarouselData>;
+    knowledgeBasedRecommendations: Array<IRecommendation>;
 }
 
 interface ICarouselState {
-    activeIndex: number;
     activeIndexesTest: Array<number>;
 }
 
@@ -21,30 +23,20 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     constructor(props: ICarouselProps) {
         super(props);
 
-        this.goToSlide = this.goToSlide.bind(this);
         this.goToPrevSlide = this.goToPrevSlide.bind(this);
         this.goToNextSlide = this.goToNextSlide.bind(this);
 
         this.state = {
-            activeIndex: 0,
             activeIndexesTest: [0, 1, 2, 3]
         };
-    }
-
-    @autobind
-    private goToSlide(index: number) {
-        this.setState({
-            activeIndex: index
-        });
     }
 
     @autobind
     private goToPrevSlide(e: any) {
         e.preventDefault();
 
-        let index = this.state.activeIndex;
-        const { slides } = this.props;
-        const slidesLength = slides.length;
+        const { knowledgeBasedRecommendations } = this.props;
+        const slidesLength = knowledgeBasedRecommendations.length;
         const oldActiveIndexes = this.state.activeIndexesTest;
 
         const setNegativeForLast = oldActiveIndexes.map((o) => {
@@ -54,16 +46,9 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
             return o;
         });
 
-        if (index < 1) {
-            index = slidesLength;
-        }
-
-        --index;
-
         const newActiveIndexes = setNegativeForLast.map((i) => { return --i; });
 
         this.setState({
-            activeIndex: index,
             activeIndexesTest: newActiveIndexes
         });
     }
@@ -72,9 +57,8 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     private goToNextSlide(e: any) {
         e.preventDefault();
 
-        let index = this.state.activeIndex;
-        const { slides } = this.props;
-        const slidesLength = slides.length - 1;
+        const { knowledgeBasedRecommendations } = this.props;
+        const slidesLength = knowledgeBasedRecommendations.length - 1;
         const oldActiveIndexes = this.state.activeIndexesTest;
 
         const setNegativeForLast = oldActiveIndexes.map((o) => {
@@ -84,18 +68,16 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
             return o;
         });
 
-        if (index === slidesLength) {
-            index = -1;
-        }
-
-        ++index;
-
         const newActiveIndexes = setNegativeForLast.map((i) => { return ++i; });
 
         this.setState({
-            activeIndex: index,
             activeIndexesTest: newActiveIndexes
         });
+    }
+
+    @autobind
+    private handleOnItemClick(recommendedCity: ICity) {
+        console.log('carousel handleOnItemClick', recommendedCity);
     }
 
     public render() {
@@ -104,13 +86,13 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
                 <CarouselLeftArrow onClick={this.goToPrevSlide} />
 
                 <ul className="carousel__slides">
-                    {this.props.slides.map((slide, index) =>
+                    {this.props.knowledgeBasedRecommendations.map((rec, index) =>
                         <CarouselSlide
                             key={index}
                             index={index}
-                            activeIndex={this.state.activeIndex}
-                            slide={slide}
+                            recommendedCity={rec.recommendedCity}
                             activeIndexes={this.state.activeIndexesTest}
+                            onItemClick={this.handleOnItemClick}
                         />
                     )}
                 </ul>

@@ -5,6 +5,7 @@ $breakpoint-desktop: 992px;
  
 .carousel {
   position: relative;
+  margin-top: 20px;
 
     // Resetting default styles
     .carousel__slides {
@@ -15,59 +16,46 @@ $breakpoint-desktop: 992px;
 
         // Carousel slides
         .carousel__slide {
-            margin-right: auto;
-            margin-left: auto;
+            margin-right: 2px;
+            margin-left: 2px;
             display: none;
             max-width: 900px;
             list-style-type: none;
             text-align: center;
-            padding-right: 10px;
-            padding-left: 10px;
-
-            @media (max-width: 991px) {
-            padding-right: 60px;
-            padding-left: 60px;
-            }
         
             &--active {
                 display: flex;
                 width: 25%;
                 flex-direction: column;
                 justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: box-shadow .3s;
+
+                &:hover {
+                    box-shadow: 0 0 30px rgba(0,168,133, 1);
+                }
             }
         }
         
         // Content of slides
         .carousel-slide__content {
-            margin-bottom: 19px;
+            height: 40px;
+            width: 298px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-family: 'Open Sans', 'Trebuchet MS', sans-serif;
-            font-size: 16px;
-        
-            @media (max-width: $breakpoint-desktop - 1px) {
-            font-size: 18px;
-            }
-        }
-        
-        .carousel-slide__author,
-        .carousel-slide__source {
-            font-family: 'Roboto', arial, sans-serif;
-            font-size: 14px;
-        
-            @media (min-width: $breakpoint-desktop) {
-            font-size: 16px;
-            }
-        }
-        
-        .carousel-slide__source {
-            font-style: italic;
-            color: #888;
+            font-size: 20px;
+            background-color: $secondary-green;
+            color: white;
         }
     }
 
     // Carousel arrows
     .carousel__arrow {
     position: absolute;
-    top: 70px;
+    top: 150px;
     display: block;
     cursor: pointer;
 
@@ -89,7 +77,7 @@ $breakpoint-desktop: 992px;
     }
     
     i {
-        border: solid black;
+        border: solid  $secondary-green;
         border-width: 0 3px 3px 0;
         display: inline-block;
         padding: 3px;

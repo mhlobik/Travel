@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Travel.Business.CityManager;
 using Travel.Database.Enums;
 using Travel.Database.Model;
 using Travel.Database.Utilities;
@@ -26,11 +27,27 @@ namespace Travel.Business.Recommenders
             Console.WriteLine("\n");
             foreach (var pair in sortedCitySimilarityDictionary)
             {
+                var recommendedCity = cities.FirstOrDefault(x => x.CityId == pair.Key);
+                var wikipediaManager = new WikipediaManager();
+                var cityManager = new ManageCityData();
+
+                if (recommendedCity.ImageUrl == null)
+                {
+                    recommendedCity.ImageUrl = wikipediaManager.GetCityImage(recommendedCity.Name);
+                    cityManager.UpdateCityImageUrl(recommendedCity);
+                }
+
+                if (recommendedCity.Description == null)
+                {
+                    recommendedCity.Description = wikipediaManager.GetCityDescription(recommendedCity.Name);
+                    cityManager.UpdateCityDescription(recommendedCity);
+                }
+
                 var recommendation = new Recommendation()
                 {
                     RecommendationId = pair.Key + pair.Value,
                     RecommenderModel = RecommenderModelEnum.KnowledgeBased,
-                    RecommendedCity = cities.FirstOrDefault(x => x.CityId == pair.Key),
+                    RecommendedCity = recommendedCity,
                     Similarity = pair.Value,
                     UserId = userId
                 };
@@ -49,10 +66,23 @@ namespace Travel.Business.Recommenders
 
             var citySimilarityDictionary = new Dictionary<string, double>();
             var sw2 = Stopwatch.StartNew();
+            Console.WriteLine("Stopwatch - similarity started");
 
             foreach (var city in cities)
             {
                 var numberOfEqualCategories = 0;
+
+                if (city.ImageUrl == null)
+                {
+
+                    var wikipediaManager = new WikipediaManager();
+                    city.ImageUrl = wikipediaManager.GetCityImage(city.Name);
+
+                    var cityManager = new ManageCityData();
+                    cityManager.UpdateCityImageUrl(city);
+                }
+
+                if (city.ImageUrl == null) continue;
 
                 foreach (var pointOfInterest in city.PointsOfInterest)
                 {
@@ -75,14 +105,8 @@ namespace Travel.Business.Recommenders
             Console.WriteLine("\n");
 
             var sortedCitySimilarityDictionary = from pair in citySimilarityDictionary
-                        orderby pair.Value descending
-                        select pair;
-
-            // Display results.
-            foreach (var pair in sortedCitySimilarityDictionary)
-            {
-                Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
-            }
+                                                 orderby pair.Value descending
+                                                 select pair;
 
             return sortedCitySimilarityDictionary.Take(50).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }

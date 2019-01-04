@@ -1,17 +1,22 @@
 import * as React from 'react';
-import { ICarouselData } from '../mainContent/mainContent';
+import { autobind } from 'quick-react-ts';
+import { ICity } from '../../common/city';
 
 interface ICarouselSlideProps {
     key: number;
     index: number;
-    activeIndex: number;
-    slide: ICarouselData;
+    recommendedCity: ICity;
     activeIndexes: Array<number>;
+    onItemClick(recommendedCity: ICity): void;
 }
 
 export default class CarouselSlide extends React.PureComponent<ICarouselSlideProps, {}> {
+    @autobind
+    private handleOnItemClick() {
+        this.props.onItemClick(this.props.recommendedCity);
+    }
+
     public render() {
-        console.log('CarouselSlide', this.props.activeIndexes);
         return (
             <li
                 className={
@@ -19,17 +24,12 @@ export default class CarouselSlide extends React.PureComponent<ICarouselSlidePro
                         ? 'carousel__slide carousel__slide--active'
                         : 'carousel__slide'
                 }
+                onClick={this.handleOnItemClick}
             >
-                <p className="carousel-slide__content">{this.props.slide.content}</p>
-                <p>
-                    <strong className="carousel-slide__author">
-                        {this.props.slide.author}
-                    </strong>,
-            {' '}
-                    <small className="carousel-slide__source">
-                        {this.props.slide.source}
-                    </small>
-                </p>
+                <img src={this.props.recommendedCity.imageUrl} height="298" width="298"></img>
+                <span className="carousel-slide__content">
+                    {this.props.recommendedCity.name}
+                </span>
             </li>
         );
     }

@@ -10,5 +10,7 @@ namespace Travel.Database.Model
         public List<Hotel> Hotels { get; set; }
         public string Name { get; set; }
         public List<PointsOfInterest> PointsOfInterest { get; set; }
+        public string Description { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

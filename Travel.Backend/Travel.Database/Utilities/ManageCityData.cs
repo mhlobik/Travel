@@ -1,4 +1,5 @@
-﻿using Raven.Client.Documents;
+﻿using Newtonsoft.Json;
+using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,20 @@ namespace Travel.Database.Utilities
             }
         }
 
+        public void DeleteCity(City city)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingCity = session.Query<City>().FirstOrDefault(x => x.CityId == city.CityId);
+                    session.Delete(existingCity);
+                        session.SaveChanges();
+                }
+            }
+        }
+
         public List<City> GetCitiesForChooser()
         {
             IDocumentStore store;
@@ -45,7 +60,11 @@ namespace Travel.Database.Utilities
                     foreach (var id in idList)
                     {
                         var city = session.Query<City>().FirstOrDefault(x => x.CityId == id);
-                        cities.Add(city);
+
+                        if(city != null)
+                        {
+                            cities.Add(city);
+                        }
                     }
                 }
             }
@@ -62,7 +81,7 @@ namespace Travel.Database.Utilities
             {
                 using (IDocumentSession session = store.OpenSession())
                 {
-                    foreach(var cityRating in cityRatings)
+                    foreach (var cityRating in cityRatings)
                     {
                         session.Store(cityRating);
                         session.SaveChanges();
@@ -101,7 +120,7 @@ namespace Travel.Database.Utilities
             return cities;
         }
 
-        public void UpdateCity(City city)
+        public void UpdateCityPointsOfInterest(City city)
         {
             IDocumentStore store;
             using (store = DatabaseConnection.DocumentStoreInitialization())
@@ -141,5 +160,40 @@ namespace Travel.Database.Utilities
 
             return cities;
         }
+
+        public void UpdateCityDescription(City city)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingCity = session.Query<City>().FirstOrDefault(x => x.CityId == city.CityId);
+                    if (existingCity != null)
+                    {
+                        session.Advanced.Patch(existingCity, x => x.Description, city.Description);
+                        session.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public void UpdateCityImageUrl(City city)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingCity = session.Query<City>().FirstOrDefault(x => x.CityId == city.CityId);
+                    if (existingCity != null)
+                    {
+                        session.Advanced.Patch(existingCity, x => x.ImageUrl, city.ImageUrl);
+                        session.SaveChanges();
+                    }
+                }
+            }
+        }
     }
 }
+

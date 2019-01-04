@@ -9,6 +9,7 @@ import { IUser } from '../../common/facebookUtilities';
 import Header from '../../components/header/header';
 import MainContent from '../../components/mainContent/mainContent';
 import * as mainActions from '../../action/main';
+import { IRecommendation } from '../../common/recommendationUtilities';
 
 function mapStateToProps(state: IRootReducerState): IHomePageProps {
   return {
@@ -17,7 +18,8 @@ function mapStateToProps(state: IRootReducerState): IHomePageProps {
     user: state.facebook.user,
     continueClicked: state.main.continueClicked,
     gettingUsers: state.facebook.isGettingUsers,
-    userPreferencesSaved: state.main.userPreferencesSaved
+    userPreferencesSaved: state.main.userPreferencesSaved,
+    knowledgeBasedRecommendations: state.recommendation.knowledgeBasedRecommendations
   };
 }
 
@@ -46,6 +48,7 @@ interface IHomePageProps {
   continueClicked?: boolean;
   gettingUsers?: boolean;
   userPreferencesSaved?: boolean;
+  knowledgeBasedRecommendations?: Array<IRecommendation>;
   onGetAllUSers?(): void;
   onGetCitiesChooser?(): void;
 }
@@ -77,6 +80,7 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           userLoggedIn={this.props.userLoggedIn}
           continueClicked={this.props.continueClicked}
           userPreferencesSaved={this.props.userPreferencesSaved}
+          knowledgeBasedRecommendations={this.props.knowledgeBasedRecommendations}
         />
       </div>
     );

@@ -1,10 +1,19 @@
 ﻿using Google.Cloud.Language.V1;
 using Google.Protobuf.Collections;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Session;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Travel.Application;
-using Travel.Business.Foursquare;
+using Travel.Business.CityManager;
 using Travel.Business.Recommenders;
 using Travel.Business.Utilities;
+using Travel.Database;
+using Travel.Database.Model;
+using Travel.Database.Utilities;
 
 namespace Travel.Backend.Console
 {
@@ -82,7 +91,6 @@ namespace Travel.Backend.Console
             var kbrsManager = new KnowledgeBased();
             //var test = kbrsManager.GetKnowledgeBasedRecommendations("10217668859972898");
             #endregion
-
 
             #region Foursquare API
             //var foursquareManager = new CityPointsOfInterestManager();
@@ -235,162 +243,177 @@ namespace Travel.Backend.Console
             #endregion
 
             #region Wikipedia API
-            //string action = "query";
-            //string query = "Nelson Mandela";
+            //http://en.wikipedia.org/w/api.php?action=query&titles=Al-Farabi&prop=pageimages&format=json&pithumbsize=100
+            //https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=Stack%20Overflow
+            //indexpageids=&format=jsonfm [try in ApiSandbox]
 
-            //HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create("http://en.wikipedia.org/w/api.php?action=query&titles=Nelson%Mandela");
-            //using (HttpWebResponse response = (HttpWebResponse)myRequest.GetResponse())
-            //{
-            //    string ResponseText;
-            //    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-            //    {
-            //        ResponseText = reader.ReadToEnd();
-            //    }
-            //}
+            //var wikiClient = new System.Net.Http.HttpClient();
+            //var wikiResponse = Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Zagreb&format=json"))).ConfigureAwait(false).GetAwaiter().GetResult();
+            //var wikiResponseSummary = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?format=json&indexpageids=&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
+            //var responseQuery = wikiResponseSummary["query"];
+            //var responsePageId = responseQuery["pageids"][0].ToString();
+            //var summary = responseQuery["pages"][responsePageId]["extract"].ToString();
+            //var wikiResponseImage = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?action=query&indexpageids=&prop=pageimages&format=json&piprop=original&titles=Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
+            //var responseQuery = wikiResponseImage["query"];
+            //var responsePageId = responseQuery["pageids"][0].ToString();
+            //var summary = responseQuery["pages"][responsePageId]["original"]["source"].ToString();
 
-            //var response = Task.Run(async () => await client.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Zagreb&format=json"))).ConfigureAwait(false).GetAwaiter().GetResult();
+            //var wikiResponseSummary1 = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("https://en.wikipedia.org/api/rest_v1/page/summary/Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
+            //var summary = wikiResponseSummary1["extract"].ToString();
 
-            //}
+
             #endregion
 
             System.Console.ReadLine();
         }
 
+        private class ScriptedPatchCommandData
+        {
+            public object Key { get; set; }
+            public object Patch { get; set; }
+        }
+
+        private class ScriptedPatchRequest
+        {
+            public string Script { get; set; }
+            public Dictionary<string, object> Values { get; set; }
+        }
+
 
         #region Cloud Natural Language API - Analyzing Sentiment
-        private static void AnalyzeSentimentFromText(string text)
-        {
-            var client = LanguageServiceClient.Create();
-            var response = client.AnalyzeSentiment(new Document()
-            {
-                Content = text,
-                Type = Document.Types.Type.PlainText
-            });
-            WriteSentiment(response.DocumentSentiment, response.Sentences);
-        }
+        //private static void AnalyzeSentimentFromText(string text)
+        //{
+        //    var client = LanguageServiceClient.Create();
+        //    var response = client.AnalyzeSentiment(new Document()
+        //    {
+        //        Content = text,
+        //        Type = Document.Types.Type.PlainText
+        //    });
+        //    WriteSentiment(response.DocumentSentiment, response.Sentences);
+        //}
 
-        private static void WriteSentiment(Sentiment sentiment,
-            RepeatedField<Sentence> sentences)
-        {
-            System.Console.WriteLine("Overall document sentiment:");
-            System.Console.WriteLine($"\tScore: {sentiment.Score}");
-            System.Console.WriteLine($"\tMagnitude: {sentiment.Magnitude}");
-            System.Console.WriteLine("Sentence level sentiment:");
-            foreach (var sentence in sentences)
-            {
-                System.Console.WriteLine($"\t{sentence.Text.Content}: "
-                    + $"({sentence.Sentiment.Score})");
-            }
-        }
+        //private static void WriteSentiment(Sentiment sentiment,
+        //    RepeatedField<Sentence> sentences)
+        //{
+        //    System.Console.WriteLine("Overall document sentiment:");
+        //    System.Console.WriteLine($"\tScore: {sentiment.Score}");
+        //    System.Console.WriteLine($"\tMagnitude: {sentiment.Magnitude}");
+        //    System.Console.WriteLine("Sentence level sentiment:");
+        //    foreach (var sentence in sentences)
+        //    {
+        //        System.Console.WriteLine($"\t{sentence.Text.Content}: "
+        //            + $"({sentence.Sentiment.Score})");
+        //    }
+        //}
         #endregion
 
         #region Cloud Natural Language API - Analyzing Entities
-        private static void AnalyzeEntitiesFromText(string text)
-        {
-            var client = LanguageServiceClient.Create();
-            var response = client.AnalyzeEntities(new Document()
-            {
-                Content = text,
-                Type = Document.Types.Type.PlainText
-            });
-            WriteEntities(response.Entities);
-        }
+        //private static void AnalyzeEntitiesFromText(string text)
+        //{
+        //    var client = LanguageServiceClient.Create();
+        //    var response = client.AnalyzeEntities(new Document()
+        //    {
+        //        Content = text,
+        //        Type = Document.Types.Type.PlainText
+        //    });
+        //    WriteEntities(response.Entities);
+        //}
 
-        private static void WriteEntities(IEnumerable<Entity> entities)
-        {
-            System.Console.WriteLine("Entities:");
-            foreach (var entity in entities)
-            {
-                System.Console.WriteLine($"\tName: {entity.Name}");
-                System.Console.WriteLine($"\tType: {entity.Type}");
-                System.Console.WriteLine($"\tSalience: {entity.Salience}");
-                System.Console.WriteLine("\tMentions:");
-                foreach (var mention in entity.Mentions)
-                    System.Console.WriteLine($"\t\t{mention.Text.BeginOffset}: {mention.Text.Content}");
-                System.Console.WriteLine("\tMetadata:");
-                foreach (var keyval in entity.Metadata)
-                {
-                    System.Console.WriteLine($"\t\t{keyval.Key}: {keyval.Value}");
-                }
-            }
-        }
+        //private static void WriteEntities(IEnumerable<Entity> entities)
+        //{
+        //    System.Console.WriteLine("Entities:");
+        //    foreach (var entity in entities)
+        //    {
+        //        System.Console.WriteLine($"\tName: {entity.Name}");
+        //        System.Console.WriteLine($"\tType: {entity.Type}");
+        //        System.Console.WriteLine($"\tSalience: {entity.Salience}");
+        //        System.Console.WriteLine("\tMentions:");
+        //        foreach (var mention in entity.Mentions)
+        //            System.Console.WriteLine($"\t\t{mention.Text.BeginOffset}: {mention.Text.Content}");
+        //        System.Console.WriteLine("\tMetadata:");
+        //        foreach (var keyval in entity.Metadata)
+        //        {
+        //            System.Console.WriteLine($"\t\t{keyval.Key}: {keyval.Value}");
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Cloud Natural Language API - Analyzing Syntax
-        private static void AnalyzeSyntaxFromText(string text)
-        {
-            var client = LanguageServiceClient.Create();
-            var response = client.AnnotateText(new Document()
-            {
-                Content = text,
-                Type = Document.Types.Type.PlainText
-            },
-            new Google.Cloud.Language.V1.AnnotateTextRequest.Types.Features() { ExtractSyntax = true });
-            WriteSentences(response.Sentences, response.Tokens);
-        }
+        //private static void AnalyzeSyntaxFromText(string text)
+        //{
+        //    var client = LanguageServiceClient.Create();
+        //    var response = client.AnnotateText(new Document()
+        //    {
+        //        Content = text,
+        //        Type = Document.Types.Type.PlainText
+        //    },
+        //    new Google.Cloud.Language.V1.AnnotateTextRequest.Types.Features() { ExtractSyntax = true });
+        //    WriteSentences(response.Sentences, response.Tokens);
+        //}
 
-        private static void WriteSentences(IEnumerable<Sentence> sentences, RepeatedField<Token> tokens)
-        {
-            System.Console.WriteLine("Sentences:");
-            foreach (var sentence in sentences)
-            {
-                System.Console.WriteLine($"\t{sentence.Text.BeginOffset}: {sentence.Text.Content}");
-            }
-            System.Console.WriteLine("Tokens:");
-            foreach (var token in tokens)
-            {
-                System.Console.WriteLine($"\t{token.PartOfSpeech.Tag} "
-                    + $"{token.Text.Content}");
-            }
-        }
+        //private static void WriteSentences(IEnumerable<Sentence> sentences, RepeatedField<Token> tokens)
+        //{
+        //    System.Console.WriteLine("Sentences:");
+        //    foreach (var sentence in sentences)
+        //    {
+        //        System.Console.WriteLine($"\t{sentence.Text.BeginOffset}: {sentence.Text.Content}");
+        //    }
+        //    System.Console.WriteLine("Tokens:");
+        //    foreach (var token in tokens)
+        //    {
+        //        System.Console.WriteLine($"\t{token.PartOfSpeech.Tag} "
+        //            + $"{token.Text.Content}");
+        //    }
+        //}
         #endregion
 
         #region Cloud Natural Language API - Analyzing Entity Sentiment
-        private static void AnalyzeEntitySentimentFromText(string text)
-        {
-            var client = LanguageServiceClient.Create();
-            var response = client.AnalyzeEntitySentiment(new Document()
-            {
-                Content = text,
-                Type = Document.Types.Type.PlainText
-            });
-            WriteEntitySentiment(response.Entities);
-        }
+        //private static void AnalyzeEntitySentimentFromText(string text)
+        //{
+        //    var client = LanguageServiceClient.Create();
+        //    var response = client.AnalyzeEntitySentiment(new Document()
+        //    {
+        //        Content = text,
+        //        Type = Document.Types.Type.PlainText
+        //    });
+        //    WriteEntitySentiment(response.Entities);
+        //}
 
-        private static void WriteEntitySentiment(IEnumerable<Entity> entities)
-        {
-            System.Console.WriteLine("Entity Sentiment:");
-            foreach (var entity in entities)
-            {
-                System.Console.WriteLine($"\t{entity.Name} "
-                    + $"({(int)(entity.Salience * 100)}%)");
-                System.Console.WriteLine($"\t\tScore: {entity.Sentiment.Score}");
-                System.Console.WriteLine($"\t\tMagnitude { entity.Sentiment.Magnitude}");
-            }
-        }
+        //private static void WriteEntitySentiment(IEnumerable<Entity> entities)
+        //{
+        //    System.Console.WriteLine("Entity Sentiment:");
+        //    foreach (var entity in entities)
+        //    {
+        //        System.Console.WriteLine($"\t{entity.Name} "
+        //            + $"({(int)(entity.Salience * 100)}%)");
+        //        System.Console.WriteLine($"\t\tScore: {entity.Sentiment.Score}");
+        //        System.Console.WriteLine($"\t\tMagnitude { entity.Sentiment.Magnitude}");
+        //    }
+        //}
         #endregion
 
         #region Cloud Natural Language API - Classifying Content
-        private static void ClassifyTextFromText(string text)
-        {
-            var client = LanguageServiceClient.Create();
-            var response = client.ClassifyText(new Document()
-            {
-                Content = text,
-                Type = Document.Types.Type.PlainText
-            });
-            WriteCategories(response.Categories);
-        }
+        //private static void ClassifyTextFromText(string text)
+        //{
+        //    var client = LanguageServiceClient.Create();
+        //    var response = client.ClassifyText(new Document()
+        //    {
+        //        Content = text,
+        //        Type = Document.Types.Type.PlainText
+        //    });
+        //    WriteCategories(response.Categories);
+        //}
 
-        private static void WriteCategories(IEnumerable<ClassificationCategory> categories)
-        {
-            System.Console.WriteLine("Categories:");
-            foreach (var category in categories)
-            {
-                System.Console.WriteLine($"\tCategory: {category.Name}");
-                System.Console.WriteLine($"\t\tConfidence: {category.Confidence}");
-            }
-        }
+        //private static void WriteCategories(IEnumerable<ClassificationCategory> categories)
+        //{
+        //    System.Console.WriteLine("Categories:");
+        //    foreach (var category in categories)
+        //    {
+        //        System.Console.WriteLine($"\tCategory: {category.Name}");
+        //        System.Console.WriteLine($"\t\tConfidence: {category.Confidence}");
+        //    }
+        //}
         #endregion
     }
 }

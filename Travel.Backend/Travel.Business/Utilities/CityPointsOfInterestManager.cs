@@ -1,4 +1,4 @@
-﻿using Travel.Business.Foursquare;
+﻿using Travel.Business.CityManager;
 using Travel.Database.Utilities;
 
 namespace Travel.Business.Utilities
@@ -15,7 +15,7 @@ namespace Travel.Business.Utilities
             foreach (var city in cities)
             {
                 city.PointsOfInterest = forusquare.GetVenuesForCity(city.Name);
-                cityManager.UpdateCity(city);
+                cityManager.UpdateCityPointsOfInterest(city);
             }
 
             return true;

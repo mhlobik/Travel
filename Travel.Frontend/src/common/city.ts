@@ -7,6 +7,8 @@ export interface ICity {
     flights: Array<IFlight>;
     // Hotels
     pointsOfInterest: Array<IPointsOfInterest>;
+    imageUrl: string;
+    description: string;
 }
 
 export interface ICityRating {
