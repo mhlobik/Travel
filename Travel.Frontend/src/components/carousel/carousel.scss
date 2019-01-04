@@ -35,9 +35,15 @@ $breakpoint-desktop: 992px;
                 cursor: pointer;
                 transition: box-shadow .3s;
 
-                &:hover {
+                /*&:hover {
                     box-shadow: 0 0 30px rgba(0,168,133, 1);
-                }
+                }*/
+
+                &:hover {
+                    -ms-transform: scale(1.2); /* IE 9 */
+                    -webkit-transform: scale(1.2); /* Safari 3-8 */
+                    transform: scale(1.2); 
+                  }
             }
         }
         

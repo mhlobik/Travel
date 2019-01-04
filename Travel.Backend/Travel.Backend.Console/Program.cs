@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raven.Client.Documents;
 using Raven.Client.Documents.Session;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +21,6 @@ namespace Travel.Backend.Console
     public class Program
     {
         private static System.Net.Http.HttpClient Client { get; set; }
-        public static string AppSecret = ""; // Google App Key
 
         public static void Main(string[] args)
         {
@@ -220,25 +220,26 @@ namespace Travel.Backend.Console
             #endregion
 
             #region Google Place API
-            //using (var client = new HttpClient())
-            //{
+               //Client = new System.Net.Http.HttpClient();
+               //Client.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/place/");
 
+               // var query = "La Poterne Caen";
+               // var resp = Task.Run(async () => await Client.GetAsync(string.Format("textsearch/json?key={0}&query={1}", AppSecret, query))).ConfigureAwait(false).GetAwaiter().GetResult();
+               // if (resp.IsSuccessStatusCode)
+               // {
+               //     var result = JObject.Parse(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
+               //     var placeID = result["results"][0]["place_id"];
+               //     var details = Task.Run(async () => await Client.GetAsync(String.Format("details/json?key={0}&placeid={1}", AppSecret, placeID))).ConfigureAwait(false).GetAwaiter().GetResult();
+               //     var content = JObject.Parse(Task.Run(async () => await details.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
+               //     var PhotoReference = result["results"][0]["photos"][0]["photo_reference"];
+               //     var MaxHeight = result["results"][0]["photos"][0]["height"];
+               //     var MaxWidth = result["results"][0]["photos"][0]["width"];
+               //     var url = String.Format("photo?photoreference={0}&sensor=false&maxheight={1}&maxwidth={2}&key={3}", PhotoReference, MaxHeight, MaxWidth, AppSecret);
+               //     var photoRequest = Task.Run(async () => await Client.GetAsync(url)).ConfigureAwait(false).GetAwaiter().GetResult();
+               //     var photo = Task.Run(async () => await photoRequest.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
 
-            //    Client = new HttpClient();
-            //    Client.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/place/");
-
-            //    var query = "Zagreb";
-            //    var resp = Task.Run(async () => await Client.GetAsync(String.Format("textsearch/json?key={0}&query={1}", AppSecret, query))).ConfigureAwait(false).GetAwaiter().GetResult();
-            //    if (resp.IsSuccessStatusCode)
-            //    {
-            //        var result = JsonConvert.DeserializeObject(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult(), typeof(Response)) as Response;
-            //    var placeID = result.Places.FirstOrDefault().PlaceId;
-            //    var details = Task.Run(async () => await Client.GetAsync(String.Format("details/json?key={0}&placeid={1}", AppSecret, placeID))).ConfigureAwait(false).GetAwaiter().GetResult();
-            //    var content = Task.Run(async () => await details.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
-            //    var contentPlace = Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
-            //}
-            //var response = client.GetStringAsync(string.Format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?name={0}&radius=500&key=AIzaSyDeym1wUQyYFmUTN4RZeBmSAtDwrHOJTlU", zagreb));
-
+               //     // /photo?maxwidth=400&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=YOUR_API_KEY
+               // }
             //                URL = "https://en.wikipedia.org/w/api.php"
             #endregion
 
@@ -247,12 +248,12 @@ namespace Travel.Backend.Console
             //https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=Stack%20Overflow
             //indexpageids=&format=jsonfm [try in ApiSandbox]
 
-            var wikiClient = new System.Net.Http.HttpClient();
+            //var wikiClient = new System.Net.Http.HttpClient();
             // var wikiResponse = Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Zagreb&format=json"))).ConfigureAwait(false).GetAwaiter().GetResult();
-            var wikiResponseSummary = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?format=json&indexpageids=&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
-            var responseQuery = wikiResponseSummary["query"];
-            var responsePageId = responseQuery["pageids"][0].ToString();
-            var summary = responseQuery["pages"][responsePageId]["extract"];
+            //var wikiResponseSummary = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?format=json&indexpageids=&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
+            //var responseQuery = wikiResponseSummary["query"];
+            //var responsePageId = responseQuery["pageids"][0].ToString();
+            //var summary = responseQuery["pages"][responsePageId]["extract"];
             //var wikiResponseImage = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?action=query&indexpageids=&prop=pageimages&format=json&piprop=original&titles=Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
             //var responseQuery = wikiResponseImage["query"];
             //var responsePageId = responseQuery["pageids"][0].ToString();

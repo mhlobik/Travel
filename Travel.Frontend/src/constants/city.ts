@@ -1,0 +1,1 @@
+export const GET_IMAGE_URL = '@City/GET_IMAGE_URL';

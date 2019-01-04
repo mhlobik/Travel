@@ -56,15 +56,15 @@ export const cityAvailableTabs: Array<AvailableTab> = [
         type: CityTabEnum.description
     },
     {
+        name: 'Points Of Interest',
+        type: CityTabEnum.pointsOfInterests
+    },
+    {
         name: 'Flights',
         type: CityTabEnum.flights
     },
     {
         name: 'Hotels',
         type: CityTabEnum.hotels
-    },
-    {
-        name: 'Points Of Interest',
-        type: CityTabEnum.pointsOfInterests
     }
-]
+];

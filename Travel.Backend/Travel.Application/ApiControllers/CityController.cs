@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
+using Travel.Business.CityManager;
 using Travel.Database.Model;
 using Travel.Database.Utilities;
 
@@ -23,6 +24,15 @@ namespace Travel.Application.ApiControllers
             var manageCityData = new ManageCityData();
             var isStored = manageCityData.StoreCityChooserRatings(cityRatings);
             return Ok();
+        }
+
+        [Route("api/city/get-image-url/{name}")]
+        [HttpGet]
+        public IHttpActionResult GetKnowledgeBased(string name)
+        {
+            var manager = new GooglePlaceManager();
+            var url = manager.GetImage(name);
+            return Ok(url);
         }
     }
 }

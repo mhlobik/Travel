@@ -7,6 +7,7 @@ import Facebook from '../facebook/facebook';
 import * as facebookActions from '../../action/facebook';
 import * as mainActions from '../../action/main';
 import * as recommendationActions from '../../action/recommendation';
+import * as  cityActions from '../../action/city';
 import { IUser } from '../../common/facebookUtilities';
 import Header from '../../components/header/header';
 import MainContent from '../../components/mainContent/mainContent';
@@ -32,7 +33,8 @@ function mapDispatchToProps(dispatch: any): IHomePageProps {
     onGetAllUSers: () => dispatch(facebookActions.getUsers()),
     onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser()),
     handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity)),
-    onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem())
+    onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem()),
+    onGetPointOfInterestsImageUrl: (name: string) => dispatch(cityActions.getImageUrl(name))
   };
 }
 
@@ -61,6 +63,7 @@ interface IHomePageProps {
   onGetCitiesChooser?(): void;
   handleOnItemClick?(recommendedCity: ICity): void;
   onCloseRecommendedItem?(): void;
+  onGetPointOfInterestsImageUrl?(name: string): void;
 }
 
 interface IHomePageState {
@@ -91,6 +94,11 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
     this.props.onCloseRecommendedItem();
   }
 
+  @autobind
+  private handleonGetPointOfInterestsImageUrl(name: string) {
+    this.props.onGetPointOfInterestsImageUrl(name);
+  }
+
   public render() {
         return (
       <div className="home-page__container">
@@ -105,6 +113,7 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           openRecommendedItem={this.props.openRecommendedItem}
           selectedRecommendedCity={this.props.selectedRecommendedCity}
           onCloseRecommendedItem={this.handleOnCloseRecommendedItem}
+          onGetPointOfInterestsImageUrl={this.handleonGetPointOfInterestsImageUrl}
         />
       </div>
     );

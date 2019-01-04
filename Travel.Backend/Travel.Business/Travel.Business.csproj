@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Compile Include="CityManager\GooglePlaceManager.cs" />
     <Compile Include="CityManager\WikipediaManager.cs" />
     <Compile Include="Facebook\UserProfileManager.cs" />
     <Compile Include="CityManager\FoursquareManager.cs" />

@@ -12,6 +12,7 @@ interface IKnowledgeBasedProps {
     openRecommendedItem: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
+    onGetPointOfInterestsImageUrl(name: string): void;
 }
 
 export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, {}> {
@@ -28,6 +29,7 @@ export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedP
                     <City
                         selectedRecommendedCity={this.props.selectedRecommendedCity}
                         closeCityDetails={this.props.onCloseRecommendedItem}
+                        onGetPointOfInterestsImageUrl={this.props.onGetPointOfInterestsImageUrl}
                     />
                 }
             </div>

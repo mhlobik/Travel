@@ -4,6 +4,7 @@ import appReducer, { IAppReducerState } from './appReducer';
 import facebookReducer, { IFacebookReducerState } from './facebookReducer';
 import mainReducer, { IMainReducerState } from './mainReducer';
 import recommendationReducer, { IRecommendationReducerState } from './recommendationReducer';
+import cityReducer, { ICityReducerState } from './cityReducer';
 
 export interface IRootReducerState {
   routing: any;
@@ -11,6 +12,7 @@ export interface IRootReducerState {
   facebook: IFacebookReducerState;
   main: IMainReducerState;
   recommendation: IRecommendationReducerState;
+  city: ICityReducerState;
 }
 
 const rootReducer = combineReducers<IRootReducerState>({
@@ -18,7 +20,8 @@ const rootReducer = combineReducers<IRootReducerState>({
   app: appReducer,
   facebook: facebookReducer,
   main: mainReducer,
-  recommendation: recommendationReducer
+  recommendation: recommendationReducer,
+  city: cityReducer
 });
 
 export default rootReducer;
