@@ -71,3 +71,10 @@ export enum RecommenderModelEnum {
     ContentBased = 1,
     KnowledgeBased = 2
 }
+
+export enum CityTabEnum {
+    description = 0,
+    pointsOfInterests = 1,
+    flights = 2,
+    hotels = 3
+}

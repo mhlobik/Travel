@@ -1,4 +1,4 @@
-import { PreferencesCategories } from './enums';
+import { PreferencesCategories, CityTabEnum } from './enums';
 
 export interface ICity {
     cityId: string;
@@ -44,3 +44,27 @@ export interface IPointOfInterestCategory {
     name: string;
     categoryType: PreferencesCategories;
 }
+
+export interface AvailableTab {
+    name: string;
+    type: CityTabEnum;
+}
+
+export const cityAvailableTabs: Array<AvailableTab> = [
+    {
+        name: 'Description',
+        type: CityTabEnum.description
+    },
+    {
+        name: 'Flights',
+        type: CityTabEnum.flights
+    },
+    {
+        name: 'Hotels',
+        type: CityTabEnum.hotels
+    },
+    {
+        name: 'Points Of Interest',
+        type: CityTabEnum.pointsOfInterests
+    }
+]
