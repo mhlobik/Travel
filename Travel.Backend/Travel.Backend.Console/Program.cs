@@ -247,12 +247,12 @@ namespace Travel.Backend.Console
             //https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=Stack%20Overflow
             //indexpageids=&format=jsonfm [try in ApiSandbox]
 
-            //var wikiClient = new System.Net.Http.HttpClient();
-            //var wikiResponse = Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Zagreb&format=json"))).ConfigureAwait(false).GetAwaiter().GetResult();
-            //var wikiResponseSummary = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?format=json&indexpageids=&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
-            //var responseQuery = wikiResponseSummary["query"];
-            //var responsePageId = responseQuery["pageids"][0].ToString();
-            //var summary = responseQuery["pages"][responsePageId]["extract"].ToString();
+            var wikiClient = new System.Net.Http.HttpClient();
+            // var wikiResponse = Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Zagreb&format=json"))).ConfigureAwait(false).GetAwaiter().GetResult();
+            var wikiResponseSummary = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?format=json&indexpageids=&action=query&prop=extracts&exintro&explaintext&redirects=1&titles=Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
+            var responseQuery = wikiResponseSummary["query"];
+            var responsePageId = responseQuery["pageids"][0].ToString();
+            var summary = responseQuery["pages"][responsePageId]["extract"];
             //var wikiResponseImage = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("http://en.wikipedia.org/w/api.php?action=query&indexpageids=&prop=pageimages&format=json&piprop=original&titles=Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
             //var responseQuery = wikiResponseImage["query"];
             //var responsePageId = responseQuery["pageids"][0].ToString();

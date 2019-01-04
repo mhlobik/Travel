@@ -1,7 +1,7 @@
 @import './../../assets/styles/variables';
 
 .city__container {
-    background-color: $primary-middle;
+    background-color: $primary-light;
     margin-left: -100px;
     margin-right: -100px;
     height: 500px;
@@ -14,7 +14,6 @@
         font-size: 32px;
         font-weight: bold;
         margin-left: 100px;
-
     }
 
     .close {
@@ -41,4 +40,60 @@
       .close:after {
         transform: rotate(-45deg);
       }
+
+      .city__tabs {
+        margin-left: 100px;
+        margin-right: 20px;
+        margin-top: 10px;
+      }
+
+      .city-description__container {
+        height: 430px;
+        margin-left: 100px;
+        margin-right: 20px;
+        margin-top: 20px;
+        display: flex;
+        overflow-y: scroll;
+        
+        .city-description__text {
+          font-family: $primary-font;
+          color: $primary-grey;
+          word-wrap: break-word;
+          white-space: pre-line;
+          width: 700px;
+          height: 430px;
+          padding-right: 50px;
+          padding-left: 20px;
+        }
+      }
+}
+
+.pivot-minimal-tabs {
+  .pivot-link {
+      border:  $secondary-green solid 1px!important;
+
+      .pivot-text,
+      .pivot-icon,
+      .pivot-count {
+          color: $secondary-green!important;
+      }
+
+      &.is-selected {
+          .pivot-text,
+          .pivot-icon,
+          .pivot-count {
+              color:  $secondary-green!important
+          }
+          &::after {
+              background-color: $secondary-green!important;
+          }
+          &::before {
+            background-color: $secondary-green!important;
+          }
+      }
+    }
+  }
+
+  .pivot-minimal-tabs.pivotItem:not(.no-border) {
+    border:$secondary-green solid 1px!important;
 }

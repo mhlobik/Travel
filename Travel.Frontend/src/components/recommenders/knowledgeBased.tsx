@@ -12,15 +12,9 @@ interface IKnowledgeBasedProps {
     openRecommendedItem: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
-    goToCityTabClick?(itemKey: number): void;
 }
 
 export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, {}> {
-    @autobind
-    private handleGoToCityTabClick(itemKey: number) {
-        console.log('City', itemKey);
-    }
-
     public render() {
         return (
             <div className="knowledge-based__container">
@@ -34,8 +28,6 @@ export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedP
                     <City
                         selectedRecommendedCity={this.props.selectedRecommendedCity}
                         closeCityDetails={this.props.onCloseRecommendedItem}
-                        goToCityTabClick={this.handleGoToCityTabClick}
-                        selectedTab={'1'}
                     />
                 }
             </div>
