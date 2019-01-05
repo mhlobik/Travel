@@ -9,6 +9,7 @@ export interface IMainReducerState {
     citiesChooser: Array<ICity>;
     isSavingSelectedCities: boolean;
     userPreferencesSaved: boolean;
+    goToPreferences: boolean;
 }
 
 const initialState: IMainReducerState = {
@@ -17,7 +18,8 @@ const initialState: IMainReducerState = {
     isGettingCities: false,
     citiesChooser: [],
     isSavingSelectedCities: false,
-    userPreferencesSaved: false
+    userPreferencesSaved: false,
+    goToPreferences: false
 };
 
 export default function facebookReducer(state: IMainReducerState = initialState, action: IAction = { type: '', payload: null }) {
@@ -31,18 +33,21 @@ export default function facebookReducer(state: IMainReducerState = initialState,
             return {
                 ...state,
                 isSavingPreferences: false,
-                userPreferencesSaved: true
+                userPreferencesSaved: true,
+                goToPreferences: false
             };
         case `${mainActions.SAVE_USER_PREFERENCES}_ERROR`:
             return {
                 ...state,
                 isSavingPreferences: false,
-                userPreferencesSaved: false
+                userPreferencesSaved: false,
+                goToPreferences: false
             };
         case mainActions.CONTINUE_CLICKED:
             return {
                 ...state,
-                continueClicked: action.payload
+                continueClicked: action.payload,
+                goToPreferences: action.payload
             };
         case `${mainActions.GET_CITIES_CHOOSER}_REQUEST`:
             return {
@@ -74,6 +79,11 @@ export default function facebookReducer(state: IMainReducerState = initialState,
             return {
                 ...state,
                 isSavingSelectedCities: false
+            };
+        case mainActions.GO_TO_PREFERENCES:
+            return {
+                ...state,
+                goToPreferences: action.payload
             };
         default:
             return state;

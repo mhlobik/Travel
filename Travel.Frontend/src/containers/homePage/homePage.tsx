@@ -3,16 +3,14 @@ import { connect } from 'react-redux';
 import './homePage.scss';
 import { autobind } from 'quick-react-ts';
 import { IRootReducerState } from '../../reducers/rootReducer';
-import Facebook from '../facebook/facebook';
 import * as facebookActions from '../../action/facebook';
 import * as mainActions from '../../action/main';
 import * as recommendationActions from '../../action/recommendation';
-import * as  cityActions from '../../action/city';
 import { IUser } from '../../common/facebookUtilities';
 import Header from '../../components/header/header';
 import MainContent, { ICarouselData } from '../../components/mainContent/mainContent';
 import { IRecommendation } from '../../common/recommendationUtilities';
-import { ICity, IPointOfInterestsCityInfo } from '../../common/city';
+import { ICity } from '../../common/city';
 
 function mapStateToProps(state: IRootReducerState): IHomePageProps {
   return {
@@ -20,6 +18,7 @@ function mapStateToProps(state: IRootReducerState): IHomePageProps {
     userLoggedIn: state.facebook.userLoggedIn,
     user: state.facebook.user,
     continueClicked: state.main.continueClicked,
+    goToPreferences: state.main.goToPreferences,
     gettingUsers: state.facebook.isGettingUsers,
     userPreferencesSaved: state.main.userPreferencesSaved,
     knowledgeBasedRecommendations: state.recommendation.knowledgeBasedRecommendations,
@@ -35,7 +34,8 @@ function mapDispatchToProps(dispatch: any): IHomePageProps {
     onGetAllUSers: () => dispatch(facebookActions.getUsers()),
     onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser()),
     handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity)),
-    onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem())
+    onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem()),
+    onGoToPreferences: () => dispatch(mainActions.goToPreferences())
   };
 }
 
@@ -62,10 +62,12 @@ interface IHomePageProps {
   openRecommendedItem?: boolean;
   pointsOfInterestsInfo?: Array<ICarouselData>;
   isGettingPointsOfInterestsInfo?: boolean;
+  goToPreferences?: boolean;
   onGetAllUSers?(): void;
   onGetCitiesChooser?(): void;
   handleOnItemClick?(recommendedCity: ICity): void;
   onCloseRecommendedItem?(): void;
+  onGoToPreferences?(): void;
 }
 
 interface IHomePageState {
@@ -83,7 +85,7 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
 
   public componentDidMount() {
     this.props.onGetAllUSers();
-    this.props.onGetCitiesChooser();
+    // this.props.onGetCitiesChooser();
   }
 
   @autobind
@@ -96,10 +98,15 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
     this.props.onCloseRecommendedItem();
   }
 
+  @autobind
+  private handleOnGoToPreferences() {
+    this.props.onGoToPreferences();
+  }
+
   public render() {
     return (
       <div className="home-page__container">
-        <Header />
+        <Header onGoToPreferences={this.handleOnGoToPreferences} />
         <MainContent
           user={this.props.user}
           userLoggedIn={this.props.userLoggedIn}
@@ -112,6 +119,7 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           onCloseRecommendedItem={this.handleOnCloseRecommendedItem}
           pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
           isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
+          goToPreferences={this.props.goToPreferences}
         />
       </div>
     );

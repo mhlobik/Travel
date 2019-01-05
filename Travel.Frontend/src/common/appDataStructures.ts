@@ -116,12 +116,6 @@ export const preferenceChoices: Array<ITreeviewItem> = [
         checked: true
     },
     {
-        id: PreferencesCategories.Circus.toString(),
-        text: getPreferencesCategoriesStrings(PreferencesCategories.Circus),
-        parentId: PreferencesCategories.Entertainment.toString(),
-        checked: true
-    },
-    {
         id: PreferencesCategories.ComedyClub.toString(),
         text: getPreferencesCategoriesStrings(PreferencesCategories.ComedyClub),
         parentId: PreferencesCategories.Entertainment.toString(),
@@ -333,12 +327,6 @@ export const preferenceChoices: Array<ITreeviewItem> = [
     {
         id: PreferencesCategories.BikeTrail.toString(),
         text: getPreferencesCategoriesStrings(PreferencesCategories.BikeTrail),
-        parentId: PreferencesCategories.Recreation.toString(),
-        checked: true
-    },
-    {
-        id: PreferencesCategories.Campground.toString(),
-        text: getPreferencesCategoriesStrings(PreferencesCategories.Campground),
         parentId: PreferencesCategories.Recreation.toString(),
         checked: true
     },

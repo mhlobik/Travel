@@ -2,16 +2,18 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IRootReducerState } from '../../reducers/rootReducer';
 import { facabookAppId } from './config';
-import { Button, Spinner, SpinnerType } from 'quick-react-ts';
 import './facebook.scss';
-import * as FacebookLogo from '../../assets/images/facebook.png';
 import * as FacebookUtilities from '../../common/facebookUtilities';
 import * as facebookActions from '../../action/facebook';
+import * as mainActions from '../../action/main';
+import * as recommendationActions from '../../action/recommendation';
 
 interface IFacebookProps {
     allUsers?: Array<FacebookUtilities.IUser>;
     onManageUserFacebookData?(user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile): void;
     onMarkIsUserExists?(userExists: boolean, loggedIn: boolean, user: FacebookUtilities.IUser): void;
+    onGoToPreferences?(): void;
+    onGetKnowledgeBased?(userId: string): void;
 }
 
 interface IFacebookState {
@@ -32,7 +34,9 @@ function mapDispatchToProps(dispatch: any): IFacebookProps {
         onManageUserFacebookData: (user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile) =>
             dispatch(facebookActions.manageUserFacebookData(user, userProfile)),
         onMarkIsUserExists: (userExists: boolean, loggedIn: boolean, user: FacebookUtilities.IUser) =>
-            dispatch(facebookActions.markIsUserExists(userExists, loggedIn, user))
+            dispatch(facebookActions.markIsUserExists(userExists, loggedIn, user)),
+        onGoToPreferences: () => dispatch(mainActions.goToPreferences()),
+        onGetKnowledgeBased: (userId: string) => dispatch(recommendationActions.getKnowledgeBased(userId))
     };
 }
 
@@ -154,6 +158,14 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
         this.props.onManageUserFacebookData(this.state.user, this.state.userProfile);
 
         this.props.onMarkIsUserExists(userExist !== null, this.state.userLoggedIn, this.state.user);
+
+        if (userExist === null) {
+            this.props.onGoToPreferences();
+        }
+
+        if (userExist !== null) {
+          this.props.onGetKnowledgeBased(this.state.user.userId);
+        }
     }
 
     public render() {

@@ -6,7 +6,6 @@
         align-items: center;
         background-color: $primary-middle;
         height: 90px !important;
-        padding-right: 100px;
         border-bottom: 1px solid $secondary-green;
 
         .header__title {
@@ -14,5 +13,24 @@
             font-size: 45px;
             font-weight: bold;
             padding-left: 100px;
+        }
+
+        .header__right {
+            margin-right: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .header__preferences-button {
+                height: 90px!important;
+                background-color: $secondary-green;
+                color: white;
+                font-size: 18px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 200px;
+                cursor: pointer;
+            }
         }
     }

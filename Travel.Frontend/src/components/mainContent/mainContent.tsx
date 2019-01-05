@@ -19,6 +19,7 @@ interface IMainContentProps {
     openRecommendedItem: boolean;
     pointsOfInterestsInfo: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo: boolean;
+    goToPreferences: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
 }
@@ -32,10 +33,10 @@ export default class MainContent extends React.PureComponent<IMainContentProps, 
     public render() {
         return (
             <div key="container" className="main-content__container">
-                {this.props.user !== null && this.props.continueClicked && !this.props.userPreferencesSaved && <UserPreferences />}
-                {this.props.user !== null && !this.props.continueClicked && <CityChooser />}
+                {this.props.user !== null && this.props.goToPreferences && <UserPreferences />}
+                {/*this.props.user !== null && !this.props.continueClicked && <CityChooser />*/}
 
-                {this.props.user !== null && this.props.continueClicked && this.props.userPreferencesSaved &&
+                {this.props.user !== null && !this.props.goToPreferences &&
                     <KnowledgeBased
                         knowledgeBasedRecommendations={this.props.knowledgeBasedRecommendations}
                         handleOnItemClick={this.props.handleOnItemClick}

@@ -63,3 +63,10 @@ export function selectedCities(clicked: boolean, cities: Array<ICityRating>) {
         });
     };
 }
+
+export function goToPreferences() {
+    return {
+        type: mainActions.GO_TO_PREFERENCES,
+        payload: true
+    };
+}
