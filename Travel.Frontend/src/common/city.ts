@@ -39,6 +39,12 @@ export interface IPointsOfInterest {
     url: string;
 }
 
+export interface IPointOfInterestsCityInfo {
+    city: ICity;
+    pointOfInterestName: string;
+    pointOfInterestId: string;
+}
+
 export interface IPointOfInterestCategory {
     id: string;
     name: string;

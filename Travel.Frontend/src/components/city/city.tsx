@@ -1,15 +1,18 @@
 import * as React from 'react';
 import './city.scss';
-import { ICity, cityAvailableTabs } from '../../common/city';
+import { ICity, cityAvailableTabs, IPointOfInterestsCityInfo } from '../../common/city';
 import { Pivot, PivotItem, PivotLinkFormat, autobind } from 'quick-react-ts';
 import { CityTabEnum } from '../../common/enums';
 import CityDescriptionTab from './cityDescriptionTab';
 import CityPointsOfInterests from './cityPointsOfInterests';
+import { ICarouselData } from '../mainContent/mainContent';
 
 interface ICityProps {
     selectedRecommendedCity: ICity;
+    pointsOfInterestsInfo: Array<ICarouselData>;
+    isGettingPointsOfInterestsInfo: boolean;
     closeCityDetails(): void;
-    onGetPointOfInterestsImageUrl(name: string): void;
+    onGetPointOfInterestsImageUrl(city: ICity): void;
 }
 
 interface ICityState {
@@ -44,7 +47,11 @@ export default class City extends React.PureComponent<ICityProps, ICityState> {
             case CityTabEnum.hotels:
                 return <span>hotels</span>;
             case CityTabEnum.pointsOfInterests:
-                return <CityPointsOfInterests onGetPointOfInterestsImageUrl={this.props.onGetPointOfInterestsImageUrl}/>;
+            this.props.onGetPointOfInterestsImageUrl(this.props.selectedRecommendedCity);
+                return <CityPointsOfInterests
+                    pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
+                    isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
+                />;
         }
     }
     public render() {

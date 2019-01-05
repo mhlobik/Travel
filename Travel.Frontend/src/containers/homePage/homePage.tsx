@@ -10,9 +10,9 @@ import * as recommendationActions from '../../action/recommendation';
 import * as  cityActions from '../../action/city';
 import { IUser } from '../../common/facebookUtilities';
 import Header from '../../components/header/header';
-import MainContent from '../../components/mainContent/mainContent';
+import MainContent, { ICarouselData } from '../../components/mainContent/mainContent';
 import { IRecommendation } from '../../common/recommendationUtilities';
-import { ICity } from '../../common/city';
+import { ICity, IPointOfInterestsCityInfo } from '../../common/city';
 
 function mapStateToProps(state: IRootReducerState): IHomePageProps {
   return {
@@ -24,7 +24,9 @@ function mapStateToProps(state: IRootReducerState): IHomePageProps {
     userPreferencesSaved: state.main.userPreferencesSaved,
     knowledgeBasedRecommendations: state.recommendation.knowledgeBasedRecommendations,
     selectedRecommendedCity: state.recommendation.selectedRecommendedCity,
-    openRecommendedItem: state.recommendation.openRecommendedItem
+    openRecommendedItem: state.recommendation.openRecommendedItem,
+    pointsOfInterestsInfo: state.city.pointsOfInterestsInfo,
+    isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo
   };
 }
 
@@ -34,7 +36,8 @@ function mapDispatchToProps(dispatch: any): IHomePageProps {
     onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser()),
     handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity)),
     onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem()),
-    onGetPointOfInterestsImageUrl: (name: string) => dispatch(cityActions.getImageUrl(name))
+    onGetPointOfInterestsImageUrl: (city: ICity) =>
+      dispatch(cityActions.getImageUrls(city))
   };
 }
 
@@ -59,11 +62,13 @@ interface IHomePageProps {
   knowledgeBasedRecommendations?: Array<IRecommendation>;
   selectedRecommendedCity?: ICity;
   openRecommendedItem?: boolean;
+  pointsOfInterestsInfo?: Array<ICarouselData>;
+  isGettingPointsOfInterestsInfo?: boolean;
   onGetAllUSers?(): void;
   onGetCitiesChooser?(): void;
   handleOnItemClick?(recommendedCity: ICity): void;
   onCloseRecommendedItem?(): void;
-  onGetPointOfInterestsImageUrl?(name: string): void;
+  onGetPointOfInterestsImageUrl?(city: ICity): void;
 }
 
 interface IHomePageState {
@@ -95,12 +100,12 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
   }
 
   @autobind
-  private handleonGetPointOfInterestsImageUrl(name: string) {
-    this.props.onGetPointOfInterestsImageUrl(name);
+  private handleonGetPointOfInterestsImageUrl(city: ICity) {
+    this.props.onGetPointOfInterestsImageUrl(city);
   }
 
   public render() {
-        return (
+    return (
       <div className="home-page__container">
         <Header />
         <MainContent
@@ -114,6 +119,8 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           selectedRecommendedCity={this.props.selectedRecommendedCity}
           onCloseRecommendedItem={this.handleOnCloseRecommendedItem}
           onGetPointOfInterestsImageUrl={this.handleonGetPointOfInterestsImageUrl}
+          pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
+          isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
         />
       </div>
     );

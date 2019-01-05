@@ -11,9 +11,10 @@ import { IRecommendation } from '../../common/recommendationUtilities';
 import { ICity } from '../../common/city';
 
 interface ICarouselProps {
-    //slides?: Array<ICarouselData>;
-    knowledgeBasedRecommendations: Array<IRecommendation>;
-    handleOnItemClick(recommendedCity: ICity): void;
+    knowledgeBasedRecommendations?: Array<IRecommendation>;
+    carouselData?: Array<ICarouselData>;
+    isClickable: boolean;
+    handleOnItemClick?(recommendedCity: ICity): void;
 }
 
 interface ICarouselState {
@@ -36,8 +37,9 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     private goToPrevSlide(e: any) {
         e.preventDefault();
 
-        const { knowledgeBasedRecommendations } = this.props;
-        const slidesLength = knowledgeBasedRecommendations.length;
+        const { knowledgeBasedRecommendations, carouselData } = this.props;
+        const slidesLength = knowledgeBasedRecommendations !== undefined ?
+            knowledgeBasedRecommendations.length : carouselData !== undefined ? carouselData.length : 0;
         const oldActiveIndexes = this.state.activeIndexesTest;
 
         const setNegativeForLast = oldActiveIndexes.map((o) => {
@@ -58,8 +60,10 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     private goToNextSlide(e: any) {
         e.preventDefault();
 
-        const { knowledgeBasedRecommendations } = this.props;
-        const slidesLength = knowledgeBasedRecommendations.length - 1;
+        const { knowledgeBasedRecommendations, carouselData } = this.props;
+        const slidesLength = knowledgeBasedRecommendations !== undefined ?
+            knowledgeBasedRecommendations.length - 1 : carouselData !== undefined ? carouselData.length - 1 : 0;
+
         const oldActiveIndexes = this.state.activeIndexesTest;
 
         const setNegativeForLast = oldActiveIndexes.map((o) => {
@@ -76,22 +80,54 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
         });
     }
 
+    @autobind
+    private renderClickableSlide(): JSX.Element {
+        return (
+            <ul className="carousel__slides">
+                {this.props.knowledgeBasedRecommendations.map((rec, index) =>
+                    <CarouselSlide
+                        key={index}
+                        index={index}
+                        recommendedCity={rec.recommendedCity}
+                        activeIndexes={this.state.activeIndexesTest}
+                        onItemClick={this.props.handleOnItemClick}
+                        isClickable={this.props.isClickable}
+                    />
+                )}
+            </ul>
+        );
+    }
+
+    @autobind
+    private renderNonClickableSlide(): JSX.Element {
+        return (
+            <ul className="carousel__slides">
+                {this.props.carouselData.map((rec, index) =>
+                    <CarouselSlide
+                        key={index}
+                        index={index}
+                        activeIndexes={this.state.activeIndexesTest}
+                        isClickable={this.props.isClickable}
+                        title={rec.title}
+                        image={rec.image}
+                    />
+                )}
+            </ul>
+        );
+    }
+
     public render() {
+        console.log('carousel', this.props);
         return (
             <div className="carousel">
                 <CarouselLeftArrow onClick={this.goToPrevSlide} />
 
-                <ul className="carousel__slides">
-                    {this.props.knowledgeBasedRecommendations.map((rec, index) =>
-                        <CarouselSlide
-                            key={index}
-                            index={index}
-                            recommendedCity={rec.recommendedCity}
-                            activeIndexes={this.state.activeIndexesTest}
-                            onItemClick={this.props.handleOnItemClick}
-                        />
-                    )}
-                </ul>
+                {this.props.isClickable &&
+                    this.renderClickableSlide()
+                }
+                {!this.props.isClickable &&
+                    this.renderNonClickableSlide()
+                }
 
                 <CarouselRightArrow onClick={e => this.goToNextSlide(e)} />
 

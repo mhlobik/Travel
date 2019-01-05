@@ -46,7 +46,9 @@
     <Compile Include="Facebook\UserProfileManager.cs" />
     <Compile Include="CityManager\FoursquareManager.cs" />
     <Compile Include="Recommenders\KnowledgeBased.cs" />
+    <Compile Include="Utilities\CarouselDataDTO.cs" />
     <Compile Include="Utilities\CityPointsOfInterestManager.cs" />
+    <Compile Include="Utilities\PointOfInterestsDTO.cs" />
     <Compile Include="Watson\FacebookTextAnalysis.cs" />
     <Compile Include="Watson\WatsonTextAnalysis.cs" />
   </ItemGroup>

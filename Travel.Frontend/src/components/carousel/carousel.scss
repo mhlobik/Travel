@@ -18,6 +18,25 @@ $breakpoint-desktop: 992px;
         display: flex;
 
         // Carousel slides
+        .carousel-non-clickable__slide {
+            margin-right: 2px;
+            margin-left: 2px;
+            display: none;
+            max-width: 900px;
+            list-style-type: none;
+            text-align: center;
+
+            &--active {
+                display: flex;
+                width: 306px;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                transition: box-shadow .3s;
+            }
+        }
+
         .carousel__slide {
             margin-right: 2px;
             margin-left: 2px;
@@ -63,7 +82,6 @@ $breakpoint-desktop: 992px;
 
     // Carousel arrows
     .carousel__arrow {
-    position: absolute;
     top: 150px;
     display: block;
     cursor: pointer;
@@ -78,11 +96,11 @@ $breakpoint-desktop: 992px;
     }
 
     &--left {
-        left: -50px;
+        padding-right: 80px;
     }
 
     &--right {
-        right: -50px;
+        padding-left: 80px;
     }
     
     i {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
-using Travel.Business.CityManager;
+using Travel.Business.Utilities;
 using Travel.Database.Model;
 using Travel.Database.Utilities;
 
@@ -26,13 +27,13 @@ namespace Travel.Application.ApiControllers
             return Ok();
         }
 
-        [Route("api/city/get-image-url/{name}")]
-        [HttpGet]
-        public IHttpActionResult GetKnowledgeBased(string name)
+        [Route("api/city/get-image-url")]
+        [HttpPost]
+        public IHttpActionResult GetKnowledgeBased([FromBody] City city)
         {
-            var manager = new GooglePlaceManager();
-            var url = manager.GetImage(name);
-            return Ok(url);
+            var manager = new CityPointsOfInterestManager();
+            var result = Task.Run(async () => await manager.GetPointOfInterestsImages(city)).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Ok(result);
         }
     }
 }

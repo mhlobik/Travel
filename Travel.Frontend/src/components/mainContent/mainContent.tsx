@@ -5,7 +5,7 @@ import UserPreferences from '../../containers/userPreferences/userPreferences';
 import CityChooser from '../../containers/cityChooser/cityChooser';
 import { IRecommendation } from '../../common/recommendationUtilities';
 import KnowledgeBased from '../recommenders/knowledgeBased';
-import { ICity } from '../../common/city';
+import { ICity, IPointOfInterestsCityInfo } from '../../common/city';
 import City from '../city/city';
 import { autobind } from 'quick-react-ts';
 
@@ -17,15 +17,16 @@ interface IMainContentProps {
     knowledgeBasedRecommendations: Array<IRecommendation>;
     selectedRecommendedCity: ICity;
     openRecommendedItem: boolean;
+    pointsOfInterestsInfo: Array<ICarouselData>;
+    isGettingPointsOfInterestsInfo: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
-    onGetPointOfInterestsImageUrl(name: string): void;
+    onGetPointOfInterestsImageUrl(city: ICity): void;
 }
 
 export interface ICarouselData {
-    content: string;
-    author: string;
-    source: string;
+    image: string;
+    title: string;
 }
 
 export default class MainContent extends React.PureComponent<IMainContentProps, {}> {
@@ -43,6 +44,8 @@ export default class MainContent extends React.PureComponent<IMainContentProps, 
                         selectedRecommendedCity={this.props.selectedRecommendedCity}
                         onCloseRecommendedItem={this.props.onCloseRecommendedItem}
                         onGetPointOfInterestsImageUrl={this.props.onGetPointOfInterestsImageUrl}
+                        pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
+                        isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
                     />
                 }
             </div>

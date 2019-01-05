@@ -1,20 +1,26 @@
 import * as React from 'react';
+import Carousel from '../carousel/carousel';
+import { ICarouselData } from '../mainContent/mainContent';
+import { IPointOfInterestsCityInfo, ICity, IPointsOfInterest } from '../../common/city';
+import { Spinner } from 'quick-react-ts';
 
 interface ICityPointsOfInterestsProps {
-    imageUrl?: string;
-    onGetPointOfInterestsImageUrl(name: string): void;
+    pointsOfInterestsInfo: Array<ICarouselData>;
+    isGettingPointsOfInterestsInfo: boolean;
 }
 
 export default class CityPointsOfInterests extends React.PureComponent<ICityPointsOfInterestsProps, {}> {
-    public componentDidMount() {
-        this.props.onGetPointOfInterestsImageUrl('La Poterne caen');
-      }
-
-          public render() {
+    public render() {
         return (
             <div className="city-points-of-interests__container">
-                <img
-                     ></img>
+                {this.props.isGettingPointsOfInterestsInfo &&
+                    <Spinner />
+                }
+                {this.props.pointsOfInterestsInfo !== null && !this.props.isGettingPointsOfInterestsInfo &&
+                    <Carousel
+                        carouselData={this.props.pointsOfInterestsInfo}
+                        isClickable={false}
+                    />}
             </div>
         );
     }

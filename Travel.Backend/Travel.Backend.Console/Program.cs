@@ -220,26 +220,26 @@ namespace Travel.Backend.Console
             #endregion
 
             #region Google Place API
-               //Client = new System.Net.Http.HttpClient();
-               //Client.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/place/");
+            //Client = new System.Net.Http.HttpClient();
+            //Client.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/place/");
 
-               // var query = "La Poterne Caen";
-               // var resp = Task.Run(async () => await Client.GetAsync(string.Format("textsearch/json?key={0}&query={1}", AppSecret, query))).ConfigureAwait(false).GetAwaiter().GetResult();
-               // if (resp.IsSuccessStatusCode)
-               // {
-               //     var result = JObject.Parse(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
-               //     var placeID = result["results"][0]["place_id"];
-               //     var details = Task.Run(async () => await Client.GetAsync(String.Format("details/json?key={0}&placeid={1}", AppSecret, placeID))).ConfigureAwait(false).GetAwaiter().GetResult();
-               //     var content = JObject.Parse(Task.Run(async () => await details.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
-               //     var PhotoReference = result["results"][0]["photos"][0]["photo_reference"];
-               //     var MaxHeight = result["results"][0]["photos"][0]["height"];
-               //     var MaxWidth = result["results"][0]["photos"][0]["width"];
-               //     var url = String.Format("photo?photoreference={0}&sensor=false&maxheight={1}&maxwidth={2}&key={3}", PhotoReference, MaxHeight, MaxWidth, AppSecret);
-               //     var photoRequest = Task.Run(async () => await Client.GetAsync(url)).ConfigureAwait(false).GetAwaiter().GetResult();
-               //     var photo = Task.Run(async () => await photoRequest.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
+            // var query = "La Poterne Caen";
+            // var resp = Task.Run(async () => await Client.GetAsync(string.Format("textsearch/json?key={0}&query={1}", AppSecret, query))).ConfigureAwait(false).GetAwaiter().GetResult();
+            // if (resp.IsSuccessStatusCode)
+            // {
+            //     var result = JObject.Parse(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
+            //     var placeID = result["results"][0]["place_id"];
+            //     var details = Task.Run(async () => await Client.GetAsync(String.Format("details/json?key={0}&placeid={1}", AppSecret, placeID))).ConfigureAwait(false).GetAwaiter().GetResult();
+            //     var content = JObject.Parse(Task.Run(async () => await details.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
+            //     var PhotoReference = result["results"][0]["photos"][0]["photo_reference"];
+            //     var MaxHeight = result["results"][0]["photos"][0]["height"];
+            //     var MaxWidth = result["results"][0]["photos"][0]["width"];
+            //     var url = String.Format("photo?photoreference={0}&sensor=false&maxheight={1}&maxwidth={2}&key={3}", PhotoReference, MaxHeight, MaxWidth, AppSecret);
+            //     var photoRequest = Task.Run(async () => await Client.GetAsync(url)).ConfigureAwait(false).GetAwaiter().GetResult();
+            //     var photo = Task.Run(async () => await photoRequest.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
 
-               //     // /photo?maxwidth=400&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=YOUR_API_KEY
-               // }
+            //     // /photo?maxwidth=400&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=YOUR_API_KEY
+            // }
             //                URL = "https://en.wikipedia.org/w/api.php"
             #endregion
 

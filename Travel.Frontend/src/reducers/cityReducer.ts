@@ -1,14 +1,15 @@
 import { IAction } from '../common/appDataStructures';
 import * as cityActions from '../constants/city';
+import { ICarouselData } from '../components/mainContent/mainContent';
 
 export interface ICityReducerState {
-    isGettingImageUrl: boolean;
-    imageUrl: string;
+    isGettingPointsOfInterestsInfo: boolean;
+    pointsOfInterestsInfo: Array<ICarouselData>;
 }
 
 const initialState: ICityReducerState = {
-    isGettingImageUrl: false,
-    imageUrl: null
+    isGettingPointsOfInterestsInfo: false,
+    pointsOfInterestsInfo: null
 };
 
 export default function cityReducer(state: ICityReducerState = initialState, action: IAction = { type: '', payload: null }) {
@@ -16,18 +17,18 @@ export default function cityReducer(state: ICityReducerState = initialState, act
         case `${cityActions.GET_IMAGE_URL}_REQUEST`:
             return {
                 ...state,
-                isGettingImageUrl: true
+                isGettingPointsOfInterestsInfo: true
             };
         case `${cityActions.GET_IMAGE_URL}_RESPONSE`:
             return {
                 ...state,
-                isGettingImageUrl: false,
-                imageUrl: action.payload
+                isGettingPointsOfInterestsInfo: false,
+                pointsOfInterestsInfo: action.payload
             };
         case `${cityActions.GET_IMAGE_URL}_ERROR`:
             return {
                 ...state,
-                isGettingImageUrl: false
+                isGettingPointsOfInterestsInfo: false
             };
         default:
             return state;

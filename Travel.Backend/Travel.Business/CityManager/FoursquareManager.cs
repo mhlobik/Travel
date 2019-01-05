@@ -13,6 +13,12 @@ namespace Travel.Business.CityManager
 
         public List<PointsOfInterest> GetVenuesForCity(string cityName)
         {
+           var lines = System.IO.File.ReadAllLines(@"D:\Diplomski Rad\config.ts");
+            string clientId = lines[1];
+            string clientSecret = lines[2];
+
+
+            var baseUrl = "https://api.foursquare.com/v2/venues/search?near=";
             var urlWithCity = baseUrl + cityName;
             var completeUrl = urlWithCity + "&client_id=" + clientId + "&client_secret=" + clientSecret + "&v=20181218";
             var venues = new List<PointsOfInterest>();

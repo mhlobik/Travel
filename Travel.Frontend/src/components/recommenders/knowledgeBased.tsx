@@ -2,17 +2,20 @@ import * as React from 'react';
 import Carousel from '../carousel/carousel';
 import { IRecommendation } from '../../common/recommendationUtilities';
 import './knowledgeBased.scss';
-import { ICity } from '../../common/city';
+import { ICity, IPointOfInterestsCityInfo } from '../../common/city';
 import City from '../city/city';
 import { autobind } from 'quick-react-ts';
+import { ICarouselData } from '../mainContent/mainContent';
 
 interface IKnowledgeBasedProps {
     knowledgeBasedRecommendations: Array<IRecommendation>;
     selectedRecommendedCity: ICity;
     openRecommendedItem: boolean;
+    pointsOfInterestsInfo: Array<ICarouselData>;
+    isGettingPointsOfInterestsInfo: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
-    onGetPointOfInterestsImageUrl(name: string): void;
+    onGetPointOfInterestsImageUrl(city: ICity): void;
 }
 
 export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, {}> {
@@ -23,6 +26,7 @@ export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedP
                 <Carousel
                     knowledgeBasedRecommendations={this.props.knowledgeBasedRecommendations}
                     handleOnItemClick={this.props.handleOnItemClick}
+                    isClickable={true}
                 />
 
                 {this.props.openRecommendedItem && this.props.selectedRecommendedCity !== null &&
@@ -30,6 +34,8 @@ export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedP
                         selectedRecommendedCity={this.props.selectedRecommendedCity}
                         closeCityDetails={this.props.onCloseRecommendedItem}
                         onGetPointOfInterestsImageUrl={this.props.onGetPointOfInterestsImageUrl}
+                        pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
+                        isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
                     />
                 }
             </div>
