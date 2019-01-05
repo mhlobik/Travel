@@ -22,6 +22,7 @@ interface IMainContentProps {
     goToPreferences: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
+    onClickCityRating(cityId: string, userId: string, rate: number): void;
 }
 
 export interface ICarouselData {
@@ -30,6 +31,11 @@ export interface ICarouselData {
 }
 
 export default class MainContent extends React.PureComponent<IMainContentProps, {}> {
+    @autobind
+    private handleOnClickCityRating(cityId: string, rate: number) {
+        this.props.onClickCityRating(cityId, this.props.user.userId, rate);
+    }
+
     public render() {
         return (
             <div key="container" className="main-content__container">
@@ -45,6 +51,7 @@ export default class MainContent extends React.PureComponent<IMainContentProps, 
                         onCloseRecommendedItem={this.props.onCloseRecommendedItem}
                         pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
                         isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
+                        onClickCityRating={this.handleOnClickCityRating}
                     />
                 }
             </div>

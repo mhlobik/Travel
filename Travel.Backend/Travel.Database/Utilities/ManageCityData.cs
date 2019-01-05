@@ -10,6 +10,23 @@ namespace Travel.Database.Utilities
 {
     public class ManageCityData
     {
+        public void SaveCityRating(CityRating cityRating)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingCity = session.Query<CityRating>().Any(x => x.CityId == cityRating.CityId && x.UserId == cityRating.UserId);
+                    if (!existingCity)
+                    {
+                        session.Store(cityRating);
+                        session.SaveChanges();
+                    }
+                }
+            }
+        }
+
         public void StoreCity(City city)
         {
             IDocumentStore store;

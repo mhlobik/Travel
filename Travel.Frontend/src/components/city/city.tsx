@@ -13,6 +13,7 @@ interface ICityProps {
     pointsOfInterestsInfo: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo: boolean;
     closeCityDetails(): void;
+    onClickCityRating(cityId: string, rate: number): void;
 }
 
 interface ICityState {
@@ -34,6 +35,11 @@ export default class City extends React.PureComponent<ICityProps, ICityState> {
     }
 
     @autobind
+    private onClickCityRating(rate: number) {
+            this.props.onClickCityRating(this.props.selectedRecommendedCity.cityId, rate);
+    }
+
+    @autobind
     private renderTabContent(): JSX.Element {
         switch (this.state.selectedTab) {
             case CityTabEnum.description:
@@ -52,7 +58,7 @@ export default class City extends React.PureComponent<ICityProps, ICityState> {
                     isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
                 />;
             case CityTabEnum.ratings:
-                return <Ratings />;
+                return <Ratings onClickCityRating={this.onClickCityRating}/>;
         }
     }
     public render() {

@@ -17,3 +17,21 @@ export function getImageUrls(city: ICity) {
         });
     };
 }
+
+export function saveCityRating(cityId: string, userId: string, rate: number) {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${cityBaseUrl}/save-city-rating`,
+            requestActionName: cityActions.GET_IMAGE_URL,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'POST',
+                body: JSON.stringify({
+                    cityId: cityId,
+                    userId: userId,
+                    rating: rate
+                })
+            }
+        });
+    };
+}

@@ -4,6 +4,6 @@
     {
         public string CityId { get; set; }
         public string UserId { get; set; }
-        public bool Liked { get; set; }
+        public int Rating { get; set; }
     }
 }

@@ -29,11 +29,20 @@ namespace Travel.Application.ApiControllers
 
         [Route("api/city/get-image-url")]
         [HttpPost]
-        public IHttpActionResult GetKnowledgeBased([FromBody] City city)
+        public IHttpActionResult GetImageUrl([FromBody] City city)
         {
             var manager = new CityPointsOfInterestManager();
             var result = Task.Run(async () => await manager.GetPointOfInterestsImages(city)).ConfigureAwait(false).GetAwaiter().GetResult();
             return Ok(result);
+        }
+
+        [Route("api/city/save-city-rating")]
+        [HttpPost]
+        public IHttpActionResult SaveCityRating([FromBody] CityRating cityRating)
+        {
+            var manager = new ManageCityData();
+            manager.SaveCityRating(cityRating);
+            return Ok();
         }
     }
 }

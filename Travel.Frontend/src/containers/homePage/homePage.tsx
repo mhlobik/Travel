@@ -6,6 +6,7 @@ import { IRootReducerState } from '../../reducers/rootReducer';
 import * as facebookActions from '../../action/facebook';
 import * as mainActions from '../../action/main';
 import * as recommendationActions from '../../action/recommendation';
+import * as cityActions from '../../action/city';
 import { IUser } from '../../common/facebookUtilities';
 import Header from '../../components/header/header';
 import MainContent, { ICarouselData } from '../../components/mainContent/mainContent';
@@ -35,7 +36,8 @@ function mapDispatchToProps(dispatch: any): IHomePageProps {
     onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser()),
     handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity)),
     onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem()),
-    onGoToPreferences: () => dispatch(mainActions.goToPreferences())
+    onGoToPreferences: () => dispatch(mainActions.goToPreferences()),
+    onClickCityRating: (cityId: string, userId: string, rate: number) => dispatch(cityActions.saveCityRating(cityId, userId, rate))
   };
 }
 
@@ -68,6 +70,7 @@ interface IHomePageProps {
   handleOnItemClick?(recommendedCity: ICity): void;
   onCloseRecommendedItem?(): void;
   onGoToPreferences?(): void;
+  onClickCityRating?(cityId: string, userId: string, rate: number): void;
 }
 
 interface IHomePageState {
@@ -120,6 +123,7 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
           isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
           goToPreferences={this.props.goToPreferences}
+          onClickCityRating={this.props.onClickCityRating}
         />
       </div>
     );

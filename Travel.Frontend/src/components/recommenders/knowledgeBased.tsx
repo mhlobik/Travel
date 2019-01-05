@@ -15,6 +15,7 @@ interface IKnowledgeBasedProps {
     isGettingPointsOfInterestsInfo: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
+    onClickCityRating(cityId: string, rate: number): void;
 }
 
 export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, {}> {
@@ -34,6 +35,7 @@ export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedP
                         closeCityDetails={this.props.onCloseRecommendedItem}
                         pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
                         isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
+                        onClickCityRating={this.props.onClickCityRating}
                     />
                 }
             </div>
