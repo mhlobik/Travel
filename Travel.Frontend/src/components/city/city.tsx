@@ -6,6 +6,7 @@ import { CityTabEnum } from '../../common/enums';
 import CityDescriptionTab from './cityDescriptionTab';
 import CityPointsOfInterests from './cityPointsOfInterests';
 import { ICarouselData } from '../mainContent/mainContent';
+import Ratings from './ratings';
 
 interface ICityProps {
     selectedRecommendedCity: ICity;
@@ -50,6 +51,8 @@ export default class City extends React.PureComponent<ICityProps, ICityState> {
                     pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
                     isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
                 />;
+            case CityTabEnum.ratings:
+                return <Ratings />;
         }
     }
     public render() {

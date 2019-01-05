@@ -72,5 +72,9 @@ export const cityAvailableTabs: Array<AvailableTab> = [
     {
         name: 'Hotels',
         type: CityTabEnum.hotels
+    },
+    {
+        name: 'Ratings',
+        type: CityTabEnum.ratings
     }
 ];

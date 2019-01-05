@@ -94,6 +94,26 @@
         }
     }
   }
+
+  .ratings__container {
+    padding-left: 120px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .icon {
+      width: 32px;
+      height: 32px;;
+      padding-bottom: 30px;
+    }
+
+    .ratings__title {
+      font-family: $primary-font;
+      color: $primary-grey;
+      font-size: 18px;
+      padding-bottom: 10px;
+    }
+  }
 }
 
 .pivot-minimal-tabs {

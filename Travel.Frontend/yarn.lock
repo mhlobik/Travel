@@ -41,6 +41,11 @@
   resolved "https://registry.yarnpkg.com/@types/history/-/history-3.2.2.tgz#b6affa240cb10b5f841c6443d8a24d7f3fc8bb0c"
   integrity sha512-DMvBzeA2dp1uZZftXkoqPC4TrdHlyuuTabCOxHY6EAKOJRMaPVu8b6lvX0QxEGKZq3cK/h3JCSxgfKmbDOYmRw==
 
+"@types/lodash@^4.14.105":
+  version "4.14.119"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.119.tgz#be847e5f4bc3e35e46d041c394ead8b603ad8b39"
+  integrity sha512-Z3TNyBL8Vd/M9D9Ms2S3LmFq2sSMzahodD6rCS9V2N44HUMINb75jNkSuwAx7eo2ufqTdfOdtGQpNbieUjPQmw==
+
 "@types/lodash@^4.14.74":
   version "4.14.117"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.117.tgz#695a7f514182771a1e0f4345d189052ee33c8778"
@@ -109,7 +114,7 @@
     "@types/history" "^3"
     "@types/react" "*"
 
-"@types/react@*", "@types/react@16.4.17":
+"@types/react@*", "@types/react@16.4.17", "@types/react@^16.0.40":
   version "16.4.17"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.4.17.tgz#a3b3bffe147b00dd22846eb6b0da23e18afa4b80"
   integrity sha512-x6js/YqbLIXC9TarM4hP6SEctMrsPgKZBUEgyazwpu8LbYFulnHblu+zAyE+pWWAPKwcvt6QQ8SDDA4JtlNaNA==
@@ -6416,6 +6421,14 @@ react-onclickoutside@^6.5.0:
   version "6.7.1"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.7.1.tgz#6a5b5b8b4eae6b776259712c89c8a2b36b17be93"
   integrity sha512-p84kBqGaMoa7VYT0vZ/aOYRfJB+gw34yjpda1Z5KeLflg70HipZOT+MXQenEhdkPAABuE2Astq4zEPdMqUQxcg==
+
+react-rating@^1.6.2:
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/react-rating/-/react-rating-1.6.2.tgz#3f527c5d7545d47c2722b17b45babd60cc132fc1"
+  integrity sha512-MO1hta9XCBIJ1A302FUkEnUiDH2UaGwJ/h2oFtFTJbPwJXS3KSJDpTyyUEl8TI9CN43xuWRFu1+RbsttK3e94w==
+  dependencies:
+    "@types/lodash" "^4.14.105"
+    "@types/react" "^16.0.40"
 
 react-redux@5.0.6:
   version "5.0.6"
