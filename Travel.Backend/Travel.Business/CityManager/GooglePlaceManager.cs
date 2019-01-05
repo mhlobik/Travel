@@ -22,6 +22,11 @@ namespace Travel.Business.CityManager
             if (resp.IsSuccessStatusCode)
             {
                 var result = JObject.Parse(await resp.Content.ReadAsStringAsync());
+                var status = result["status"].ToString();
+                if (status.Equals("ZERO_RESULTS")) {
+                    return null;
+                }
+
                 var photos = result["results"][0]["photos"];
                 if(photos != null)
                 {

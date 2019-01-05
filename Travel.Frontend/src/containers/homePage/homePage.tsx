@@ -35,9 +35,7 @@ function mapDispatchToProps(dispatch: any): IHomePageProps {
     onGetAllUSers: () => dispatch(facebookActions.getUsers()),
     onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser()),
     handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity)),
-    onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem()),
-    onGetPointOfInterestsImageUrl: (city: ICity) =>
-      dispatch(cityActions.getImageUrls(city))
+    onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem())
   };
 }
 
@@ -68,7 +66,6 @@ interface IHomePageProps {
   onGetCitiesChooser?(): void;
   handleOnItemClick?(recommendedCity: ICity): void;
   onCloseRecommendedItem?(): void;
-  onGetPointOfInterestsImageUrl?(city: ICity): void;
 }
 
 interface IHomePageState {
@@ -99,11 +96,6 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
     this.props.onCloseRecommendedItem();
   }
 
-  @autobind
-  private handleonGetPointOfInterestsImageUrl(city: ICity) {
-    this.props.onGetPointOfInterestsImageUrl(city);
-  }
-
   public render() {
     return (
       <div className="home-page__container">
@@ -118,7 +110,6 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           openRecommendedItem={this.props.openRecommendedItem}
           selectedRecommendedCity={this.props.selectedRecommendedCity}
           onCloseRecommendedItem={this.handleOnCloseRecommendedItem}
-          onGetPointOfInterestsImageUrl={this.handleonGetPointOfInterestsImageUrl}
           pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
           isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
         />

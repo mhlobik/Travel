@@ -21,7 +21,6 @@ interface IMainContentProps {
     isGettingPointsOfInterestsInfo: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
-    onGetPointOfInterestsImageUrl(city: ICity): void;
 }
 
 export interface ICarouselData {
@@ -43,7 +42,6 @@ export default class MainContent extends React.PureComponent<IMainContentProps, 
                         openRecommendedItem={this.props.openRecommendedItem}
                         selectedRecommendedCity={this.props.selectedRecommendedCity}
                         onCloseRecommendedItem={this.props.onCloseRecommendedItem}
-                        onGetPointOfInterestsImageUrl={this.props.onGetPointOfInterestsImageUrl}
                         pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
                         isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
                     />

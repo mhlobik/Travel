@@ -117,7 +117,6 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     }
 
     public render() {
-        console.log('carousel', this.props);
         return (
             <div className="carousel">
                 <CarouselLeftArrow onClick={this.goToPrevSlide} />

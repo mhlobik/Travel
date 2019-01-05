@@ -12,7 +12,6 @@ interface ICityProps {
     pointsOfInterestsInfo: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo: boolean;
     closeCityDetails(): void;
-    onGetPointOfInterestsImageUrl(city: ICity): void;
 }
 
 interface ICityState {
@@ -47,7 +46,6 @@ export default class City extends React.PureComponent<ICityProps, ICityState> {
             case CityTabEnum.hotels:
                 return <span>hotels</span>;
             case CityTabEnum.pointsOfInterests:
-            this.props.onGetPointOfInterestsImageUrl(this.props.selectedRecommendedCity);
                 return <CityPointsOfInterests
                     pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
                     isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}

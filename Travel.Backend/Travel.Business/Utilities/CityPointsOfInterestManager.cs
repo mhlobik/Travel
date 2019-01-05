@@ -38,6 +38,7 @@ namespace Travel.Business.Utilities
                 if(pi.Url == null)
                 {
                     url = await manager.GetImage(pi.Name + " " + city.Name);
+                    if (url == null) continue;
                 }
 
                 i++;
