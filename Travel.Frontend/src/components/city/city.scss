@@ -114,6 +114,74 @@
       padding-bottom: 10px;
     }
   }
+
+  .city-flights__container {
+    margin-left: 120px;
+    margin-top: 20px;
+
+    .city-flights__content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 320px;
+
+      .city-flights__message {
+        font-family: $primary-font;
+        color: $primary-grey;
+        font-size: 18px;
+      }
+  
+      .city-flights__grid {
+        height: 320px;
+        width: 95%;
+        margin-top: 20px;
+    
+        .grid-component-container {
+          height: 100%;
+          width: 100%;
+          margin: 0;
+          border: 1px solid $primary-middle;
+  
+          .grid-header-column:last-child {
+              .grid-column-draggable{
+                 border-right: none;
+              }
+         }
+  
+          .grid-component {
+            .grid-cell_link {
+              margin-left: 30px;
+            }
+          }
+        }
+      }
+    }
+
+    .flight-date-picker__container {
+      display: flex;
+      align-items: flex-end;
+
+      .flight-date-picker__picker {
+        padding-top: 5px;
+        padding-right: 30px;
+        width: 200px;
+      }
+
+      .flight-date-picker__label {
+        font-family: $primary-font;
+        color: $primary-grey;
+        font-size: 16px;
+      }
+
+      .flight-date-picker__button {
+        margin-bottom: 10px;
+        color: $secondary-green;
+        background: $secondary-green;
+        font-size: 16px;
+        padding: 5px;
+      }
+    }
+  }
 }
 
 .pivot-minimal-tabs {

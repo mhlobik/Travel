@@ -23,24 +23,23 @@ namespace Travel.Business.CityManager
             {
                 var result = JObject.Parse(await resp.Content.ReadAsStringAsync());
                 var status = result["status"].ToString();
+
                 if (status.Equals("ZERO_RESULTS")) {
                     return null;
                 }
 
                 var photos = result["results"][0]["photos"];
-                if(photos != null)
+
+                if (photos != null)
                 {
                     var photoReference = photos[0]["photo_reference"];
                     var maxHeight = photos[0]["height"];
                     var maxWidth = photos[0]["width"];
                     photoUrl = String.Format("{0}photo?photoreference={1}&sensor=false&maxheight={2}&maxwidth={3}&key={4}", baseUrl, photoReference, maxHeight, maxWidth, appSecret);
-                } else if(result.Count > 1)
+                }
+                else
                 {
-                    var photos1 = result["results"][1]["photos"];
-                    var photoReference1 = photos1[0]["photo_reference"];
-                    var maxHeight1 = photos1[0]["height"];
-                    var maxWidth1 = photos1[0]["width"];
-                    photoUrl = String.Format("{0}photo?photoreference={1}&sensor=false&maxheight={2}&maxwidth={3}&key={4}", baseUrl, photoReference1, maxHeight1, maxWidth1, appSecret);
+                    return null;
                 }
             }
 

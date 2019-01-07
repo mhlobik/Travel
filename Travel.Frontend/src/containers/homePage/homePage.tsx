@@ -11,7 +11,7 @@ import { IUser } from '../../common/facebookUtilities';
 import Header from '../../components/header/header';
 import MainContent, { ICarouselData } from '../../components/mainContent/mainContent';
 import { IRecommendation } from '../../common/recommendationUtilities';
-import { ICity } from '../../common/city';
+import { ICity, IFlight, IFlightViewModel } from '../../common/city';
 
 function mapStateToProps(state: IRootReducerState): IHomePageProps {
   return {
@@ -26,7 +26,9 @@ function mapStateToProps(state: IRootReducerState): IHomePageProps {
     selectedRecommendedCity: state.recommendation.selectedRecommendedCity,
     openRecommendedItem: state.recommendation.openRecommendedItem,
     pointsOfInterestsInfo: state.city.pointsOfInterestsInfo,
-    isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo
+    isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo,
+    flights: state.city.flights,
+    isGettingFlights: state.city.isGettingFlights
   };
 }
 
@@ -37,7 +39,9 @@ function mapDispatchToProps(dispatch: any): IHomePageProps {
     handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity)),
     onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem()),
     onGoToPreferences: () => dispatch(mainActions.goToPreferences()),
-    onClickCityRating: (cityId: string, userId: string, rate: number) => dispatch(cityActions.saveCityRating(cityId, userId, rate))
+    onClickCityRating: (cityId: string, userId: string, rate: number) => dispatch(cityActions.saveCityRating(cityId, userId, rate)),
+    onSearchClick: (departureDate: Date, returnDate: Date, city: ICity) => 
+      dispatch(cityActions.getCityFlights(departureDate, returnDate, city))
   };
 }
 
@@ -65,12 +69,15 @@ interface IHomePageProps {
   pointsOfInterestsInfo?: Array<ICarouselData>;
   isGettingPointsOfInterestsInfo?: boolean;
   goToPreferences?: boolean;
+  flights?: Array<IFlightViewModel>;
+  isGettingFlights?: boolean;
   onGetAllUSers?(): void;
   onGetCitiesChooser?(): void;
   handleOnItemClick?(recommendedCity: ICity): void;
   onCloseRecommendedItem?(): void;
   onGoToPreferences?(): void;
   onClickCityRating?(cityId: string, userId: string, rate: number): void;
+  onSearchClick?(departureDate: Date, returnDate: Date, city: ICity): void;
 }
 
 interface IHomePageState {
@@ -124,6 +131,9 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
           isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
           goToPreferences={this.props.goToPreferences}
           onClickCityRating={this.props.onClickCityRating}
+          flights={this.props.flights}
+          onSearchClick={this.props.onSearchClick}
+          isGettingFlights={this.props.isGettingFlights}
         />
       </div>
     );

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Carousel from '../carousel/carousel';
 import { IRecommendation } from '../../common/recommendationUtilities';
 import './knowledgeBased.scss';
-import { ICity, IPointOfInterestsCityInfo } from '../../common/city';
+import { ICity, IPointOfInterestsCityInfo, IFlight, IFlightViewModel } from '../../common/city';
 import City from '../city/city';
 import { autobind } from 'quick-react-ts';
 import { ICarouselData } from '../mainContent/mainContent';
@@ -13,9 +13,12 @@ interface IKnowledgeBasedProps {
     openRecommendedItem: boolean;
     pointsOfInterestsInfo: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo: boolean;
+    flights: Array<IFlightViewModel>;
+    isGettingFlights: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
     onClickCityRating(cityId: string, rate: number): void;
+    onSearchClick(departureDate: Date, returnDate: Date, city: ICity): void;
 }
 
 export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, {}> {
@@ -36,6 +39,9 @@ export default class KnowledgeBased extends React.PureComponent<IKnowledgeBasedP
                         pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
                         isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
                         onClickCityRating={this.props.onClickCityRating}
+                        flights={this.props.flights}
+                        onSearchClick={this.props.onSearchClick}
+                        isGettingFlights={this.props.isGettingFlights}
                     />
                 }
             </div>

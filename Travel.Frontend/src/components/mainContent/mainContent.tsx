@@ -5,7 +5,7 @@ import UserPreferences from '../../containers/userPreferences/userPreferences';
 import CityChooser from '../../containers/cityChooser/cityChooser';
 import { IRecommendation } from '../../common/recommendationUtilities';
 import KnowledgeBased from '../recommenders/knowledgeBased';
-import { ICity, IPointOfInterestsCityInfo } from '../../common/city';
+import { ICity, IPointOfInterestsCityInfo, IFlight, IFlightViewModel } from '../../common/city';
 import City from '../city/city';
 import { autobind } from 'quick-react-ts';
 
@@ -20,9 +20,12 @@ interface IMainContentProps {
     pointsOfInterestsInfo: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo: boolean;
     goToPreferences: boolean;
+    flights: Array<IFlightViewModel>;
+    isGettingFlights: boolean;
     handleOnItemClick(recommendedCity: ICity): void;
     onCloseRecommendedItem(): void;
     onClickCityRating(cityId: string, userId: string, rate: number): void;
+    onSearchClick(departureDate: Date, returnDate: Date, city: ICity): void;
 }
 
 export interface ICarouselData {
@@ -52,6 +55,9 @@ export default class MainContent extends React.PureComponent<IMainContentProps, 
                         pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
                         isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
                         onClickCityRating={this.handleOnClickCityRating}
+                        flights={this.props.flights}
+                        onSearchClick={this.props.onSearchClick}
+                        isGettingFlights={this.props.isGettingFlights}
                     />
                 }
             </div>

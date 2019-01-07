@@ -210,7 +210,24 @@ namespace Travel.Database.Utilities
                     }
                 }
             }
-        }      
+        }
+
+        public Airport GetCityAirport(string cityName)
+        {
+            IDocumentStore store;
+            var airport = new Airport();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    airport = session.Query<Airport>().FirstOrDefault(x => x.City.Equals(cityName));                    
+                }
+            }
+
+            return airport;
+        }
+
     }
 }
 

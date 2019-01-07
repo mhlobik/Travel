@@ -147,3 +147,5 @@ export namespace CityChooserStrings {
         case  PreferencesCategories.SkiTrail: return 'SkiTrail';
         }
     };
+
+export const noFlights = 'We didn\'t find flights for selected dates and cities. Please try different origin city or different date range.';

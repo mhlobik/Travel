@@ -243,6 +243,7 @@
     <Compile Include="Model\Fare.cs" />
     <Compile Include="Model\Flight.cs" />
     <Compile Include="Model\FlightDetails.cs" />
+    <Compile Include="Model\FlightViewModel.cs" />
     <Compile Include="Model\Hotel.cs" />
     <Compile Include="Model\MinDailyRate.cs" />
     <Compile Include="Model\PointOfInterestCategory.cs" />

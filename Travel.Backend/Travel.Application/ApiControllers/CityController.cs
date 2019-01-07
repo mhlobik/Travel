@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
+using Travel.Business.CityManager;
 using Travel.Business.Utilities;
 using Travel.Database.Model;
 using Travel.Database.Utilities;
@@ -43,6 +44,16 @@ namespace Travel.Application.ApiControllers
             var manager = new ManageCityData();
             manager.SaveCityRating(cityRating);
             return Ok();
+        }
+
+        [Route("api/city/get-flights")]
+        [HttpPost]
+        public IHttpActionResult GetCityFlights([FromBody] FlightDTO flightInfo)
+        {
+            var travelManager = new TravelAmadeusManager();
+            var result = Task.Run(async () => await travelManager.GetFlights(flightInfo)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            return Ok(result);
         }
     }
 }

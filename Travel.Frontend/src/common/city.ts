@@ -1,4 +1,5 @@
 import { PreferencesCategories, CityTabEnum } from './enums';
+import { GridColumn, DataTypeEnum } from 'quick-react-ts';
 
 export interface ICity {
     cityId: string;
@@ -24,6 +25,16 @@ export interface IFlight {
     // public FlightDetails Inbound { get; set; }
     // public FlightDetails Outbound { get; set; }
     travelClass: string;
+}
+
+export interface IFlightViewModel {
+    from: string;
+    to: string;
+    totalPrice: number;
+    currency: string;
+    outboundDuration: string;
+    inboundDuration: string;
+    link: string;
 }
 
 export interface IFare {

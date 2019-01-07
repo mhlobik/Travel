@@ -35,3 +35,22 @@ export function saveCityRating(cityId: string, userId: string, rate: number) {
         });
     };
 }
+
+export function getCityFlights(departureDate: Date, returnDate: Date, city: ICity) {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${cityBaseUrl}/get-flights`,
+            requestActionName: cityActions.GET_FLIGHTS,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'POST',
+                body: JSON.stringify({
+                    origin: 'New York',
+                    destination: city.name,
+                    departureDate: departureDate,
+                    returnDate: returnDate
+                })
+            }
+        });
+    };
+}

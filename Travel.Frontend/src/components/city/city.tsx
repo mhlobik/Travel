@@ -1,19 +1,23 @@
 import * as React from 'react';
 import './city.scss';
-import { ICity, cityAvailableTabs, IPointOfInterestsCityInfo } from '../../common/city';
+import { ICity, cityAvailableTabs, IPointOfInterestsCityInfo, IFlight, IFlightViewModel } from '../../common/city';
 import { Pivot, PivotItem, PivotLinkFormat, autobind } from 'quick-react-ts';
 import { CityTabEnum } from '../../common/enums';
 import CityDescriptionTab from './cityDescriptionTab';
 import CityPointsOfInterests from './cityPointsOfInterests';
 import { ICarouselData } from '../mainContent/mainContent';
 import Ratings from './ratings';
+import CityFlights from './cityFlights';
 
 interface ICityProps {
     selectedRecommendedCity: ICity;
     pointsOfInterestsInfo: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo: boolean;
+    flights: Array<IFlightViewModel>;
+    isGettingFlights: boolean;
     closeCityDetails(): void;
     onClickCityRating(cityId: string, rate: number): void;
+    onSearchClick(departureDate: Date, returnDate: Date, city: ICity): void;
 }
 
 interface ICityState {
@@ -36,7 +40,12 @@ export default class City extends React.PureComponent<ICityProps, ICityState> {
 
     @autobind
     private onClickCityRating(rate: number) {
-            this.props.onClickCityRating(this.props.selectedRecommendedCity.cityId, rate);
+        this.props.onClickCityRating(this.props.selectedRecommendedCity.cityId, rate);
+    }
+
+    @autobind
+    private handleOnSearchClicked(departureDate: Date, returnDate: Date) {
+        this.props.onSearchClick(departureDate, returnDate, this.props.selectedRecommendedCity);
     }
 
     @autobind
@@ -49,7 +58,11 @@ export default class City extends React.PureComponent<ICityProps, ICityState> {
                     imageUrl={this.props.selectedRecommendedCity.imageUrl}
                 />;
             case CityTabEnum.flights:
-                return <span>flights</span>;
+                return <CityFlights
+                    flights={this.props.flights}
+                    onSearchClick={this.handleOnSearchClicked}
+                    isGettingFlights={this.props.isGettingFlights}
+                />;
             case CityTabEnum.hotels:
                 return <span>hotels</span>;
             case CityTabEnum.pointsOfInterests:
@@ -58,7 +71,7 @@ export default class City extends React.PureComponent<ICityProps, ICityState> {
                     isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
                 />;
             case CityTabEnum.ratings:
-                return <Ratings onClickCityRating={this.onClickCityRating}/>;
+                return <Ratings onClickCityRating={this.onClickCityRating} />;
         }
     }
     public render() {

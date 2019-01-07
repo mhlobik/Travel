@@ -28,7 +28,7 @@ namespace Travel.Backend.Console
 
             var app = new TravelApplication();
             app.StartApplication();
-
+            System.Console.WriteLine("App started!\n");
             #endregion
 
             #region read xls
@@ -237,8 +237,6 @@ namespace Travel.Backend.Console
             //     var url = String.Format("photo?photoreference={0}&sensor=false&maxheight={1}&maxwidth={2}&key={3}", PhotoReference, MaxHeight, MaxWidth, AppSecret);
             //     var photoRequest = Task.Run(async () => await Client.GetAsync(url)).ConfigureAwait(false).GetAwaiter().GetResult();
             //     var photo = Task.Run(async () => await photoRequest.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
-
-            //     // /photo?maxwidth=400&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=YOUR_API_KEY
             // }
             //                URL = "https://en.wikipedia.org/w/api.php"
             #endregion
@@ -262,6 +260,45 @@ namespace Travel.Backend.Console
             //var wikiResponseSummary1 = JObject.Parse(Task.Run(async () => await wikiClient.GetStringAsync(string.Format("https://en.wikipedia.org/api/rest_v1/page/summary/Zagreb"))).ConfigureAwait(false).GetAwaiter().GetResult());
             //var summary = wikiResponseSummary1["extract"].ToString();
 
+
+            #endregion
+
+            #region Flights API
+            //var lines = System.IO.File.ReadAllLines(@"D:\Diplomski Rad\config.ts");
+            //string flightsApiKey = lines[3];
+
+            //var flightClient = new System.Net.Http.HttpClient();
+            //flightClient.BaseAddress = new Uri("https://api.sandbox.amadeus.com/v1.2/flights/affiliate-search");
+            //var origin = "LON";
+            //var destination = "NYC";
+
+            //var resp = Task.Run(async () => await flightClient.GetAsync(string.Format("?apikey={0}&origin={1}&destination={2}&departure_date=2019-01-08&return_date=2019-01-11", flightsApiKey, origin, destination))).ConfigureAwait(false).GetAwaiter().GetResult();
+            //if (resp.IsSuccessStatusCode)
+            //{
+            //    var result = JObject.Parse(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
+            //    JArray array = (JArray)result["results"];
+            //    System.Console.WriteLine($"Ukupno rezultata {array.Count}");
+
+            //    var results0 = array[0];
+            //    //FlightDetails outbound = results0["outbound"].ToObject<FlightDetails>();
+            //    var outbound = results0["outbound"];
+            //    JArray outboundArray = (JArray)outbound["flights"];
+            //    System.Console.WriteLine($"Outbound flights: {outboundArray.Count}");
+            //    var inbound = results0["inbound"];
+            //    JArray inboundArray = (JArray)outbound["flights"];
+            //    System.Console.WriteLine($"Inbound flights: {inboundArray.Count}");
+
+            //    var flight0 = new FlightViewModel()
+            //    {
+            //        From = origin,
+            //        To = destination,
+            //        Currency = results0["fare"]["currency"].ToString(),
+            //        TotalPrice = (decimal)results0["fare"]["total_price"],
+            //        OutboundDuration = results0["outbound"]["duration"].ToString(),
+            //        InboundDuration = results0["inbound"]["duration"].ToString(),
+            //        Link = results0["deep_link"].ToString(),
+            //    };
+            //}
 
             #endregion
 

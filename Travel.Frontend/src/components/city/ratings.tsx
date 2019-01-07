@@ -11,7 +11,6 @@ interface IRatingsProps {
 export default class Ratings extends React.PureComponent<IRatingsProps, {}> {
     @autobind
     private handleOnClickCityRating(rate: number) {
-        console.log('onClickCityRating', rate);
         this.props.onClickCityRating(rate);
     }
 
