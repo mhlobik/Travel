@@ -12,7 +12,7 @@ interface IFacebookProps {
     allUsers?: Array<FacebookUtilities.IUser>;
     onManageUserFacebookData?(user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile): void;
     onMarkIsUserExists?(userExists: boolean, loggedIn: boolean, user: FacebookUtilities.IUser): void;
-    onGoToPreferences?(): void;
+    onGoToPreferences?(shouldGo: boolean): void;
     onGetKnowledgeBased?(userId: string): void;
 }
 
@@ -35,7 +35,7 @@ function mapDispatchToProps(dispatch: any): IFacebookProps {
             dispatch(facebookActions.manageUserFacebookData(user, userProfile)),
         onMarkIsUserExists: (userExists: boolean, loggedIn: boolean, user: FacebookUtilities.IUser) =>
             dispatch(facebookActions.markIsUserExists(userExists, loggedIn, user)),
-        onGoToPreferences: () => dispatch(mainActions.goToPreferences()),
+        onGoToPreferences: (shouldGo: boolean) => dispatch(mainActions.goToPreferences(shouldGo)),
         onGetKnowledgeBased: (userId: string) => dispatch(recommendationActions.getKnowledgeBased(userId))
     };
 }
@@ -160,7 +160,7 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
         this.props.onMarkIsUserExists(userExist !== null, this.state.userLoggedIn, this.state.user);
 
         if (userExist === null) {
-            this.props.onGoToPreferences();
+            this.props.onGoToPreferences(true);
         }
 
         if (userExist !== null) {

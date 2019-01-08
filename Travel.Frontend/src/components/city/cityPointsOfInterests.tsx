@@ -20,6 +20,7 @@ export default class CityPointsOfInterests extends React.PureComponent<ICityPoin
                     <Carousel
                         carouselData={this.props.pointsOfInterestsInfo}
                         isClickable={false}
+                        isLoading={this.props.isGettingPointsOfInterestsInfo}
                     />}
             </div>
         );

@@ -4,13 +4,13 @@ import Facebook from '../../containers/facebook/facebook';
 import { autobind } from 'quick-react-ts';
 
 interface IHeaderProps {
-    onGoToPreferences(): void;
+    onGoToPreferences(shouldGo: boolean): void;
 }
 
 export default class Header extends React.PureComponent<IHeaderProps, {}> {
     @autobind
     private handleOnClick() {
-        this.props.onGoToPreferences();
+        this.props.onGoToPreferences(true);
     }
 
     public render() {

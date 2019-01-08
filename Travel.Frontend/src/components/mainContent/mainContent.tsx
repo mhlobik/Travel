@@ -2,11 +2,9 @@ import * as React from 'react';
 import './mainContent.scss';
 import { IUser } from '../../common/facebookUtilities';
 import UserPreferences from '../../containers/userPreferences/userPreferences';
-import CityChooser from '../../containers/cityChooser/cityChooser';
 import { IRecommendation } from '../../common/recommendationUtilities';
 import KnowledgeBased from '../recommenders/knowledgeBased';
-import { ICity, IPointOfInterestsCityInfo, IFlight, IFlightViewModel } from '../../common/city';
-import City from '../city/city';
+import { ICity, IFlightViewModel } from '../../common/city';
 import { autobind } from 'quick-react-ts';
 
 interface IMainContentProps {
@@ -14,18 +12,7 @@ interface IMainContentProps {
     user: IUser;
     continueClicked: boolean;
     userPreferencesSaved: boolean;
-    knowledgeBasedRecommendations: Array<IRecommendation>;
-    selectedRecommendedCity: ICity;
-    openRecommendedItem: boolean;
-    pointsOfInterestsInfo: Array<ICarouselData>;
-    isGettingPointsOfInterestsInfo: boolean;
     goToPreferences: boolean;
-    flights: Array<IFlightViewModel>;
-    isGettingFlights: boolean;
-    handleOnItemClick(recommendedCity: ICity): void;
-    onCloseRecommendedItem(): void;
-    onClickCityRating(cityId: string, userId: string, rate: number): void;
-    onSearchClick(departureDate: Date, returnDate: Date, city: ICity): void;
 }
 
 export interface ICarouselData {
@@ -34,31 +21,13 @@ export interface ICarouselData {
 }
 
 export default class MainContent extends React.PureComponent<IMainContentProps, {}> {
-    @autobind
-    private handleOnClickCityRating(cityId: string, rate: number) {
-        this.props.onClickCityRating(cityId, this.props.user.userId, rate);
-    }
-
     public render() {
         return (
             <div key="container" className="main-content__container">
                 {this.props.user !== null && this.props.goToPreferences && <UserPreferences />}
-                {/*this.props.user !== null && !this.props.continueClicked && <CityChooser />*/}
 
                 {this.props.user !== null && !this.props.goToPreferences &&
-                    <KnowledgeBased
-                        knowledgeBasedRecommendations={this.props.knowledgeBasedRecommendations}
-                        handleOnItemClick={this.props.handleOnItemClick}
-                        openRecommendedItem={this.props.openRecommendedItem}
-                        selectedRecommendedCity={this.props.selectedRecommendedCity}
-                        onCloseRecommendedItem={this.props.onCloseRecommendedItem}
-                        pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
-                        isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
-                        onClickCityRating={this.handleOnClickCityRating}
-                        flights={this.props.flights}
-                        onSearchClick={this.props.onSearchClick}
-                        isGettingFlights={this.props.isGettingFlights}
-                    />
+                    <KnowledgeBased />
                 }
             </div>
         );

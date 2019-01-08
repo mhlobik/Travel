@@ -108,7 +108,7 @@ namespace Travel.Business.Recommenders
                                                  orderby pair.Value descending
                                                  select pair;
 
-            return sortedCitySimilarityDictionary.Take(50).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            return sortedCitySimilarityDictionary.Take(200).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
     }
 }

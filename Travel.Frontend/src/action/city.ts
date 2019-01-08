@@ -45,7 +45,7 @@ export function getCityFlights(departureDate: Date, returnDate: Date, city: ICit
             requestInit: {
                 method: 'POST',
                 body: JSON.stringify({
-                    origin: 'New York',
+                    origin: 'Zagreb',
                     destination: city.name,
                     departureDate: departureDate,
                     returnDate: returnDate

@@ -3,6 +3,7 @@ import fetcher from '../common/fetcher';
 import * as mainActions from './../constants/main';
 import { ICityRating } from '../common/city';
 import * as recommendationActionCreators from '../action/recommendation';
+import * as facebookActionCreators from '../action/facebook';
 
 const mainBaseUrl = 'api/main';
 const cityBaseUrl = 'api/city';
@@ -36,7 +37,9 @@ export function saveUserPreferences(userPreferences: Array<string>, maxTravelPri
                 })
             }
         }).then(() => {
-            dispatch(recommendationActionCreators.getKnowledgeBased(user.userId));
+            dispatch(facebookActionCreators.getUserProfile(user.userId)).then(() => {
+                dispatch(recommendationActionCreators.getKnowledgeBased(user.userId));
+            });
         });
     };
 }
@@ -64,9 +67,9 @@ export function selectedCities(clicked: boolean, cities: Array<ICityRating>) {
     };
 }
 
-export function goToPreferences() {
+export function goToPreferences(shouldGo: boolean) {
     return {
         type: mainActions.GO_TO_PREFERENCES,
-        payload: true
+        payload: shouldGo
     };
 }

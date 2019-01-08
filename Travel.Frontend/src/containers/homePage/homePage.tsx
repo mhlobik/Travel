@@ -21,14 +21,7 @@ function mapStateToProps(state: IRootReducerState): IHomePageProps {
     continueClicked: state.main.continueClicked,
     goToPreferences: state.main.goToPreferences,
     gettingUsers: state.facebook.isGettingUsers,
-    userPreferencesSaved: state.main.userPreferencesSaved,
-    knowledgeBasedRecommendations: state.recommendation.knowledgeBasedRecommendations,
-    selectedRecommendedCity: state.recommendation.selectedRecommendedCity,
-    openRecommendedItem: state.recommendation.openRecommendedItem,
-    pointsOfInterestsInfo: state.city.pointsOfInterestsInfo,
-    isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo,
-    flights: state.city.flights,
-    isGettingFlights: state.city.isGettingFlights
+    userPreferencesSaved: state.main.userPreferencesSaved
   };
 }
 
@@ -36,12 +29,7 @@ function mapDispatchToProps(dispatch: any): IHomePageProps {
   return {
     onGetAllUSers: () => dispatch(facebookActions.getUsers()),
     onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser()),
-    handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity)),
-    onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem()),
-    onGoToPreferences: () => dispatch(mainActions.goToPreferences()),
-    onClickCityRating: (cityId: string, userId: string, rate: number) => dispatch(cityActions.saveCityRating(cityId, userId, rate)),
-    onSearchClick: (departureDate: Date, returnDate: Date, city: ICity) => 
-      dispatch(cityActions.getCityFlights(departureDate, returnDate, city))
+    onGoToPreferences: (shouldGo: boolean) => dispatch(mainActions.goToPreferences(shouldGo))
   };
 }
 
@@ -63,21 +51,10 @@ interface IHomePageProps {
   continueClicked?: boolean;
   gettingUsers?: boolean;
   userPreferencesSaved?: boolean;
-  knowledgeBasedRecommendations?: Array<IRecommendation>;
-  selectedRecommendedCity?: ICity;
-  openRecommendedItem?: boolean;
-  pointsOfInterestsInfo?: Array<ICarouselData>;
-  isGettingPointsOfInterestsInfo?: boolean;
   goToPreferences?: boolean;
-  flights?: Array<IFlightViewModel>;
-  isGettingFlights?: boolean;
   onGetAllUSers?(): void;
   onGetCitiesChooser?(): void;
-  handleOnItemClick?(recommendedCity: ICity): void;
-  onCloseRecommendedItem?(): void;
-  onGoToPreferences?(): void;
-  onClickCityRating?(cityId: string, userId: string, rate: number): void;
-  onSearchClick?(departureDate: Date, returnDate: Date, city: ICity): void;
+  onGoToPreferences?(shouldGo: boolean): void;
 }
 
 interface IHomePageState {
@@ -98,42 +75,16 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
     // this.props.onGetCitiesChooser();
   }
 
-  @autobind
-  private onHandleOnItemClick(recommendedCity: ICity) {
-    this.props.handleOnItemClick(recommendedCity);
-  }
-
-  @autobind
-  private handleOnCloseRecommendedItem() {
-    this.props.onCloseRecommendedItem();
-  }
-
-  @autobind
-  private handleOnGoToPreferences() {
-    this.props.onGoToPreferences();
-  }
-
   public render() {
     return (
       <div className="home-page__container">
-        <Header onGoToPreferences={this.handleOnGoToPreferences} />
+        <Header onGoToPreferences={this.props.onGoToPreferences} />
         <MainContent
           user={this.props.user}
           userLoggedIn={this.props.userLoggedIn}
           continueClicked={this.props.continueClicked}
           userPreferencesSaved={this.props.userPreferencesSaved}
-          knowledgeBasedRecommendations={this.props.knowledgeBasedRecommendations}
-          handleOnItemClick={this.onHandleOnItemClick}
-          openRecommendedItem={this.props.openRecommendedItem}
-          selectedRecommendedCity={this.props.selectedRecommendedCity}
-          onCloseRecommendedItem={this.handleOnCloseRecommendedItem}
-          pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
-          isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
           goToPreferences={this.props.goToPreferences}
-          onClickCityRating={this.props.onClickCityRating}
-          flights={this.props.flights}
-          onSearchClick={this.props.onSearchClick}
-          isGettingFlights={this.props.isGettingFlights}
         />
       </div>
     );

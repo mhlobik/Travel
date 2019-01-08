@@ -26,7 +26,11 @@ namespace Travel.Application.ApiControllers
         {
             var userPofileManager = new UserProfileManager();
             var isStored = userPofileManager.ParseAndStoreUserProfile(userProfile);
-            return Ok();
+
+            var databaseManager = new ManageUserFacebookData();
+            var newUserProfile = databaseManager.GetUserProfile(userProfile.UserId);
+
+            return Ok(newUserProfile);
         }
 
         [Route("api/facebook/get-users")]
@@ -36,6 +40,15 @@ namespace Travel.Application.ApiControllers
             ManageUserFacebookData databaseManager = new ManageUserFacebookData();
             var allUsers = databaseManager.GetAllUsers();
             return Ok(allUsers);
+        }
+
+        [Route("api/facebook/get-user-profile/{userId}")]
+        [HttpGet]
+        public IHttpActionResult GetUserProfile(string userId)
+        {
+            var databaseManager = new ManageUserFacebookData();
+            var userProfile = databaseManager.GetUserProfile(userId);
+            return Ok(userProfile);
         }
     }
 }

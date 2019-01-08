@@ -28,11 +28,15 @@
         display: flex;
         justify-content: flex-end;
 
+        .button.button-textual {
+            font-size: 16px;
+        }
+
         .user-preferences__button {
             color: $secondary-green;
             background: $secondary-green;
             font-size: 16px;
-            padding: 5px;
+            margin-left: 30px;
         }
     }
 

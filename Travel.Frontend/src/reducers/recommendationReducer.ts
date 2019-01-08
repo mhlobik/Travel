@@ -22,8 +22,7 @@ export default function facebookReducer(state: IRecommendationReducerState = ini
         case `${recommendationActions.GET_KNOWLEDGE_BASED}_REQUEST`:
             return {
                 ...state,
-                isGettingKnowledgeBased: true
-            };
+                isGettingKnowledgeBased: true            };
         case `${recommendationActions.GET_KNOWLEDGE_BASED}_RESPONSE`:
             return {
                 ...state,

@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 import { IRootReducerState } from '../../reducers/rootReducer';
 import './userPreferences.scss';
 import { UserPreferencesStrings } from '../../assets/strings/strings';
-import { IUser } from '../../common/facebookUtilities';
+import { IUser, IUserProfile } from '../../common/facebookUtilities';
 import { autobind, Button, TextField, Tooltip, DirectionalHint, TreeDataSource, Treeview, ITreeviewItem } from 'quick-react-ts';
 
 import * as mainActions from '../../action/main';
-import { preferenceChoices } from '../../common/appDataStructures';
+import { preferenceChoices, checkSavedPreferences } from '../../common/appDataStructures';
 
 interface IUserPreferencesProps {
     user?: IUser;
+    userProfile?: IUserProfile;
     onSaveUserPreferences?(userPreferences: Array<string>, maxTravelPrice: number, maxFlightPrice: number, user: IUser): void;
+    onGoToPreferences?(shouldGo: boolean): void;
 }
 
 interface IUserPreferencesState {
@@ -23,14 +25,16 @@ interface IUserPreferencesState {
 
 function mapStateToProps(state: IRootReducerState): IUserPreferencesProps {
     return {
-        user: state.facebook.user
+        user: state.facebook.user,
+        userProfile: state.facebook.userProfile
     };
 }
 
 function mapDispatchToProps(dispatch: any): IUserPreferencesProps {
     return {
         onSaveUserPreferences: (userPreferences: Array<string>, maxTravelPrice: number, maxFlightPrice: number, user: IUser) =>
-            dispatch(mainActions.saveUserPreferences(userPreferences, maxTravelPrice, maxFlightPrice, user))
+            dispatch(mainActions.saveUserPreferences(userPreferences, maxTravelPrice, maxFlightPrice, user)),
+        onGoToPreferences: (shouldGo: boolean) => dispatch(mainActions.goToPreferences(shouldGo))
     };
 }
 
@@ -54,6 +58,12 @@ class UserPreferences extends React.Component<IUserPreferencesProps, IUserPrefer
             isSaving: false,
             userPreferenceChoices: preferenceChoices
         };
+    }
+
+    public componentDidMount() {
+        if (this.props.userProfile.preferences !== null) {
+            this.setState({ userPreferenceChoices: checkSavedPreferences(this.props.userProfile.preferences) });
+        }
     }
 
     @autobind
@@ -141,6 +151,11 @@ class UserPreferences extends React.Component<IUserPreferencesProps, IUserPrefer
         this.props.onSaveUserPreferences(filteredPreferences, this.state.maxTravelPrice, this.state.maxFlightPrice, this.props.user);
     }
 
+    @autobind
+    private _onCancel() {
+        this.props.onGoToPreferences(false);
+    }
+
     public render() {
         return (
             <div className="user-preferences__container">
@@ -149,6 +164,11 @@ class UserPreferences extends React.Component<IUserPreferencesProps, IUserPrefer
                 {this._renderChoicesTree()}
                 {this._renderPriceChoices()}
                 <span className="user-preferences__button-wraper">
+                    <Button
+                        className="button-textual"
+                        onClick={this._onCancel}>
+                        Cancel
+                    </Button>
                     <Button
                         className="user-preferences__button"
                         onClick={this._onSaveClick}

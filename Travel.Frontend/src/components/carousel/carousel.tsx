@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { IRootReducerState } from '../../reducers/rootReducer';
 import './carousel.scss';
-import { autobind } from 'quick-react-ts';
+import { autobind, Spinner, SpinnerType } from 'quick-react-ts';
 import CarouselLeftArrow from '../../components/carousel/carouselLeftArrow';
 import CarouselRightArrow from '../../components/carousel/carouselRightArrow';
 import CarouselSlide from '../../components/carousel/carouselSlide';
@@ -14,6 +14,7 @@ interface ICarouselProps {
     knowledgeBasedRecommendations?: Array<IRecommendation>;
     carouselData?: Array<ICarouselData>;
     isClickable: boolean;
+    isLoading: boolean;
     handleOnItemClick?(recommendedCity: ICity): void;
 }
 
@@ -117,14 +118,19 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     }
 
     public render() {
+        console.log('carousel', this.props.isLoading);
         return (
             <div className="carousel">
                 <CarouselLeftArrow onClick={this.goToPrevSlide} />
 
-                {this.props.isClickable &&
+                {this.props.isLoading &&
+                    <Spinner type={SpinnerType.large} className="carousel__spinner" label={'Loading...'} />
+                }
+
+                {this.props.isClickable && !this.props.isLoading &&
                     this.renderClickableSlide()
                 }
-                {!this.props.isClickable &&
+                {!this.props.isClickable && !this.props.isLoading &&
                     this.renderNonClickableSlide()
                 }
 

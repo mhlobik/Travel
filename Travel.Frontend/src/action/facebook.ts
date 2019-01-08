@@ -25,7 +25,7 @@ export function manageUserProfileFacebookData(userProfile: IUserProfile) {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${facebookBaseUrl}/manage-user-profile-facebook-data`,
             requestActionName: facebookActions.MANAGE_USER_PROFILE_FACEBOOK_DATA,
-            jsonResponseExpected: false,
+            jsonResponseExpected: true,
             requestInit: {
                 method: 'POST',
                 body: JSON.stringify(userProfile)
@@ -51,5 +51,18 @@ export function markIsUserExists(exists: boolean, loggedIn: boolean, user: IUser
     return {
         type: facebookActions.SET_USER_FLAGS,
         payload: { userExists: exists, userLoggedIn: loggedIn, user: user }
+    };
+}
+
+export function getUserProfile(userId: string) {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${facebookBaseUrl}/get-user-profile/${userId}`,
+            requestActionName: facebookActions.MANAGE_USER_PROFILE_FACEBOOK_DATA,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'GET'
+            }
+        });
     };
 }

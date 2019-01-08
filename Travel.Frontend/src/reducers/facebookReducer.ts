@@ -1,6 +1,6 @@
 import { IAction } from '../common/appDataStructures';
 import * as facebookActions from '../constants/facebook';
-import { IUser } from '../common/facebookUtilities';
+import { IUser, IUserProfile } from '../common/facebookUtilities';
 
 export interface IFacebookReducerState {
     userLoggedIn: boolean;
@@ -8,6 +8,8 @@ export interface IFacebookReducerState {
     userExists: boolean;
     user: IUser;
     allUsers: Array<IUser>;
+    userProfile: IUserProfile;
+    isGettingUserProfile: boolean;
 }
 
 const initialState: IFacebookReducerState = {
@@ -15,7 +17,9 @@ const initialState: IFacebookReducerState = {
     isGettingUsers: false,
     userExists: false,
     user: null,
-    allUsers: null
+    allUsers: null,
+    userProfile: null,
+    isGettingUserProfile: false
 };
 
 export default function facebookReducer(state: IFacebookReducerState = initialState, action: IAction = { type: '', payload: null }) {
@@ -35,6 +39,22 @@ export default function facebookReducer(state: IFacebookReducerState = initialSt
             return {
                 ...state,
                 isCheckingUser: false
+            };
+        case `${facebookActions.MANAGE_USER_PROFILE_FACEBOOK_DATA}_REQUEST`:
+            return {
+                ...state,
+                isGettingUserProfile: true
+            };
+        case `${facebookActions.MANAGE_USER_PROFILE_FACEBOOK_DATA}_RESPONSE`:
+            return {
+                ...state,
+                isGettingUserProfile: false,
+                userProfile: action.payload
+            };
+        case `${facebookActions.MANAGE_USER_PROFILE_FACEBOOK_DATA}_ERROR`:
+            return {
+                ...state,
+                isGettingUserProfile: false
             };
         case `${facebookActions.GET_USERS}_REQUEST`:
             return {
