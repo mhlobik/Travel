@@ -1,22 +1,23 @@
 import * as React from 'react';
 import { autobind } from 'quick-react-ts';
 import { ICity } from '../../common/city';
+import { IRecommendation } from '../../common/recommendationUtilities';
 
 interface ICarouselSlideProps {
     key: number;
     index: number;
-    recommendedCity?: ICity;
+    recommendation?: IRecommendation;
     activeIndexes: Array<number>;
     image?: string;
     title?: string;
     isClickable: boolean;
-    onItemClick?(recommendedCity: ICity): void;
+    onItemClick?(recommendation: IRecommendation): void;
 }
 
 export default class CarouselSlide extends React.PureComponent<ICarouselSlideProps, {}> {
     @autobind
     private handleOnItemClick() {
-        this.props.onItemClick(this.props.recommendedCity);
+        this.props.onItemClick(this.props.recommendation);
     }
 
     @autobind
@@ -30,9 +31,9 @@ export default class CarouselSlide extends React.PureComponent<ICarouselSlidePro
                 }
                 onClick={this.handleOnItemClick}
             >
-                <img src={this.props.recommendedCity.imageUrl} height="306" width="306"></img>
+                <img src={this.props.recommendation.recommendedCity.imageUrl} height="306" width="306"></img>
                 <span className="carousel-slide__content">
-                    {this.props.recommendedCity.name}
+                    {this.props.recommendation.recommendedCity.name}
                 </span>
             </li>
         );

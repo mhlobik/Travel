@@ -45,7 +45,6 @@ namespace Travel.Business.Recommenders
 
                 var recommendation = new Recommendation()
                 {
-                    RecommendationId = pair.Key + pair.Value,
                     RecommenderModel = RecommenderModelEnum.KnowledgeBased,
                     RecommendedCity = recommendedCity,
                     Similarity = pair.Value,

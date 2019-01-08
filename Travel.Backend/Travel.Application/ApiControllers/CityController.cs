@@ -61,7 +61,7 @@ namespace Travel.Application.ApiControllers
         public IHttpActionResult GetCityRating(string cityId)
         {
             var databaseManager = new ManageCityData();
-            var rating = databaseManager.GetRating(cityId);
+            var rating = databaseManager.GetCityRating(cityId);
             return Ok(rating);
         }
 

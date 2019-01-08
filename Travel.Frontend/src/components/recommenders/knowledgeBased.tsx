@@ -14,17 +14,18 @@ import * as cityActions from '../../action/city';
 interface IKnowledgeBasedProps {
     userId?: string;
     knowledgeBasedRecommendations?: Array<IRecommendation>;
-    selectedRecommendedCity?: ICity;
     openRecommendedItem?: boolean;
     pointsOfInterestsInfo?: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo?: boolean;
     flights?: Array<IFlightViewModel>;
     isGettingFlights?: boolean;
     isGettingKnowledgeBased?: boolean;
-    handleOnItemClick?(recommendedCity: ICity): void;
+    selectedRecommendation?: IRecommendation;
+    handleOnItemClick?(recommendation: IRecommendation): void;
     onCloseRecommendedItem?(): void;
     onClickCityRating?(cityId: string, userId: string, rate: number): void;
     onSearchClick?(departureDate: Date, returnDate: Date, city: ICity): void;
+    onClickRecommendationRating?(rate: number): void;
 }
 
 interface IKnowledgeBasedState {
@@ -35,19 +36,19 @@ function mapStateToProps(state: IRootReducerState): IKnowledgeBasedProps {
     return {
         userId: state.facebook.user.userId,
         knowledgeBasedRecommendations: state.recommendation.knowledgeBasedRecommendations,
-        selectedRecommendedCity: state.recommendation.selectedRecommendedCity,
         openRecommendedItem: state.recommendation.openRecommendedItem,
         pointsOfInterestsInfo: state.city.pointsOfInterestsInfo,
         isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo,
         flights: state.city.flights,
         isGettingFlights: state.city.isGettingFlights,
-        isGettingKnowledgeBased: state.recommendation.isGettingKnowledgeBased
+        isGettingKnowledgeBased: state.recommendation.isGettingKnowledgeBased,
+        selectedRecommendation: state.recommendation.selectedRecommendation
     };
 }
 
 function mapDispatchToProps(dispatch: any): IKnowledgeBasedProps {
     return {
-        handleOnItemClick: (recommendedCity: ICity) => dispatch(recommendationActions.openRecommendedItem(recommendedCity)),
+        handleOnItemClick: (recommendation: IRecommendation) => dispatch(recommendationActions.openRecommendedItem(recommendation)),
         onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem()),
         onClickCityRating: (cityId: string, userId: string, rate: number) => dispatch(cityActions.saveCityRating(cityId, userId, rate)),
         onSearchClick: (departureDate: Date, returnDate: Date, city: ICity) =>
@@ -79,8 +80,8 @@ class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledg
     }
 
     @autobind
-    private onHandleOnItemClick(recommendedCity: ICity) {
-        this.props.handleOnItemClick(recommendedCity);
+    private onHandleOnItemClick(recommendation: IRecommendation) {
+        this.props.handleOnItemClick(recommendation);
     }
 
     public render() {
@@ -94,7 +95,7 @@ class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledg
                     isLoading={this.state.isLoading}
                 />
 
-                {this.props.openRecommendedItem && this.props.selectedRecommendedCity !== null &&
+                {this.props.openRecommendedItem && this.props.selectedRecommendation !== null &&
                     <City />
                 }
             </div>

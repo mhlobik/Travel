@@ -15,7 +15,7 @@ interface ICarouselProps {
     carouselData?: Array<ICarouselData>;
     isClickable: boolean;
     isLoading: boolean;
-    handleOnItemClick?(recommendedCity: ICity): void;
+    handleOnItemClick?(recommendation: IRecommendation): void;
 }
 
 interface ICarouselState {
@@ -89,7 +89,7 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
                     <CarouselSlide
                         key={index}
                         index={index}
-                        recommendedCity={rec.recommendedCity}
+                        recommendation={rec}
                         activeIndexes={this.state.activeIndexesTest}
                         onItemClick={this.props.handleOnItemClick}
                         isClickable={this.props.isClickable}

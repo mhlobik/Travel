@@ -10,7 +10,9 @@ interface IRatingsProps {
     cityRating: ICityRating;
     isGettingCityRating: boolean;
     cityName: string;
+    recommendationRating: number;
     onClickCityRating(rate: number): void;
+    onClickRecommendationRating(rate: number): void;
 }
 
 export default class Ratings extends React.PureComponent<IRatingsProps, {}> {
@@ -20,13 +22,13 @@ export default class Ratings extends React.PureComponent<IRatingsProps, {}> {
     }
 
     @autobind
-    private onClickRecommendationRationg(ev: any) {
-        console.log('onClickRecommendationRationg', ev);
-        // trebam userId, recommendationId
+    private onClickRecommendationRationg(rate: any) {
+        this.props.onClickRecommendationRating(rate);
     }
 
     public render() {
         const initialCityRating = this.props.cityRating !== null ? this.props.cityRating.rating : 0;
+        const initialRecommendationRating = this.props.recommendationRating !== null ? this.props.recommendationRating : 0;
 
         return (
             <div className="ratings__container">
@@ -42,7 +44,7 @@ export default class Ratings extends React.PureComponent<IRatingsProps, {}> {
                     emptySymbol={<img src={StarEmpty} className="icon" />}
                     fullSymbol={<img src={StarFull} className="icon" />}
                     onClick={this.onClickRecommendationRationg}
-                    initialRating={3}
+                    initialRating={initialRecommendationRating}
                 />
             </div>
         );

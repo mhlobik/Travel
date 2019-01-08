@@ -249,7 +249,6 @@
     <Compile Include="Model\PointOfInterestCategory.cs" />
     <Compile Include="Model\PointsOfInterest.cs" />
     <Compile Include="Model\Recommendation.cs" />
-    <Compile Include="Model\RecommenderModelRating.cs" />
     <Compile Include="Model\TextAnalysis.cs" />
     <Compile Include="Model\UserProfile.cs" />
     <Compile Include="Model\FacebookEvent.cs" />

@@ -211,7 +211,7 @@ namespace Travel.Database.Utilities
             return airport;
         }
 
-        public CityRating GetRating(string cityId)
+        public CityRating GetCityRating(string cityId)
         {
             IDocumentStore store;
             var cityRating = new CityRating();
@@ -259,6 +259,46 @@ namespace Travel.Database.Utilities
                     }
                 }
             }
+        }
+
+        public void SaveRecommendation(Recommendation recommendation)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingRecommendation = session.Query<Recommendation>().FirstOrDefault(x => x.RecommendedCity.Equals(recommendation.RecommendedCity) 
+                    && x.RecommenderModel == recommendation.RecommenderModel && x.UserId == recommendation.UserId);
+   
+                    if (existingRecommendation != null)
+                    {
+                        session.Advanced.Patch(existingRecommendation, x => x.Rating, recommendation.Rating);
+                        session.SaveChanges();
+                    } else
+                    {
+                        session.Store(recommendation);
+                        session.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public Recommendation GetRecommendation(Recommendation recommendation)
+        {
+            IDocumentStore store;
+            var recommendationDatabase = new Recommendation();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    recommendationDatabase = session.Query<Recommendation>().FirstOrDefault(x => x.RecommendedCity.Equals(recommendation.RecommendedCity)
+                    && x.RecommenderModel == recommendation.RecommenderModel && x.UserId == recommendation.UserId);
+                }
+            }
+
+            return recommendationDatabase;
         }
     }
 }

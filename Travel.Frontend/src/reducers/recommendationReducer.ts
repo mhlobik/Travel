@@ -6,14 +6,14 @@ import { IRecommendation } from '../common/recommendationUtilities';
 export interface IRecommendationReducerState {
     isGettingKnowledgeBased: boolean;
     knowledgeBasedRecommendations: Array<IRecommendation>;
-    selectedRecommendedCity: ICity;
+    selectedRecommendation: IRecommendation;
     openRecommendedItem: boolean;
 }
 
 const initialState: IRecommendationReducerState = {
     isGettingKnowledgeBased: false,
     knowledgeBasedRecommendations: [],
-    selectedRecommendedCity: null,
+    selectedRecommendation: null,
     openRecommendedItem: false
 };
 
@@ -38,13 +38,13 @@ export default function facebookReducer(state: IRecommendationReducerState = ini
             return {
                 ...state,
                 openRecommendedItem: true,
-                selectedRecommendedCity: action.payload
+                selectedRecommendation: action.payload
             };
         case recommendationActions.CLOSE_RECOMMENDED_ITEM:
             return {
                 ...state,
                 openRecommendedItem: action.payload,
-                selectedRecommendedCity: null
+                selectedRecommendation: null
             };
         default:
             return state;
