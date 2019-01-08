@@ -150,7 +150,17 @@
   
           .grid-component {
             .grid-cell_link {
-              margin-left: 30px;
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+            .grid-cell__center {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
           }
         }
@@ -179,6 +189,58 @@
         background: $secondary-green;
         font-size: 16px;
         padding: 5px;
+      }
+    }
+  }
+
+  .city-hotels__container {
+    margin-left: 60px;
+    margin-top: 20px;
+
+    .city-hotels__content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 400px;
+
+      .city-hotels__message {
+        font-family: $primary-font;
+        color: $primary-grey;
+        font-size: 18px;
+      }
+  
+      .city-hotels__grid {
+        height: 400px;
+        width: 95%;
+    
+        .grid-component-container {
+          height: 100%;
+          width: 100%;
+          margin: 0;
+          border: 1px solid $primary-middle;
+  
+          .grid-header-column:last-child {
+              .grid-column-draggable{
+                 border-right: none;
+              }
+         }
+  
+          .grid-component {
+            .grid-cell_link {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+            .grid-cell__center {
+              width: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+          }
+        }
       }
     }
   }

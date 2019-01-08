@@ -54,7 +54,7 @@ class CityChooser extends React.PureComponent<ICityChooserProps, ICityChooserSta
 
     @autobind
     private _onCityClicked(cityId: string, selected: boolean) {
-        const newCityRating: ICityRating = { cityId: cityId, userId: this.props.user.userId, liked: selected };
+        const newCityRating: ICityRating = { cityId: cityId, userId: this.props.user.userId, rating: 1 }; // ovo treba ispravit ili obrisat
         const newSelectedCities = this.state.selectedCities.concat([newCityRating]);
 
         this.setState({ selectedCities: newSelectedCities });

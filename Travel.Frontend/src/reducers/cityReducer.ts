@@ -1,20 +1,28 @@
 import { IAction } from '../common/appDataStructures';
 import * as cityActions from '../constants/city';
 import { ICarouselData } from '../components/mainContent/mainContent';
-import { IFlightViewModel } from '../common/city';
+import { IFlightViewModel, ICityRating, IHotel } from '../common/city';
 
 export interface ICityReducerState {
     isGettingPointsOfInterestsInfo: boolean;
     pointsOfInterestsInfo: Array<ICarouselData>;
     flights: Array<IFlightViewModel>;
     isGettingFlights: boolean;
+    cityRating: ICityRating;
+    isGettingCityRating: boolean;
+    hotels: Array<IHotel>;
+    isGettingHotels: boolean;
 }
 
 const initialState: ICityReducerState = {
     isGettingPointsOfInterestsInfo: false,
     pointsOfInterestsInfo: null,
     flights: null,
-    isGettingFlights: false
+    isGettingFlights: false,
+    cityRating: null,
+    isGettingCityRating: false,
+    hotels: null,
+    isGettingHotels: false
 };
 
 export default function cityReducer(state: ICityReducerState = initialState, action: IAction = { type: '', payload: null }) {
@@ -50,6 +58,39 @@ export default function cityReducer(state: ICityReducerState = initialState, act
             return {
                 ...state,
                 isGettingFlights: false
+            };
+        case `${cityActions.GET_CITY_RATING}_REQUEST`:
+            return {
+                ...state,
+                isGettingCityRating: true
+            };
+        case `${cityActions.GET_CITY_RATING}_RESPONSE`:
+            return {
+                ...state,
+                isGettingCityRating: false,
+                cityRating: action.payload
+            };
+        case `${cityActions.GET_CITY_RATING}_ERROR`:
+            return {
+                ...state,
+                isGettingCityRating: false
+            };
+        case `${cityActions.GET_HOTELS}_REQUEST`:
+            return {
+                ...state,
+                isGettingHotels: true,
+                hotels: null
+            };
+        case `${cityActions.GET_HOTELS}_RESPONSE`:
+            return {
+                ...state,
+                isGettingHotels: false,
+                hotels: action.payload
+            };
+        case `${cityActions.GET_HOTELS}_ERROR`:
+            return {
+                ...state,
+                isGettingHotels: false
             };
         default:
             return state;

@@ -57,7 +57,7 @@ export const flightsColumns: Array<GridColumn> = [
         cellFormatter: (cellData, rowData) => {
             return (
                 <a className="grid-cell_link" href={cellData}>
-                    {'Chech Flight Details'}
+                    {'Check Flight Details'}
                 </a>
             );
         }
@@ -66,7 +66,6 @@ export const flightsColumns: Array<GridColumn> = [
 
 export default class CityFlights extends React.PureComponent<ICityFlightsProps, {}> {
     public render() {
-        console.log(this.props.flights);
         return (
             <div className="city-flights__container">
                 <FlightDatePicker onSearchClick={this.props.onSearchClick} />

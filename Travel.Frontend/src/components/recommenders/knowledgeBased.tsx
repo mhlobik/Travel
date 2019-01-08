@@ -75,8 +75,7 @@ class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledg
     }
 
     public componentWillReceiveProps(nextProps: IKnowledgeBasedProps) {
-        console.log('componentWillReceiveProps', nextProps.isGettingKnowledgeBased, this.props.isGettingKnowledgeBased);
-        this.setState({isLoading: nextProps.isGettingKnowledgeBased});
+        this.setState({ isLoading: nextProps.isGettingKnowledgeBased });
     }
 
     @autobind
@@ -84,18 +83,7 @@ class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledg
         this.props.handleOnItemClick(recommendedCity);
     }
 
-    @autobind
-    private handleOnCloseRecommendedItem() {
-        this.props.onCloseRecommendedItem();
-    }
-
-    @autobind
-    private handleOnClickCityRating(cityId: string, rate: number) {
-        this.props.onClickCityRating(cityId, this.props.userId, rate);
-    }
-
     public render() {
-        console.log('knowledge based render', this.state.isLoading);
         return (
             <div className="knowledge-based__container">
                 <span className="knowledge-based__title">Cities based on your preferences:</span>
@@ -107,16 +95,7 @@ class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledg
                 />
 
                 {this.props.openRecommendedItem && this.props.selectedRecommendedCity !== null &&
-                    <City
-                        selectedRecommendedCity={this.props.selectedRecommendedCity}
-                        closeCityDetails={this.handleOnCloseRecommendedItem}
-                        pointsOfInterestsInfo={this.props.pointsOfInterestsInfo}
-                        isGettingPointsOfInterestsInfo={this.props.isGettingPointsOfInterestsInfo}
-                        onClickCityRating={this.handleOnClickCityRating}
-                        flights={this.props.flights}
-                        onSearchClick={this.props.onSearchClick}
-                        isGettingFlights={this.props.isGettingFlights}
-                    />
+                    <City />
                 }
             </div>
         );

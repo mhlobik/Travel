@@ -10,23 +10,6 @@ namespace Travel.Database.Utilities
 {
     public class ManageCityData
     {
-        public void SaveCityRating(CityRating cityRating)
-        {
-            IDocumentStore store;
-            using (store = DatabaseConnection.DocumentStoreInitialization())
-            {
-                using (IDocumentSession session = store.OpenSession())
-                {
-                    var existingCity = session.Query<CityRating>().Any(x => x.CityId == cityRating.CityId && x.UserId == cityRating.UserId);
-                    if (!existingCity)
-                    {
-                        session.Store(cityRating);
-                        session.SaveChanges();
-                    }
-                }
-            }
-        }
-
         public void StoreCity(City city)
         {
             IDocumentStore store;
@@ -228,6 +211,55 @@ namespace Travel.Database.Utilities
             return airport;
         }
 
+        public CityRating GetRating(string cityId)
+        {
+            IDocumentStore store;
+            var cityRating = new CityRating();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    cityRating = session.Query<CityRating>().FirstOrDefault(x => x.CityId.Equals(cityId));
+                }
+            }
+
+            return cityRating;
+        }
+
+        public void SaveCityRating(CityRating cityRating)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingCity = session.Query<CityRating>().Any(x => x.CityId == cityRating.CityId && x.UserId == cityRating.UserId);
+                    if (!existingCity)
+                    {
+                        session.Store(cityRating);
+                        session.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public void UpdateCityHotels(City city)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingCity = session.Query<City>().FirstOrDefault(x => x.CityId == city.CityId);
+                    if (existingCity != null)
+                    {
+                        session.Advanced.Patch(existingCity, x => x.Hotels, city.Hotels);
+                        session.SaveChanges();
+                    }
+                }
+            }
+        }
     }
 }
 

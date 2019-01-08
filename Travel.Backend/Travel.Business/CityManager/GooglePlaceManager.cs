@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Travel.Database.Model;
 
 namespace Travel.Business.CityManager
 {
@@ -24,7 +26,8 @@ namespace Travel.Business.CityManager
                 var result = JObject.Parse(await resp.Content.ReadAsStringAsync());
                 var status = result["status"].ToString();
 
-                if (status.Equals("ZERO_RESULTS")) {
+                if (status.Equals("ZERO_RESULTS"))
+                {
                     return null;
                 }
 
@@ -44,6 +47,58 @@ namespace Travel.Business.CityManager
             }
 
             return photoUrl;
+        }
+
+        public async Task<List<Hotel>> GetHotels(string cityName)
+        {
+            var lines = System.IO.File.ReadAllLines(@"D:\Diplomski Rad\config.ts");
+            string appSecret = lines[0];
+
+            Client = new System.Net.Http.HttpClient();
+            Client.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/place/");
+
+            var hotels = new List<Hotel>();
+
+            var query = "hotels in " + cityName;
+
+            var resp = await Client.GetAsync(string.Format("textsearch/json?query={0}&key={1}", query, appSecret));
+
+            if (resp.IsSuccessStatusCode)
+            {
+                var results = JObject.Parse(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
+                JArray resultsArray = (JArray)results["results"];
+                System.Console.WriteLine($"\nUkupno rezultata za hotele {cityName} : {resultsArray.Count}\n");
+
+                foreach (var result in resultsArray)
+                {
+                    var placeId = result["place_id"].ToString();
+                    var hotel = await getHotelDetails(appSecret, placeId);
+                    hotels.Add(hotel);
+                }
+            }
+
+            return hotels;
+        }
+
+        private async Task<Hotel> getHotelDetails(string appSecret, string placeId)
+        {
+            var hotel = new Hotel();
+            var details = await Client.GetAsync(String.Format("details/json?key={0}&placeid={1}", appSecret, placeId));
+
+            if (details.IsSuccessStatusCode)
+            {
+                var content = JObject.Parse(await details.Content.ReadAsStringAsync());
+                var result = content["result"];
+
+                hotel.HotelId = result["id"] != null ? result["id"].ToString() : "";
+                hotel.Address = result["formatted_address"] != null ? result["formatted_address"].ToString() : "";
+                hotel.Name = result["name"] != null ? result["name"].ToString() : "";
+                hotel.GoogleMapsUrl = result["url"] != null ? result["url"].ToString() : "";
+                hotel.UserRating = result["rating"] != null ? result["rating"].ToString() : "";
+                hotel.Website = result["website"] != null ? result["website"].ToString() : "";
+            }
+
+            return hotel;
         }
     }
 }

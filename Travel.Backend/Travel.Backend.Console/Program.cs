@@ -220,25 +220,28 @@ namespace Travel.Backend.Console
             #endregion
 
             #region Google Place API
+            //var lines = System.IO.File.ReadAllLines(@"D:\Diplomski Rad\config.ts");
+            //string AppSecret = lines[0];
+
             //Client = new System.Net.Http.HttpClient();
             //Client.BaseAddress = new Uri("https://maps.googleapis.com/maps/api/place/");
 
-            // var query = "La Poterne Caen";
-            // var resp = Task.Run(async () => await Client.GetAsync(string.Format("textsearch/json?key={0}&query={1}", AppSecret, query))).ConfigureAwait(false).GetAwaiter().GetResult();
-            // if (resp.IsSuccessStatusCode)
-            // {
-            //     var result = JObject.Parse(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
-            //     var placeID = result["results"][0]["place_id"];
-            //     var details = Task.Run(async () => await Client.GetAsync(String.Format("details/json?key={0}&placeid={1}", AppSecret, placeID))).ConfigureAwait(false).GetAwaiter().GetResult();
-            //     var content = JObject.Parse(Task.Run(async () => await details.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
-            //     var PhotoReference = result["results"][0]["photos"][0]["photo_reference"];
-            //     var MaxHeight = result["results"][0]["photos"][0]["height"];
-            //     var MaxWidth = result["results"][0]["photos"][0]["width"];
-            //     var url = String.Format("photo?photoreference={0}&sensor=false&maxheight={1}&maxwidth={2}&key={3}", PhotoReference, MaxHeight, MaxWidth, AppSecret);
-            //     var photoRequest = Task.Run(async () => await Client.GetAsync(url)).ConfigureAwait(false).GetAwaiter().GetResult();
-            //     var photo = Task.Run(async () => await photoRequest.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
-            // }
-            //                URL = "https://en.wikipedia.org/w/api.php"
+            //var query = "zagreb";
+
+            //var resp = Task.Run(async () => await Client.GetAsync(string.Format("textsearch/json?key={0}&query={1}", AppSecret, query))).ConfigureAwait(false).GetAwaiter().GetResult();
+            //if (resp.IsSuccessStatusCode)
+            //{
+            //    var result = JObject.Parse(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
+            //    var placeID = result["results"][0]["place_id"];
+            //    var details = Task.Run(async () => await Client.GetAsync(String.Format("details/json?key={0}&placeid={1}", AppSecret, placeID))).ConfigureAwait(false).GetAwaiter().GetResult();
+            //    var content = JObject.Parse(Task.Run(async () => await details.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
+            //var PhotoReference = result["results"][0]["photos"][0]["photo_reference"];
+            //var MaxHeight = result["results"][0]["photos"][0]["height"];
+            //var MaxWidth = result["results"][0]["photos"][0]["width"];
+            //var url = String.Format("photo?photoreference={0}&sensor=false&maxheight={1}&maxwidth={2}&key={3}", PhotoReference, MaxHeight, MaxWidth, AppSecret);
+            //var photoRequest = Task.Run(async () => await Client.GetAsync(url)).ConfigureAwait(false).GetAwaiter().GetResult();
+            //var photo = Task.Run(async () => await photoRequest.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult();
+            //}
             #endregion
 
             #region Wikipedia API
@@ -301,6 +304,30 @@ namespace Travel.Backend.Console
             //}
 
             #endregion
+
+            #region Hotels API
+            //var lines = System.IO.File.ReadAllLines(@"D:\Diplomski Rad\config.ts");
+            //string flightsApiKey = lines[3];
+
+            //var flightClient = new System.Net.Http.HttpClient();
+            //flightClient.BaseAddress = new Uri("https://api.sandbox.amadeus.com/v1.2/hotels/search-airport");
+
+            //var location = "NYC";
+            //var check_in = "2018-01-08";
+            //var check_out = "2018-01-11";
+            //var resp = Task.Run(async () => await flightClient.GetAsync(string.Format("https://api.sandbox.amadeus.com/v1.2/hotels/search-airport?apikey=PwjKNqfE7uyak3JV3ehwyDeoiBAFVuxy&location=BOS&check_in=2017-12-15&check_out=2017-12-16"))).ConfigureAwait(false).GetAwaiter().GetResult();
+            //var resp = Task.Run(async () => await flightClient.GetAsync(string.Format("?apikey={0}&location={1}&check_in={2}&check_out={3}", flightsApiKey, location, check_in, check_out))).ConfigureAwait(false).GetAwaiter().GetResult();
+            //if (resp.IsSuccessStatusCode)
+            //{
+            //    var result = JObject.Parse(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
+            //    JArray array = (JArray)result["results"];
+            //    System.Console.WriteLine($"Ukupno rezultata hoteli {array.Count}");
+
+            //    var results0 = array[0];
+            //}
+
+            #endregion
+
 
             System.Console.ReadLine();
         }

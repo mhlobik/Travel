@@ -149,3 +149,6 @@ export namespace CityChooserStrings {
     };
 
 export const noFlights = 'We didn\'t find flights for selected dates and cities. Please try different origin city or different date range.';
+export const noHotels = (name: string) => { return 'We didn\'t find hotels for city "' + name + '" .'; };
+export const ratingCity = (name: string) => { return 'How much do you like "' + name + '" city?'; };
+export const ratingRecommendation = (name: string) => { return 'How accurate the recommendation of city "' + name + '" is?'; };

@@ -55,5 +55,23 @@ namespace Travel.Application.ApiControllers
 
             return Ok(result);
         }
+
+        [Route("api/city/get-rating/{cityId}")]
+        [HttpGet]
+        public IHttpActionResult GetCityRating(string cityId)
+        {
+            var databaseManager = new ManageCityData();
+            var rating = databaseManager.GetRating(cityId);
+            return Ok(rating);
+        }
+
+        [Route("api/city/get-hotels")]
+        [HttpPost]
+        public IHttpActionResult GetCityHotels(City city)
+        {
+            var hotelsManager = new CityHotelsManager();
+            var hotels = Task.Run(async () => await hotelsManager.GetHotels(city)).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Ok(hotels);
+        }
     }
 }

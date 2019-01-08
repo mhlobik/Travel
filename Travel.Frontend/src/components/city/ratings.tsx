@@ -3,8 +3,13 @@ import Rating from 'react-rating';
 import * as StarEmpty from '../../assets/images/star-empty.png';
 import * as StarFull from '../../assets/images/star-full.png';
 import { autobind } from 'quick-react-ts';
+import { ICityRating } from '../../common/city';
+import { ratingCity, ratingRecommendation } from '../../assets/strings/strings';
 
 interface IRatingsProps {
+    cityRating: ICityRating;
+    isGettingCityRating: boolean;
+    cityName: string;
     onClickCityRating(rate: number): void;
 }
 
@@ -21,17 +26,18 @@ export default class Ratings extends React.PureComponent<IRatingsProps, {}> {
     }
 
     public render() {
-        // dodaj logiku ako je nekad prije ocijenio grad i preporuku da se to odmah oznaci
+        const initialCityRating = this.props.cityRating !== null ? this.props.cityRating.rating : 0;
+
         return (
             <div className="ratings__container">
-                <span className="ratings__title">How much you like this city?</span>
+                <span className="ratings__title">{ratingCity(this.props.cityName)}</span>
                 <Rating
                     emptySymbol={<img src={StarEmpty} className="icon" />}
                     fullSymbol={<img src={StarFull} className="icon" />}
                     onClick={this.handleOnClickCityRating}
-                    initialRating={3}
+                    initialRating={initialCityRating}
                 />
-                <span className="ratings__title">How accurate the recommendation is?</span>
+                <span className="ratings__title">{ratingRecommendation(this.props.cityName)}</span>
                 <Rating
                     emptySymbol={<img src={StarEmpty} className="icon" />}
                     fullSymbol={<img src={StarFull} className="icon" />}

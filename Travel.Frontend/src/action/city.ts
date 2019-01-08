@@ -54,3 +54,30 @@ export function getCityFlights(departureDate: Date, returnDate: Date, city: ICit
         });
     };
 }
+
+export function getCityRating(cityId: string) {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${cityBaseUrl}/get-rating/${cityId}`,
+            requestActionName: cityActions.GET_CITY_RATING,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'GET'
+            }
+        });
+    };
+}
+
+export function getCityHotels(city: ICity) {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${cityBaseUrl}/get-hotels`,
+            requestActionName: cityActions.GET_HOTELS,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'POST',
+                body: JSON.stringify(city)
+            }
+        });
+    };
+}

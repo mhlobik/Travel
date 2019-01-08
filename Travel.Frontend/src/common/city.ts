@@ -15,7 +15,7 @@ export interface ICity {
 export interface ICityRating {
     cityId: string;
     userId: string;
-    liked: boolean;
+    rating: number;
 }
 
 export interface IFlight {
@@ -65,6 +65,15 @@ export interface IPointOfInterestCategory {
 export interface AvailableTab {
     name: string;
     type: CityTabEnum;
+}
+
+export interface IHotel {
+    hotelId: string;
+    name: string;
+    address: string;
+    website: string;
+    googleMapsUrl: string;
+    userRating: string;
 }
 
 export const cityAvailableTabs: Array<AvailableTab> = [

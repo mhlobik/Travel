@@ -2,6 +2,7 @@ import * as recommendationActions from '../constants/recommend';
 import fetcher from '../common/fetcher';
 import { ICity } from '../common/city';
 import { getImageUrls } from './city';
+import * as cityActionsCreator from './city';
 
 const recommendationBaseUrl = 'api/recommendation';
 
@@ -22,6 +23,8 @@ export function openRecommendedItem(recommendedCity: ICity) {
     return (dispatch, getState) => {
         dispatch(getImageUrls(recommendedCity));
         dispatch(handleOpenRecommendedItem(recommendedCity));
+        dispatch(cityActionsCreator.getCityRating(recommendedCity.cityId));
+        dispatch(cityActionsCreator.getCityHotels(recommendedCity));
     };
 }
 
