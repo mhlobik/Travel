@@ -56,12 +56,12 @@ namespace Travel.Application.ApiControllers
             return Ok(result);
         }
 
-        [Route("api/city/get-rating/{cityId}")]
+        [Route("api/city/get-rating/{cityId}/{userId}")]
         [HttpGet]
-        public IHttpActionResult GetCityRating(string cityId)
+        public IHttpActionResult GetCityRating(string cityId, string userId)
         {
             var databaseManager = new ManageCityData();
-            var rating = databaseManager.GetCityRating(cityId);
+            var rating = databaseManager.GetCityRating(cityId, userId);
             return Ok(rating);
         }
 
@@ -72,6 +72,15 @@ namespace Travel.Application.ApiControllers
             var hotelsManager = new CityHotelsManager();
             var hotels = Task.Run(async () => await hotelsManager.GetHotels(city)).ConfigureAwait(false).GetAwaiter().GetResult();
             return Ok(hotels);
+        }
+
+        [Route("api/city/get-airports")]
+        [HttpGet]
+        public IHttpActionResult GetAirports()
+        {
+            var databaseManager = new ManageCityData();
+            var airports = databaseManager.GetAllAirports();
+            return Ok(airports);
         }
     }
 }

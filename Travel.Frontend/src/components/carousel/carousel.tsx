@@ -11,7 +11,7 @@ import { IRecommendation } from '../../common/recommendationUtilities';
 import { ICity } from '../../common/city';
 
 interface ICarouselProps {
-    knowledgeBasedRecommendations?: Array<IRecommendation>;
+    recommendations?: Array<IRecommendation>;
     carouselData?: Array<ICarouselData>;
     isClickable: boolean;
     isLoading: boolean;
@@ -38,9 +38,9 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     private goToPrevSlide(e: any) {
         e.preventDefault();
 
-        const { knowledgeBasedRecommendations, carouselData } = this.props;
-        const slidesLength = knowledgeBasedRecommendations !== undefined ?
-            knowledgeBasedRecommendations.length : carouselData !== undefined ? carouselData.length : 0;
+        const { recommendations, carouselData } = this.props;
+        const slidesLength = recommendations !== undefined ?
+        recommendations.length : carouselData !== undefined ? carouselData.length : 0;
         const oldActiveIndexes = this.state.activeIndexesTest;
 
         const setNegativeForLast = oldActiveIndexes.map((o) => {
@@ -61,9 +61,9 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     private goToNextSlide(e: any) {
         e.preventDefault();
 
-        const { knowledgeBasedRecommendations, carouselData } = this.props;
-        const slidesLength = knowledgeBasedRecommendations !== undefined ?
-            knowledgeBasedRecommendations.length - 1 : carouselData !== undefined ? carouselData.length - 1 : 0;
+        const { recommendations, carouselData } = this.props;
+        const slidesLength = recommendations !== undefined ?
+        recommendations.length - 1 : carouselData !== undefined ? carouselData.length - 1 : 0;
 
         const oldActiveIndexes = this.state.activeIndexesTest;
 
@@ -85,7 +85,7 @@ export default class Carousel extends React.Component<ICarouselProps, ICarouselS
     private renderClickableSlide(): JSX.Element {
         return (
             <ul className="carousel__slides">
-                {this.props.knowledgeBasedRecommendations.map((rec, index) =>
+                {this.props.recommendations.map((rec, index) =>
                     <CarouselSlide
                         key={index}
                         index={index}

@@ -1,14 +1,24 @@
 import * as React from 'react';
 
-import { DateTimeDropdownPicker, autobind, Button, TreeFilter, TreeItem } from 'quick-react-ts';
+import { DateTimeDropdownPicker, autobind, Button, TreeFilter, TreeItem, IFilterSelection, FilterSelectionEnum } from 'quick-react-ts';
+import { IAirport } from '../../common/city';
+import Select from 'react-select';
 
 interface IFlightDatePickerProps {
-    onSearchClick(departureDate: Date, returnDate: Date): void;
+    airports: Array<IAirport>;
+    onSearchClick(departureDate: Date, returnDate: Date, originSelected: string, destinationSelected: string): void;
 }
 
 interface IFlightDatePickerState {
     departure: Date;
     return: Date;
+    originSelected: ISelection;
+    destinationSelected: ISelection;
+}
+
+interface ISelection {
+    value: string;
+    label: string;
 }
 
 export default class FlightDatePicker extends React.Component<IFlightDatePickerProps, IFlightDatePickerState> {
@@ -16,7 +26,9 @@ export default class FlightDatePicker extends React.Component<IFlightDatePickerP
         super(props);
         this.state = {
             departure: new Date(),
-            return: new Date()
+            return: new Date(),
+            originSelected: null,
+            destinationSelected: null
         };
     }
 
@@ -36,12 +48,18 @@ export default class FlightDatePicker extends React.Component<IFlightDatePickerP
 
     @autobind
     private handleOnSearchClick() {
-        this.props.onSearchClick(this.state.departure, this.state.return);
+        this.props.onSearchClick(this.state.departure, this.state.return,
+            this.state.originSelected.value, this.state.destinationSelected.value);
     }
 
     @autobind
-    private handleOnOriginClick(option: any, index: any) {
-        console.log('handleOnOriginClick', option, index);
+    private handleOnOriginClick(selection: ISelection) {
+        this.setState({ originSelected: selection });
+    }
+
+    @autobind
+    private handleOnDestinationClick(selection: ISelection) {
+        this.setState({ destinationSelected: selection });
     }
 
     private renderDepartureDatePicker(): JSX.Element {
@@ -72,13 +90,11 @@ export default class FlightDatePicker extends React.Component<IFlightDatePickerP
         return (
             <div className="flight-date-picker__picker">
                 <span className="flight-date-picker__label">From</span>
-                <TreeFilter
-                    items={options}
-                    itemsAreFlatList={true}
-                    hasTitleBorder={true}
-                    showButtons={false}
-                    hasSearch={true}
-                    isSingleSelect={true}
+                <Select
+                    value={this.state.originSelected}
+                    onChange={this.handleOnOriginClick}
+                    options={options}
+                    isSearchable={true}
                 />
             </div>
         );
@@ -88,13 +104,11 @@ export default class FlightDatePicker extends React.Component<IFlightDatePickerP
         return (
             <div className="flight-date-picker__picker">
                 <span className="flight-date-picker__label">To</span>
-                <TreeFilter
-                    items={options}
-                    itemsAreFlatList={true}
-                    hasTitleBorder={true}
-                    showButtons={false}
-                    hasSearch={true}
-                    isSingleSelect={true}
+                <Select
+                    value={this.state.destinationSelected}
+                    onChange={this.handleOnDestinationClick}
+                    options={options}
+                    isSearchable={true}
                 />
             </div>
         );
@@ -111,20 +125,27 @@ export default class FlightDatePicker extends React.Component<IFlightDatePickerP
     }
 
     public render() {
-        const options: Array<TreeItem> = [
-            { value: 'Swedish', id: 'sv' },
-            { value: 'English', id: 'en' }
-        ];
+        const options = this.props.airports.map((data) => {
+            const result: ISelection = {
+                label: data.city,
+                value: data.iata
+            };
+            return result;
+        });
 
         return (
             <div className="flight-date-picker__container">
-                {this.renderDepartureDatePicker()}
-                {this.renderReturnDatePicker()}
+                <div className="flight-date-picker__cities">
+                    {this.renderFromCity(options)}
+                    {this.renderToCity(options)}
+                </div>
 
-                {this.renderFromCity(options)}
-                {this.renderToCity(options)}
+                <div className="flight-date-picker__dates">
+                    {this.renderDepartureDatePicker()}
+                    {this.renderReturnDatePicker()}
 
-                {this.renderSearchButton()}
+                    {this.renderSearchButton()}
+                </div>
             </div>
         );
     }

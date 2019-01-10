@@ -161,6 +161,22 @@ namespace Travel.Database.Utilities
             return cities;
         }
 
+        public List<CityRating> GetAllCityRatings()
+        {
+            IDocumentStore store;
+            var cityRatings = new List<CityRating>();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    cityRatings = session.Query<CityRating>().ToList();
+                }
+            }
+
+            return cityRatings;
+        }
+
         public void UpdateCityDescription(City city)
         {
             IDocumentStore store;
@@ -211,7 +227,7 @@ namespace Travel.Database.Utilities
             return airport;
         }
 
-        public CityRating GetCityRating(string cityId)
+        public CityRating GetCityRating(string cityId, string userId)
         {
             IDocumentStore store;
             var cityRating = new CityRating();
@@ -220,7 +236,7 @@ namespace Travel.Database.Utilities
             {
                 using (IDocumentSession session = store.OpenSession())
                 {
-                    cityRating = session.Query<CityRating>().FirstOrDefault(x => x.CityId.Equals(cityId));
+                    cityRating = session.Query<CityRating>().FirstOrDefault(x => x.CityId.Equals(cityId) && x.UserId.Equals(userId));
                 }
             }
 
@@ -299,6 +315,26 @@ namespace Travel.Database.Utilities
             }
 
             return recommendationDatabase;
+        }
+
+
+        public List<Airport> GetAllAirports()
+        {
+            IDocumentStore store;
+            var cities = new List<string>();
+            var airports = new List<Airport>();
+            var filteredAirports = new List<Airport>();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    cities = session.Query<City>().Select(x=>x.Name).ToList();
+                    airports = session.Query<Airport>().ToList();
+                }
+            }
+
+            return airports;
         }
     }
 }

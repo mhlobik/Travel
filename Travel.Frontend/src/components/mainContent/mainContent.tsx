@@ -2,10 +2,8 @@ import * as React from 'react';
 import './mainContent.scss';
 import { IUser } from '../../common/facebookUtilities';
 import UserPreferences from '../../containers/userPreferences/userPreferences';
-import { IRecommendation } from '../../common/recommendationUtilities';
 import KnowledgeBased from '../recommenders/knowledgeBased';
-import { ICity, IFlightViewModel } from '../../common/city';
-import { autobind } from 'quick-react-ts';
+import TopCities from '../recommenders/topCities';
 
 interface IMainContentProps {
     userLoggedIn: boolean;
@@ -25,7 +23,7 @@ export default class MainContent extends React.PureComponent<IMainContentProps, 
         return (
             <div key="container" className="main-content__container">
                 {this.props.user !== null && this.props.goToPreferences && <UserPreferences />}
-
+                <TopCities />
                 {this.props.user !== null && !this.props.goToPreferences &&
                     <KnowledgeBased />
                 }

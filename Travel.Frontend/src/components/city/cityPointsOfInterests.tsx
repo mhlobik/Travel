@@ -13,15 +13,11 @@ export default class CityPointsOfInterests extends React.PureComponent<ICityPoin
     public render() {
         return (
             <div className="city-points-of-interests__container">
-                {this.props.isGettingPointsOfInterestsInfo &&
-                    <Spinner />
-                }
-                {this.props.pointsOfInterestsInfo !== null && !this.props.isGettingPointsOfInterestsInfo &&
-                    <Carousel
-                        carouselData={this.props.pointsOfInterestsInfo}
-                        isClickable={false}
-                        isLoading={this.props.isGettingPointsOfInterestsInfo}
-                    />}
+                <Carousel
+                    carouselData={this.props.pointsOfInterestsInfo}
+                    isClickable={false}
+                    isLoading={this.props.isGettingPointsOfInterestsInfo}
+                />
             </div>
         );
     }

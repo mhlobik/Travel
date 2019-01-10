@@ -1,6 +1,7 @@
 import * as cityActions from '../constants/city';
 import fetcher from '../common/fetcher';
 import { IPointOfInterestsCityInfo, IPointsOfInterest, ICity } from '../common/city';
+import { IUser } from '../common/facebookUtilities';
 
 const cityBaseUrl = 'api/city/';
 
@@ -18,17 +19,17 @@ export function getImageUrls(city: ICity) {
     };
 }
 
-export function saveCityRating(cityId: string, userId: string, rate: number) {
+export function saveCityRating(cityId: string, user: IUser, rate: number) {
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${cityBaseUrl}/save-city-rating`,
-            requestActionName: cityActions.GET_IMAGE_URL,
+            requestActionName: cityActions.SAVE_CITY_RATING,
             jsonResponseExpected: true,
             requestInit: {
                 method: 'POST',
                 body: JSON.stringify({
                     cityId: cityId,
-                    userId: userId,
+                    userId: user.userId,
                     rating: rate
                 })
             }
@@ -36,7 +37,7 @@ export function saveCityRating(cityId: string, userId: string, rate: number) {
     };
 }
 
-export function getCityFlights(departureDate: Date, returnDate: Date, city: ICity) {
+export function getCityFlights(departureDate: Date, returnDate: Date, originSelected: string, destinationSelected: string) {
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${cityBaseUrl}/get-flights`,
@@ -45,8 +46,8 @@ export function getCityFlights(departureDate: Date, returnDate: Date, city: ICit
             requestInit: {
                 method: 'POST',
                 body: JSON.stringify({
-                    origin: 'Zagreb',
-                    destination: city.name,
+                    origin: originSelected,
+                    destination: destinationSelected,
                     departureDate: departureDate,
                     returnDate: returnDate
                 })
@@ -55,10 +56,10 @@ export function getCityFlights(departureDate: Date, returnDate: Date, city: ICit
     };
 }
 
-export function getCityRating(cityId: string) {
+export function getCityRating(cityId: string, userId: string) {
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
-            requestUrl: `${cityBaseUrl}/get-rating/${cityId}`,
+            requestUrl: `${cityBaseUrl}/get-rating/${cityId}/${userId}`,
             requestActionName: cityActions.GET_CITY_RATING,
             jsonResponseExpected: true,
             requestInit: {
@@ -77,6 +78,19 @@ export function getCityHotels(city: ICity) {
             requestInit: {
                 method: 'POST',
                 body: JSON.stringify(city)
+            }
+        });
+    };
+}
+
+export function getAllAirports() {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${cityBaseUrl}/get-airports`,
+            requestActionName: cityActions.GET_AIRPORTS,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'GET'
             }
         });
     };

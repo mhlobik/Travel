@@ -22,9 +22,10 @@ export function getKnowledgeBased(userId: string) {
 
 export function openRecommendedItem(recommendation: IRecommendation) {
     return (dispatch, getState) => {
-        dispatch(getImageUrls(recommendation.recommendedCity));
         dispatch(handleOpenRecommendedItem(recommendation));
-        dispatch(cityActionsCreator.getCityRating(recommendation.recommendedCity.cityId));
+        dispatch(getImageUrls(recommendation.recommendedCity));
+        dispatch(cityActionsCreator.getAllAirports());
+        dispatch(cityActionsCreator.getCityRating(recommendation.recommendedCity.cityId, recommendation.userId));
         dispatch(cityActionsCreator.getCityHotels(recommendation.recommendedCity));
     };
 }
@@ -66,6 +67,19 @@ export function getRecommendationRating(recommendation: IRecommendation) {
             requestInit: {
                 method: 'POST',
                 body: JSON.stringify(recommendation)
+            }
+        });
+    };
+}
+
+export function getTopCities() {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${recommendationBaseUrl}/get-top-cities`,
+            requestActionName: recommendationActions.GET_TOP_CITIES,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'GET'
             }
         });
     };

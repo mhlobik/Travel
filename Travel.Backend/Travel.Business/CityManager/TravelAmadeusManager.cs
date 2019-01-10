@@ -21,12 +21,8 @@ namespace Travel.Business.CityManager
 
             var flights = new List<FlightViewModel>();
 
-            var cityDatamanager = new ManageCityData();
-            var destinationAirport = cityDatamanager.GetCityAirport(flightInfo.Destination);
-            var originAirport = cityDatamanager.GetCityAirport(flightInfo.Origin);
-
-            var origin = originAirport.IATA; //"LON";
-            var destination = destinationAirport.IATA; //"NYC";
+            var origin = flightInfo.Origin; //"LON";
+            var destination = flightInfo.Destination; //"NYC";
 
             var departureDate = flightInfo.DepartureDate.Date.ToString("yyyy-MM-dd"); //"2019-01-08"; //
             var returnDate = flightInfo.ReturnDate.Date.ToString("yyyy-MM-dd"); //"2019-01-11"; //

@@ -76,6 +76,11 @@ export interface IHotel {
     userRating: string;
 }
 
+export interface IAirport {
+    city: string;
+    iata: string;
+}
+
 export const cityAvailableTabs: Array<AvailableTab> = [
     {
         name: 'Description',

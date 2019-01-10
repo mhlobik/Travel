@@ -168,3 +168,15 @@ body {
 .grid-component-container .grid-header-column .header-column-content .header-text { 
     text-align: center;
 }
+
+.css-vj8t7z {
+    &:hover{
+        border-color: $secondary-green!important;
+    }
+    border-radius: 8px!important;
+}
+
+.css-2o5izv {
+    border-color:  $secondary-green!important;
+    box-shadow: none!important;
+}

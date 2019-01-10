@@ -8,13 +8,17 @@ export interface IRecommendationReducerState {
     knowledgeBasedRecommendations: Array<IRecommendation>;
     selectedRecommendation: IRecommendation;
     openRecommendedItem: boolean;
+    isGettingTopCities: boolean;
+    topCitiesRecommendations: Array<IRecommendation>;
 }
 
 const initialState: IRecommendationReducerState = {
     isGettingKnowledgeBased: false,
     knowledgeBasedRecommendations: [],
     selectedRecommendation: null,
-    openRecommendedItem: false
+    openRecommendedItem: false,
+    isGettingTopCities: false,
+    topCitiesRecommendations: []
 };
 
 export default function facebookReducer(state: IRecommendationReducerState = initialState, action: IAction = { type: '', payload: null }) {
@@ -22,7 +26,8 @@ export default function facebookReducer(state: IRecommendationReducerState = ini
         case `${recommendationActions.GET_KNOWLEDGE_BASED}_REQUEST`:
             return {
                 ...state,
-                isGettingKnowledgeBased: true            };
+                isGettingKnowledgeBased: true
+            };
         case `${recommendationActions.GET_KNOWLEDGE_BASED}_RESPONSE`:
             return {
                 ...state,
@@ -45,6 +50,22 @@ export default function facebookReducer(state: IRecommendationReducerState = ini
                 ...state,
                 openRecommendedItem: action.payload,
                 selectedRecommendation: null
+            };
+        case `${recommendationActions.GET_TOP_CITIES}_REQUEST`:
+            return {
+                ...state,
+                isGettingTopCities: true
+            };
+        case `${recommendationActions.GET_TOP_CITIES}_RESPONSE`:
+            return {
+                ...state,
+                isGettingTopCities: false,
+                topCitiesRecommendations: action.payload
+            };
+        case `${recommendationActions.GET_TOP_CITIES}_ERROR`:
+            return {
+                ...state,
+                isGettingTopCities: false
             };
         default:
             return state;

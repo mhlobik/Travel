@@ -21,7 +21,8 @@ function mapStateToProps(state: IRootReducerState): IHomePageProps {
     continueClicked: state.main.continueClicked,
     goToPreferences: state.main.goToPreferences,
     gettingUsers: state.facebook.isGettingUsers,
-    userPreferencesSaved: state.main.userPreferencesSaved
+    userPreferencesSaved: state.main.userPreferencesSaved,
+    topCities: state.recommendation.topCitiesRecommendations
   };
 }
 
@@ -29,7 +30,8 @@ function mapDispatchToProps(dispatch: any): IHomePageProps {
   return {
     onGetAllUSers: () => dispatch(facebookActions.getUsers()),
     onGetCitiesChooser: () => dispatch(mainActions.getCitiesChooser()),
-    onGoToPreferences: (shouldGo: boolean) => dispatch(mainActions.goToPreferences(shouldGo))
+    onGoToPreferences: (shouldGo: boolean) => dispatch(mainActions.goToPreferences(shouldGo)),
+    onGetTopCities: () => dispatch(recommendationActions.getTopCities())
   };
 }
 
@@ -52,9 +54,11 @@ interface IHomePageProps {
   gettingUsers?: boolean;
   userPreferencesSaved?: boolean;
   goToPreferences?: boolean;
+  topCities?: Array<IRecommendation>;
   onGetAllUSers?(): void;
   onGetCitiesChooser?(): void;
   onGoToPreferences?(shouldGo: boolean): void;
+  onGetTopCities?(): void;
 }
 
 interface IHomePageState {
@@ -72,13 +76,13 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
 
   public componentDidMount() {
     this.props.onGetAllUSers();
-    // this.props.onGetCitiesChooser();
+    this.props.onGetTopCities();
   }
 
   public render() {
     return (
       <div className="home-page__container">
-        <Header onGoToPreferences={this.props.onGoToPreferences} />
+        <Header user={this.props.user} onGoToPreferences={this.props.onGoToPreferences} />
         <MainContent
           user={this.props.user}
           userLoggedIn={this.props.userLoggedIn}

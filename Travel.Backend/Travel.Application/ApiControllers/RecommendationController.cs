@@ -12,6 +12,15 @@ namespace Travel.Application.ApiControllers
 {
     public class RecommendationController : ApiController
     {
+        [Route("api/recommendation/get-top-cities")]
+        [HttpGet]
+        public IHttpActionResult GetTopCities()
+        {
+            var manager = new TopCitiesOnTravel();
+            var recommendations = manager.GetTopCitiesOnTravel();
+            return Ok(recommendations);
+
+        }
         [Route("api/recommendation/get-knowledge-based/{userId}")]
         [HttpGet]
         public IHttpActionResult GetKnowledgeBased(string userId)

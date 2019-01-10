@@ -2,7 +2,7 @@ import { ICity } from './city';
 import { RecommenderModelEnum } from './enums';
 
 export interface IRecommendation {
-    userId: string;
+    userId?: string;
     recommenderModel: RecommenderModelEnum;
     recommendedCity: ICity;
     similarity: number;

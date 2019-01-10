@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Carousel from '../carousel/carousel';
 import { IRecommendation } from '../../common/recommendationUtilities';
-import './knowledgeBased.scss';
-import { ICity, IPointOfInterestsCityInfo, IFlight, IFlightViewModel } from '../../common/city';
+import './topCities.scss';
+import { IFlightViewModel } from '../../common/city';
 import City from '../city/city';
 import { autobind, Spinner, SpinnerType } from 'quick-react-ts';
 import { ICarouselData } from '../mainContent/mainContent';
@@ -10,42 +10,39 @@ import { connect } from 'react-redux';
 import { IRootReducerState } from '../../reducers/rootReducer';
 import * as recommendationActions from '../../action/recommendation';
 import * as cityActions from '../../action/city';
-import { IUser } from '../../common/facebookUtilities';
 
-interface IKnowledgeBasedProps {
-    user?: IUser;
-    knowledgeBasedRecommendations?: Array<IRecommendation>;
+interface ITopCitiesProps {
+    topCitiesRecommendations?: Array<IRecommendation>;
     openRecommendedItem?: boolean;
     pointsOfInterestsInfo?: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo?: boolean;
     flights?: Array<IFlightViewModel>;
     isGettingFlights?: boolean;
-    isGettingKnowledgeBased?: boolean;
+    isGettingTopCities?: boolean;
     selectedRecommendation?: IRecommendation;
     handleOnItemClick?(recommendation: IRecommendation): void;
     onCloseRecommendedItem?(): void;
     onClickRecommendationRating?(rate: number): void;
 }
 
-interface IKnowledgeBasedState {
+interface ITopCitiesState {
     isLoading: boolean;
 }
 
-function mapStateToProps(state: IRootReducerState): IKnowledgeBasedProps {
+function mapStateToProps(state: IRootReducerState): ITopCitiesProps {
     return {
-        user: state.facebook.user,
-        knowledgeBasedRecommendations: state.recommendation.knowledgeBasedRecommendations,
+        topCitiesRecommendations: state.recommendation.topCitiesRecommendations,
         openRecommendedItem: state.recommendation.openRecommendedItem,
         pointsOfInterestsInfo: state.city.pointsOfInterestsInfo,
         isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo,
         flights: state.city.flights,
         isGettingFlights: state.city.isGettingFlights,
-        isGettingKnowledgeBased: state.recommendation.isGettingKnowledgeBased,
+        isGettingTopCities: state.recommendation.isGettingTopCities,
         selectedRecommendation: state.recommendation.selectedRecommendation
     };
 }
 
-function mapDispatchToProps(dispatch: any): IKnowledgeBasedProps {
+function mapDispatchToProps(dispatch: any): ITopCitiesProps {
     return {
         handleOnItemClick: (recommendation: IRecommendation) => dispatch(recommendationActions.openRecommendedItem(recommendation)),
         onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem())
@@ -53,17 +50,17 @@ function mapDispatchToProps(dispatch: any): IKnowledgeBasedProps {
 }
 
 function mergeProps(
-    stateProps: IKnowledgeBasedProps,
-    dispatchProps: IKnowledgeBasedProps
-): IKnowledgeBasedProps {
+    stateProps: ITopCitiesProps,
+    dispatchProps: ITopCitiesProps
+): ITopCitiesProps {
     return {
         ...stateProps,
         ...dispatchProps
     };
 }
 
-class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledgeBasedState> {
-    constructor(props: IKnowledgeBasedProps) {
+class TopCities extends React.PureComponent<ITopCitiesProps, ITopCitiesState> {
+    constructor(props: ITopCitiesProps) {
         super(props);
 
         this.state = {
@@ -71,8 +68,8 @@ class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledg
         };
     }
 
-    public componentWillReceiveProps(nextProps: IKnowledgeBasedProps) {
-        this.setState({ isLoading: nextProps.isGettingKnowledgeBased });
+    public componentWillReceiveProps(nextProps: ITopCitiesProps) {
+        this.setState({ isLoading: nextProps.isGettingTopCities });
     }
 
     @autobind
@@ -82,10 +79,10 @@ class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledg
 
     public render() {
         return (
-            <div className="knowledge-based__container">
-                <span className="knowledge-based__title">Cities based on your preferences:</span>
+            <div className="top-cities__container">
+                <span className="top-cities__title">Top Rated Cities on Travel:</span>
                 <Carousel
-                    recommendations={this.props.knowledgeBasedRecommendations}
+                    recommendations={this.props.topCitiesRecommendations}
                     handleOnItemClick={this.onHandleOnItemClick}
                     isClickable={true}
                     isLoading={this.state.isLoading}
@@ -103,4 +100,4 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps
-)(KnowledgeBased);
+)(TopCities);

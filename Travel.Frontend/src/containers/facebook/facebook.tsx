@@ -80,7 +80,7 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
                 appId: facabookAppId,
                 cookie: true,
                 xfbml: true,
-                version: 'v2.8'
+                version: 'v3.2'
             });
 
             this.setState({ isLoadingStatus: true });

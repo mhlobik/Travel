@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { Spinner, QuickGrid, GridColumn, DataTypeEnum, SpinnerType } from 'quick-react-ts';
 import FlightDatePicker from './flightDatePicker';
-import { IFlightViewModel, ICity } from '../../common/city';
+import { IFlightViewModel, ICity, IAirport } from '../../common/city';
 import { throws } from 'assert';
 import { noFlights } from '../../assets/strings/strings';
 
 interface ICityFlightsProps {
     flights: Array<IFlightViewModel>;
     isGettingFlights: boolean;
-    onSearchClick(departureDate: Date, returnDate: Date): void;
+    airports: Array<IAirport>;
+    onSearchClick(departureDate: Date, returnDate: Date, originSelected: string, destinationSelected: string): void;
 }
 
 export const flightsColumns: Array<GridColumn> = [
@@ -68,7 +69,10 @@ export default class CityFlights extends React.PureComponent<ICityFlightsProps, 
     public render() {
         return (
             <div className="city-flights__container">
-                <FlightDatePicker onSearchClick={this.props.onSearchClick} />
+                <FlightDatePicker
+                    onSearchClick={this.props.onSearchClick}
+                    airports={this.props.airports}
+                />
 
                 <div className="city-flights__content">
                     {this.props.isGettingFlights &&

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './city.scss';
-import { ICity, cityAvailableTabs, IPointOfInterestsCityInfo, IFlight, IFlightViewModel, ICityRating, IHotel } from '../../common/city';
+import { ICity, cityAvailableTabs, IFlightViewModel, ICityRating, IHotel, IAirport } from '../../common/city';
 import { Pivot, PivotItem, PivotLinkFormat, autobind } from 'quick-react-ts';
 import { CityTabEnum } from '../../common/enums';
 import CityDescriptionTab from './cityDescriptionTab';
@@ -14,9 +14,10 @@ import * as recommendationActions from '../../action/recommendation';
 import { connect } from 'react-redux';
 import CityHotels from './cityHotels';
 import { IRecommendation } from '../../common/recommendationUtilities';
+import { IUser } from '../../common/facebookUtilities';
 
 interface ICityProps {
-    userId?: string;
+    user?: IUser;
     selectedRecommendation?: IRecommendation;
     pointsOfInterestsInfo?: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo?: boolean;
@@ -27,9 +28,10 @@ interface ICityProps {
     hotels?: Array<IHotel>;
     isGettingHotels?: boolean;
     recommendationRating?: number;
+    airports?: Array<IAirport>;
     onCloseRecommendedItem?(): void;
-    onClickCityRating?(cityId: string, userId: string, rate: number): void;
-    onSearchClick?(departureDate: Date, returnDate: Date, city: ICity): void;
+    onClickCityRating?(cityId: string, user: IUser, rate: number): void;
+    onSearchClick?(departureDate: Date, returnDate: Date, originSelected: string, destinationSelected: string): void;
     onClickRecommendationRating?(updatedRecommendation: IRecommendation): void;
 }
 
@@ -39,7 +41,7 @@ interface ICityState {
 
 function mapStateToProps(state: IRootReducerState): ICityProps {
     return {
-        userId: state.facebook.user.userId,
+        user: state.facebook.user,
         selectedRecommendation: state.recommendation.selectedRecommendation,
         pointsOfInterestsInfo: state.city.pointsOfInterestsInfo,
         isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo,
@@ -48,16 +50,17 @@ function mapStateToProps(state: IRootReducerState): ICityProps {
         cityRating: state.city.cityRating,
         isGettingCityRating: state.city.isGettingCityRating,
         hotels: state.city.hotels,
-        isGettingHotels: state.city.isGettingHotels
+        isGettingHotels: state.city.isGettingHotels,
+        airports: state.city.airports
     };
 }
 
 function mapDispatchToProps(dispatch: any): ICityProps {
     return {
         onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem()),
-        onClickCityRating: (cityId: string, userId: string, rate: number) => dispatch(cityActions.saveCityRating(cityId, userId, rate)),
-        onSearchClick: (departureDate: Date, returnDate: Date, city: ICity) =>
-            dispatch(cityActions.getCityFlights(departureDate, returnDate, city)),
+        onClickCityRating: (cityId: string, user: IUser, rate: number) => dispatch(cityActions.saveCityRating(cityId, user, rate)),
+        onSearchClick: (departureDate: Date, returnDate: Date, originSelected: string, destinationSelected: string) =>
+            dispatch(cityActions.getCityFlights(departureDate, returnDate, originSelected, destinationSelected)),
         onClickRecommendationRating: (updatedRecommendation: IRecommendation) =>
             dispatch(recommendationActions.saveRecommendation(updatedRecommendation))
     };
@@ -89,12 +92,7 @@ class City extends React.PureComponent<ICityProps, ICityState> {
 
     @autobind
     private onClickCityRating(rate: number) {
-        this.props.onClickCityRating(this.props.selectedRecommendation.recommendedCity.cityId, this.props.userId, rate);
-    }
-
-    @autobind
-    private handleOnSearchClicked(departureDate: Date, returnDate: Date) {
-        this.props.onSearchClick(departureDate, returnDate, this.props.selectedRecommendation.recommendedCity);
+        this.props.onClickCityRating(this.props.selectedRecommendation.recommendedCity.cityId, this.props.user, rate);
     }
 
     @autobind
@@ -126,8 +124,9 @@ class City extends React.PureComponent<ICityProps, ICityState> {
                 />;
             case CityTabEnum.flights:
                 return <CityFlights
+                    airports={this.props.airports}
                     flights={this.props.flights}
-                    onSearchClick={this.handleOnSearchClicked}
+                    onSearchClick={this.props.onSearchClick}
                     isGettingFlights={this.props.isGettingFlights}
                 />;
             case CityTabEnum.hotels:

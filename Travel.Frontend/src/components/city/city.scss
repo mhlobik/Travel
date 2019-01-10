@@ -117,7 +117,6 @@
 
   .city-flights__container {
     margin-left: 120px;
-    margin-top: 20px;
 
     .city-flights__content {
       display: flex;
@@ -169,7 +168,7 @@
 
     .flight-date-picker__container {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
 
       .flight-date-picker__picker {
         padding-top: 5px;
@@ -190,6 +189,16 @@
         font-size: 16px;
         padding: 5px;
       }
+
+      .flight-date-picker__dates {
+        display: flex;
+        align-items: flex-end;
+        margin-top: 20px;
+      }
+
+      .flight-date-picker__cities {
+        display: flex;
+      }
     }
   }
 
@@ -202,7 +211,8 @@
       justify-content: center;
       align-items: center;
       height: 400px;
-
+      margin-left: -40px;
+      
       .city-hotels__message {
         font-family: $primary-font;
         color: $primary-grey;

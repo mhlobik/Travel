@@ -1,7 +1,7 @@
 import { IAction } from '../common/appDataStructures';
 import * as cityActions from '../constants/city';
 import { ICarouselData } from '../components/mainContent/mainContent';
-import { IFlightViewModel, ICityRating, IHotel } from '../common/city';
+import { IFlightViewModel, ICityRating, IHotel, IAirport } from '../common/city';
 
 export interface ICityReducerState {
     isGettingPointsOfInterestsInfo: boolean;
@@ -12,6 +12,7 @@ export interface ICityReducerState {
     isGettingCityRating: boolean;
     hotels: Array<IHotel>;
     isGettingHotels: boolean;
+    airports: Array<IAirport>;
 }
 
 const initialState: ICityReducerState = {
@@ -22,7 +23,8 @@ const initialState: ICityReducerState = {
     cityRating: null,
     isGettingCityRating: false,
     hotels: null,
-    isGettingHotels: false
+    isGettingHotels: false,
+    airports: null
 };
 
 export default function cityReducer(state: ICityReducerState = initialState, action: IAction = { type: '', payload: null }) {
@@ -91,6 +93,11 @@ export default function cityReducer(state: ICityReducerState = initialState, act
             return {
                 ...state,
                 isGettingHotels: false
+            };
+        case `${cityActions.GET_AIRPORTS}_RESPONSE`:
+            return {
+                ...state,
+                airports: action.payload
             };
         default:
             return state;
