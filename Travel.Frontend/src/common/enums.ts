@@ -77,5 +77,6 @@ export enum CityTabEnum {
     pointsOfInterests = '1',
     flights = '2',
     hotels = '3',
-    ratings = '4'
+    ratings = '4',
+    recommendationForYou = '5'
 }

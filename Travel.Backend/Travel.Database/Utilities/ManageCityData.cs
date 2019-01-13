@@ -10,6 +10,32 @@ namespace Travel.Database.Utilities
 {
     public class ManageCityData
     {
+        public void UpdateCityHotels(City city)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingCity = session.Query<City>().FirstOrDefault(x => x.CityId == city.CityId);
+                    if (existingCity != null)
+                    {
+                        var existingHotels = existingCity.Hotels;
+                        var newHotels = city.Hotels;
+                        // ako su eventi razliciti, treba nove dodati u bazu (stare zadržati)
+                        var arePIEqual = (existingHotels != null) && (newHotels != null) ? existingHotels.SequenceEqual(newHotels) : false;
+                        if (!arePIEqual)
+                        {
+                            session.Advanced.Patch(existingCity, x => x.Hotels, city.Hotels);
+                        }
+
+                        session.SaveChanges();
+                        System.Console.WriteLine($"\t\t{city.Name} update-ani hoteli");
+                    }
+                }
+            }
+        }
+
         public void StoreCity(City city)
         {
             IDocumentStore store;
@@ -254,23 +280,6 @@ namespace Travel.Database.Utilities
                     if (!existingCity)
                     {
                         session.Store(cityRating);
-                        session.SaveChanges();
-                    }
-                }
-            }
-        }
-
-        public void UpdateCityHotels(City city)
-        {
-            IDocumentStore store;
-            using (store = DatabaseConnection.DocumentStoreInitialization())
-            {
-                using (IDocumentSession session = store.OpenSession())
-                {
-                    var existingCity = session.Query<City>().FirstOrDefault(x => x.CityId == city.CityId);
-                    if (existingCity != null)
-                    {
-                        session.Advanced.Patch(existingCity, x => x.Hotels, city.Hotels);
                         session.SaveChanges();
                     }
                 }

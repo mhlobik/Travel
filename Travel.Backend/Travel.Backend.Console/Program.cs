@@ -101,6 +101,50 @@ namespace Travel.Backend.Console
 
             #endregion
 
+            // delete existng data from city (hotels and points of interests urls)
+            var cityDataManager = new ManageCityData();
+            var cities = cityDataManager.GetAllCities();
+
+            foreach (var city in cities)
+            {
+                System.Console.WriteLine($"\t{city.Name}");
+                var updatedCity = new City()
+                {
+                    CityId = city.CityId,
+                    Country = city.Country,
+                    Description = city.Description,
+                    Flights = city.Flights,
+                    Hotels = null,
+                    ImageUrl = city.ImageUrl,
+                    Name = city.Name,
+                    PointsOfInterest = city.PointsOfInterest
+                };
+
+                if (city.Hotels != null)
+                {
+                    cityDataManager.UpdateCityHotels(updatedCity);
+                }
+
+                var updatedPiList = new List<PointsOfInterest>();
+                foreach (var pi in city.PointsOfInterest)
+                {
+                    var updatedPi = new PointsOfInterest()
+                    {
+                        Url = null,
+                        Categories = pi.Categories,
+                        Description = pi.Description,
+                        Id = pi.Id,
+                        Name = pi.Name
+                    };
+
+                    updatedPiList.Add(updatedPi);
+                }
+
+                updatedCity.PointsOfInterest = updatedPiList;
+
+                cityDataManager.UpdateCityPointsOfInterest(updatedCity);
+                System.Console.WriteLine($"\t\t{city.Name} update-ani pi");
+            }
             //DatabaseConnection test = new DatabaseConnection();
             //test.TestCon();
 

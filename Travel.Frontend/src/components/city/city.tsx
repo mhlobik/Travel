@@ -149,6 +149,8 @@ class City extends React.PureComponent<ICityProps, ICityState> {
                     recommendationRating={this.props.selectedRecommendation.rating}
                     onClickRecommendationRating={this.handleOnClickRecommendationRating}
                 />;
+            case CityTabEnum.recommendationForYou:
+                return <span></span>;
         }
     }
     public render() {

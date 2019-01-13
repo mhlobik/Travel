@@ -52,7 +52,6 @@ namespace Travel.Business.Utilities
                 updatedPI.Add(new PointsOfInterest()
                 {
                     Categories = pi.Categories,
-                    Url = pi.Url ?? url,
                     Name = pi.Name,
                     Description = pi.Description,
                     Id = pi.Id
@@ -71,7 +70,6 @@ namespace Travel.Business.Utilities
                 Flights = city.Flights,
                 Hotels = city.Hotels,
                 Name = city.Name,
-                ImageUrl = city.ImageUrl,
                 PointsOfInterest = updatedPI
             };
 

@@ -101,5 +101,9 @@ export const cityAvailableTabs: Array<AvailableTab> = [
     {
         name: 'Ratings',
         type: CityTabEnum.ratings
+    },
+    {
+        name: 'Recommended for You',
+        type: CityTabEnum.recommendationForYou
     }
 ];

@@ -20,10 +20,6 @@ namespace Travel.Business.Utilities
 
                 if (hotels.Any())
                 {
-                    city.Hotels = hotels;
-                    var cityManager = new ManageCityData();
-                    cityManager.UpdateCityHotels(city);
-
                     return hotels;
                 }
             }
