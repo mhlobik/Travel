@@ -261,6 +261,7 @@
     <Compile Include="Utilities\ManageAirportData.cs" />
     <Compile Include="Utilities\ManageCityData.cs" />
     <Compile Include="Utilities\ManageUserFacebookData.cs" />
+    <Compile Include="Utilities\RatedCityDTO.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

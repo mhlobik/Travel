@@ -19,6 +19,9 @@ export interface ICarouselData {
 }
 
 export default class MainContent extends React.PureComponent<IMainContentProps, {}> {
+    public componentWillReceiveProps(nextProps: IMainContentProps) {
+console.log('componentWillReceivePropsF', nextProps);
+    }
     public render() {
         return (
             <div key="container" className="main-content__container">

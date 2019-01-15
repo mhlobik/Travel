@@ -1,6 +1,6 @@
 ﻿using Travel.Database.Model;
 
-namespace Travel.Business.Utilities
+namespace Travel.Business.DTO
 {
     public class PointOfInterestsDTO
     {

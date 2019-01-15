@@ -1,10 +1,12 @@
 import * as facebookActions from './../constants/facebook';
 import { IUserProfile, IUser } from '../common/facebookUtilities';
 import fetcher from '../common/fetcher';
+import * as mainActionCreators from '../action/main';
+import * as recommendationActionCreators from '../action/recommendation';
 
 const facebookBaseUrl = 'api/facebook';
 
-export function manageUserFacebookData(user: IUser, userProfile: IUserProfile) {
+export function manageUserFacebookData(user: IUser, userProfile: IUserProfile, userExist: any) {
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${facebookBaseUrl}/manage-user-facebook-data`,
@@ -15,12 +17,12 @@ export function manageUserFacebookData(user: IUser, userProfile: IUserProfile) {
                 body: JSON.stringify(user)
             }
         }).then(() => {
-            dispatch(manageUserProfileFacebookData(userProfile));
+            dispatch(manageUserProfileFacebookData(userProfile, userExist));
         });
     };
 }
 
-export function manageUserProfileFacebookData(userProfile: IUserProfile) {
+export function manageUserProfileFacebookData(userProfile: IUserProfile, userExist: any) {
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${facebookBaseUrl}/manage-user-profile-facebook-data`,
@@ -29,6 +31,15 @@ export function manageUserProfileFacebookData(userProfile: IUserProfile) {
             requestInit: {
                 method: 'POST',
                 body: JSON.stringify(userProfile)
+            }
+        }).then(() => {
+            console.log('manageUserProfileFacebookData', userExist);
+            if (userExist === undefined) {
+                dispatch(mainActionCreators.goToPreferences(true));
+            }
+
+            if (userExist !== undefined) {
+                dispatch(recommendationActionCreators.getKnowledgeBased(userProfile.userId));
             }
         });
     };

@@ -47,12 +47,14 @@
     <Compile Include="CityManager\WikipediaManager.cs" />
     <Compile Include="Facebook\UserProfileManager.cs" />
     <Compile Include="CityManager\FoursquareManager.cs" />
+    <Compile Include="Recommenders\CollaborativeFiltering.cs" />
     <Compile Include="Recommenders\KnowledgeBased.cs" />
     <Compile Include="Recommenders\TopCitiesOnTravel.cs" />
-    <Compile Include="Utilities\CarouselDataDTO.cs" />
+    <Compile Include="DTO\CarouselDataDTO.cs" />
     <Compile Include="Utilities\CityHotelsManager.cs" />
     <Compile Include="Utilities\CityPointsOfInterestManager.cs" />
-    <Compile Include="Utilities\PointOfInterestsDTO.cs" />
+    <Compile Include="DTO\PointOfInterestsDTO.cs" />
+    <Compile Include="Utilities\MappingDataManager.cs" />
     <Compile Include="Watson\FacebookTextAnalysis.cs" />
     <Compile Include="Watson\WatsonTextAnalysis.cs" />
   </ItemGroup>

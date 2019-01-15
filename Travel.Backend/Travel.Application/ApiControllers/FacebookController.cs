@@ -27,10 +27,7 @@ namespace Travel.Application.ApiControllers
             var userPofileManager = new UserProfileManager();
             var isStored = userPofileManager.ParseAndStoreUserProfile(userProfile);
 
-            var databaseManager = new ManageUserFacebookData();
-            var newUserProfile = databaseManager.GetUserProfile(userProfile.UserId);
-
-            return Ok(newUserProfile);
+            return Ok(userProfile);
         }
 
         [Route("api/facebook/get-users")]

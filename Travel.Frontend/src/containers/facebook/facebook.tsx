@@ -10,10 +10,8 @@ import * as recommendationActions from '../../action/recommendation';
 
 interface IFacebookProps {
     allUsers?: Array<FacebookUtilities.IUser>;
-    onManageUserFacebookData?(user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile): void;
+    onManageUserFacebookData?(user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile, userExist: any): void;
     onMarkIsUserExists?(userExists: boolean, loggedIn: boolean, user: FacebookUtilities.IUser): void;
-    onGoToPreferences?(shouldGo: boolean): void;
-    onGetKnowledgeBased?(userId: string): void;
 }
 
 interface IFacebookState {
@@ -31,12 +29,10 @@ function mapStateToProps(state: IRootReducerState): IFacebookProps {
 
 function mapDispatchToProps(dispatch: any): IFacebookProps {
     return {
-        onManageUserFacebookData: (user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile) =>
-            dispatch(facebookActions.manageUserFacebookData(user, userProfile)),
+        onManageUserFacebookData: (user: FacebookUtilities.IUser, userProfile: FacebookUtilities.IUserProfile, userExist: any) =>
+            dispatch(facebookActions.manageUserFacebookData(user, userProfile, userExist)),
         onMarkIsUserExists: (userExists: boolean, loggedIn: boolean, user: FacebookUtilities.IUser) =>
-            dispatch(facebookActions.markIsUserExists(userExists, loggedIn, user)),
-        onGoToPreferences: (shouldGo: boolean) => dispatch(mainActions.goToPreferences(shouldGo)),
-        onGetKnowledgeBased: (userId: string) => dispatch(recommendationActions.getKnowledgeBased(userId))
+            dispatch(facebookActions.markIsUserExists(userExists, loggedIn, user))
     };
 }
 
@@ -148,24 +144,16 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
                     userId: response.id
                 }
             });
-            this.onHandleFacebookData();
+            this.onHandleFacebookData(response.id);
         });
     }
 
-    private onHandleFacebookData() {
-        const userExist = this.props.allUsers.find((user) => user.userId === this.state.user.userId);
+    private onHandleFacebookData(userId: string) {
+        const userExist = this.props.allUsers.find((user) => user.userId === userId);
+        console.log('onHandleFacebookData', userExist);
 
-        this.props.onManageUserFacebookData(this.state.user, this.state.userProfile);
-
-        this.props.onMarkIsUserExists(userExist !== null, this.state.userLoggedIn, this.state.user);
-
-        if (userExist === null) {
-            this.props.onGoToPreferences(true);
-        }
-
-        if (userExist !== null) {
-          this.props.onGetKnowledgeBased(this.state.user.userId);
-        }
+        this.props.onManageUserFacebookData(this.state.user, this.state.userProfile, userExist);
+        this.props.onMarkIsUserExists(userExist !== undefined, this.state.userLoggedIn, this.state.user);
     }
 
     public render() {

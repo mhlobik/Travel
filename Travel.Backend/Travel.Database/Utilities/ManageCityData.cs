@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Raven.Client.Documents;
+using Raven.Client.Documents.Linq;
 using Raven.Client.Documents.Session;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace Travel.Database.Utilities
                 {
                     var existingCity = session.Query<City>().FirstOrDefault(x => x.CityId == city.CityId);
                     session.Delete(existingCity);
-                        session.SaveChanges();
+                    session.SaveChanges();
                 }
             }
         }
@@ -87,7 +88,7 @@ namespace Travel.Database.Utilities
                     {
                         var city = session.Query<City>().FirstOrDefault(x => x.CityId == id);
 
-                        if(city != null)
+                        if (city != null)
                         {
                             cities.Add(city);
                         }
@@ -246,7 +247,7 @@ namespace Travel.Database.Utilities
             {
                 using (IDocumentSession session = store.OpenSession())
                 {
-                    airport = session.Query<Airport>().FirstOrDefault(x => x.City.Equals(cityName));                    
+                    airport = session.Query<Airport>().FirstOrDefault(x => x.City.Equals(cityName));
                 }
             }
 
@@ -293,14 +294,15 @@ namespace Travel.Database.Utilities
             {
                 using (IDocumentSession session = store.OpenSession())
                 {
-                    var existingRecommendation = session.Query<Recommendation>().FirstOrDefault(x => x.RecommendedCity.Equals(recommendation.RecommendedCity) 
+                    var existingRecommendation = session.Query<Recommendation>().FirstOrDefault(x => x.RecommendedCity.Equals(recommendation.RecommendedCity)
                     && x.RecommenderModel == recommendation.RecommenderModel && x.UserId == recommendation.UserId);
-   
+
                     if (existingRecommendation != null)
                     {
                         session.Advanced.Patch(existingRecommendation, x => x.Rating, recommendation.Rating);
                         session.SaveChanges();
-                    } else
+                    }
+                    else
                     {
                         session.Store(recommendation);
                         session.SaveChanges();
@@ -338,12 +340,76 @@ namespace Travel.Database.Utilities
             {
                 using (IDocumentSession session = store.OpenSession())
                 {
-                    cities = session.Query<City>().Select(x=>x.Name).ToList();
+                    cities = session.Query<City>().Select(x => x.Name).ToList();
                     airports = session.Query<Airport>().ToList();
                 }
             }
 
             return airports;
+        }
+
+        public List<CityRating> GetUserCityRatings(string userId)
+        {
+            IDocumentStore store;
+            var cityRatings = new List<CityRating>();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    cityRatings = session.Query<CityRating>().Where(x => x.UserId.Equals(userId)).ToList();
+                }
+            }
+
+            return cityRatings;
+        }
+
+        public Dictionary<string, RatedCityDTO> GetAllRatedCities(string userId)
+        {
+            var userRatings = GetUserCityRatings(userId);
+            var ratedCityIds = userRatings.Select(x => x.CityId).Distinct().ToList();
+            var ratedCities = new List<City>();
+
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    ratedCities = session.Query<City>().Where(x => x.CityId.In(ratedCityIds)).ToList();
+                }
+            }
+
+            var ratedCityDictionary = new Dictionary<string, RatedCityDTO>();
+
+            #region Popuni dictionary
+
+            foreach (var city in ratedCities)
+            {
+                var key = city.CityId;
+
+                if (ratedCityDictionary.Keys.Contains(key))
+                {
+                    ratedCityDictionary[key] = new RatedCityDTO()
+                    {
+                        CityRating = userRatings.FirstOrDefault(x => x.CityId.Equals(key)),
+                        PointsOfInterests = city.PointsOfInterest,
+                        Name = city.Name
+                    };
+                }
+                else
+                {
+                    ratedCityDictionary.Add(key, new RatedCityDTO()
+                    {
+                        CityRating = userRatings.FirstOrDefault(x => x.CityId.Equals(key)),
+                        PointsOfInterests = city.PointsOfInterest,
+                        Name = city.Name
+                    });
+                }
+            }
+
+            #endregion
+
+            return ratedCityDictionary;
         }
     }
 }

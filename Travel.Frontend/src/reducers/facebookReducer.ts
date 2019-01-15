@@ -8,6 +8,7 @@ export interface IFacebookReducerState {
     userExists: boolean;
     user: IUser;
     allUsers: Array<IUser>;
+    allUserProfiles: Array<IUserProfile>;
     userProfile: IUserProfile;
     isGettingUserProfile: boolean;
 }
@@ -19,7 +20,8 @@ const initialState: IFacebookReducerState = {
     user: null,
     allUsers: null,
     userProfile: null,
-    isGettingUserProfile: false
+    isGettingUserProfile: false,
+    allUserProfiles: null
 };
 
 export default function facebookReducer(state: IFacebookReducerState = initialState, action: IAction = { type: '', payload: null }) {

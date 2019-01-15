@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Travel.Business.CityManager;
+using Travel.Business.DTO;
 using Travel.Database.Model;
 using Travel.Database.Utilities;
 
