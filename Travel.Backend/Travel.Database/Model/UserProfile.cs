@@ -14,6 +14,7 @@ namespace Travel.Database.Model
         public int MaxTravelPrice { get; set; }
         public string UserId { get; set; }
         public List<string> VisitedCityIds { get; set; }
+        public string LocationName { get; set; }
     }
 
 }

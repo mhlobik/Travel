@@ -21,12 +21,22 @@ namespace Travel.Application.ApiControllers
             return Ok(recommendations);
 
         }
+
         [Route("api/recommendation/get-knowledge-based/{userId}")]
         [HttpGet]
         public IHttpActionResult GetKnowledgeBased(string userId)
         {
             var manager = new KnowledgeBased();
             var recommendations = manager.GetKnowledgeBasedRecommendations(userId);
+            return Ok(recommendations);
+        }
+
+        [Route("api/recommendation/get-collaborative-filtering/{userId}")]
+        [HttpGet]
+        public IHttpActionResult GetCollaborativeFiltering(string userId)
+        {
+            var manager = new CollaborativeFiltering();
+            var recommendations = manager.GetCollaborativeFiltering(userId);
             return Ok(recommendations);
         }
 

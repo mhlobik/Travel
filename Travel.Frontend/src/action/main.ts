@@ -39,6 +39,7 @@ export function saveUserPreferences(userPreferences: Array<string>, maxTravelPri
         }).then(() => {
             dispatch(facebookActionCreators.getUserProfile(user.userId)).then(() => {
                 dispatch(recommendationActionCreators.getKnowledgeBased(user.userId));
+                dispatch(recommendationActionCreators.getCollaborativeFiltering(user.userId));
             });
         });
     };

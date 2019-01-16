@@ -11,7 +11,7 @@ namespace Travel.Business.Recommenders
 {
     public class CollaborativeFiltering
     {
-        public void GetCollaborativeFiltering(string userId)
+        public List<Recommendation> GetCollaborativeFiltering(string userId)
         {
             var similarCities = findSimilarCities(userId);
 
@@ -30,31 +30,32 @@ namespace Travel.Business.Recommenders
 
             var recommendedCityRatings = new List<CityRating>();
 
-
             //za gradove koje korisnik nije ocjenio, procijeni ocjene
             foreach (var cityId in cityDictionary.Keys)
-              {
-                  var cityIndex = cityDictionary.Keys.ToList().IndexOf(cityId);
-                  var userRatedCity = cityDictionary[cityId].ToList().FirstOrDefault(x => x.UserId.Equals(userId)) == null ? false : true;
+            {
+                var cityIndex = cityDictionary.Keys.ToList().IndexOf(cityId);
+                var userRatedCity = cityDictionary[cityId].ToList().FirstOrDefault(x => x.UserId.Equals(userId)) == null ? false : true;
 
-                  if (!userRatedCity)
-                  {
-                      var recommendedRating = getRecommendedRating(cityIndex, userIndex, userItemMatrix, itemsRatingAverage, numOfItems, numOfUsers);
+                if (!userRatedCity)
+                {
+                    var recommendedRating = getRecommendedRating(cityIndex, userIndex, userItemMatrix, itemsRatingAverage, numOfItems, numOfUsers);
 
-                      // nakon sto izracunamo ocjene, preporuci korisniku one gradove koje bi on ocjenio sa 4 i 5, a da nisu vec u korisnik gradovi
-                      if (recommendedRating >= 4)
-                      {
-                          recommendedCityRatings.Add(new CityRating()
-                          {
-                              CityId = cityId,
-                              Rating = (int)Math.Round(recommendedRating),
-                              UserId = userId
-                          });
-                      }
-                  }
-              }
+                    // nakon sto izracunamo ocjene, preporuci korisniku one gradove koje bi on ocjenio sa 4 i 5, a da nisu vec u korisnik gradovi
+                    if (recommendedRating >= 3)
+                    {
+                        recommendedCityRatings.Add(new CityRating()
+                        {
+                            CityId = cityId,
+                            Rating = (int)Math.Round(recommendedRating),
+                            UserId = userId
+                        });
+                    }
+                }
+            }
 
-            var test = recommendedCityRatings;
+            var recommendationList = getRecommendationList(recommendedCityRatings, similarCities, userId);
+
+            return recommendationList;
         }
 
         private List<CityRating> findSimilarCities(string userId)
@@ -284,7 +285,7 @@ namespace Travel.Business.Recommenders
                 }
             }
 
-            float recommendation = gradeMultipleSimilarities / resultSimilarities;
+            float recommendation = resultSimilarities != 0 ? gradeMultipleSimilarities / resultSimilarities : 0;
 
             return recommendation;
         }
@@ -315,6 +316,30 @@ namespace Travel.Business.Recommenders
                     }
                 }
                 i++;
+            }
+
+            return result;
+        }
+
+        private List<Recommendation> getRecommendationList(List<CityRating> recommendedRatings, List<CityRating> similarCities, string userId)
+        {
+            var result = new List<Recommendation>();
+            var cityDataManager = new ManageCityData();
+            var cities = cityDataManager.GetAllCities();
+
+            var tempList = recommendedRatings.Count != 0 ? recommendedRatings : similarCities;
+
+            foreach (var rating in tempList)
+            {
+                if (rating.Rating < 3) continue;
+
+                var city = cities.FirstOrDefault(x => x.CityId.Equals(rating.CityId));
+                result.Add(new Recommendation()
+                {
+                    RecommendedCity = city,
+                    RecommenderModel = RecommenderModelEnum.CollaborativeFiltering,
+                    UserId = userId
+                });
             }
 
             return result;

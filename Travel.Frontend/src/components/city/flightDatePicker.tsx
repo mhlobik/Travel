@@ -6,6 +6,8 @@ import Select from 'react-select';
 
 interface IFlightDatePickerProps {
     airports: Array<IAirport>;
+    userLocation: string;
+    cityName: string;
     onSearchClick(departureDate: Date, returnDate: Date, originSelected: string, destinationSelected: string): void;
 }
 
@@ -27,8 +29,14 @@ export default class FlightDatePicker extends React.Component<IFlightDatePickerP
         this.state = {
             departure: new Date(),
             return: new Date(),
-            originSelected: null,
-            destinationSelected: null
+            originSelected: {
+                value: props.userLocation,
+                label: props.userLocation
+            },
+            destinationSelected: {
+                value: props.cityName,
+                label: props.cityName
+            }
         };
     }
 

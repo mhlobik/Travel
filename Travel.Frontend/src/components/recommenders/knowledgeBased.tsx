@@ -11,6 +11,7 @@ import { IRootReducerState } from '../../reducers/rootReducer';
 import * as recommendationActions from '../../action/recommendation';
 import * as cityActions from '../../action/city';
 import { IUser } from '../../common/facebookUtilities';
+import { RecommenderModelEnum } from '../../common/enums';
 
 interface IKnowledgeBasedProps {
     user?: IUser;
@@ -91,7 +92,10 @@ class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledg
                     isLoading={this.state.isLoading}
                 />
 
-                {this.props.openRecommendedItem && this.props.selectedRecommendation !== null &&
+                {
+                    this.props.openRecommendedItem &&
+                    this.props.selectedRecommendation !== null &&
+                    this.props.selectedRecommendation.recommenderModel === RecommenderModelEnum.KnowledgeBased &&
                     <City />
                 }
             </div>

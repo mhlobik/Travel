@@ -33,13 +33,14 @@ export function manageUserProfileFacebookData(userProfile: IUserProfile, userExi
                 body: JSON.stringify(userProfile)
             }
         }).then(() => {
-            console.log('manageUserProfileFacebookData', userExist);
             if (userExist === undefined) {
                 dispatch(mainActionCreators.goToPreferences(true));
             }
 
             if (userExist !== undefined) {
+                dispatch(getUserProfile(userProfile.userId));
                 dispatch(recommendationActionCreators.getKnowledgeBased(userProfile.userId));
+                dispatch(recommendationActionCreators.getCollaborativeFiltering(userProfile.userId));
             }
         });
     };

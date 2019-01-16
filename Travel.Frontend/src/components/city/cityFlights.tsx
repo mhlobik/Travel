@@ -9,6 +9,8 @@ interface ICityFlightsProps {
     flights: Array<IFlightViewModel>;
     isGettingFlights: boolean;
     airports: Array<IAirport>;
+    userLocation: string;
+    cityName: string;
     onSearchClick(departureDate: Date, returnDate: Date, originSelected: string, destinationSelected: string): void;
 }
 
@@ -72,6 +74,8 @@ export default class CityFlights extends React.PureComponent<ICityFlightsProps, 
                 <FlightDatePicker
                     onSearchClick={this.props.onSearchClick}
                     airports={this.props.airports}
+                    cityName={this.props.cityName}
+                    userLocation={this.props.userLocation}
                 />
 
                 <div className="city-flights__content">

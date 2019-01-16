@@ -42,6 +42,7 @@ export interface IUserProfile {
     facebookTaggedPlaces: Array<IFacebookTaggedPlace>;
     userId: string;
     preferences?: Array<number>;
+    locationName: string;
 }
 
 export interface IUser {

@@ -33,7 +33,7 @@ namespace Travel.Backend.Console
 
             #region Test CF
             var cfManager = new CollaborativeFiltering();
-            cfManager.GetCollaborativeFiltering("10217668859972898");
+            cfManager.GetCollaborativeFiltering("10217912614309441");
             #endregion
 
             #region read xls

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Carousel from '../carousel/carousel';
 import { IRecommendation } from '../../common/recommendationUtilities';
-import './topCities.scss';
-import { IFlightViewModel } from '../../common/city';
+import './collaborativeFiltering.scss';
+import { ICity, IPointOfInterestsCityInfo, IFlight, IFlightViewModel } from '../../common/city';
 import City from '../city/city';
 import { autobind, Spinner, SpinnerType } from 'quick-react-ts';
 import { ICarouselData } from '../mainContent/mainContent';
@@ -10,40 +10,43 @@ import { connect } from 'react-redux';
 import { IRootReducerState } from '../../reducers/rootReducer';
 import * as recommendationActions from '../../action/recommendation';
 import * as cityActions from '../../action/city';
+import { IUser } from '../../common/facebookUtilities';
 import { RecommenderModelEnum } from '../../common/enums';
 
-interface ITopCitiesProps {
-    topCitiesRecommendations?: Array<IRecommendation>;
+interface ICollaborativeFilteringProps {
+    user?: IUser;
+    collaborativeFilteringRecommendations?: Array<IRecommendation>;
     openRecommendedItem?: boolean;
     pointsOfInterestsInfo?: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo?: boolean;
     flights?: Array<IFlightViewModel>;
     isGettingFlights?: boolean;
-    isGettingTopCities?: boolean;
+    isGettingCollaborativeFiltering?: boolean;
     selectedRecommendation?: IRecommendation;
     handleOnItemClick?(recommendation: IRecommendation): void;
     onCloseRecommendedItem?(): void;
     onClickRecommendationRating?(rate: number): void;
 }
 
-interface ITopCitiesState {
+interface ICollaborativeFilteringState {
     isLoading: boolean;
 }
 
-function mapStateToProps(state: IRootReducerState): ITopCitiesProps {
+function mapStateToProps(state: IRootReducerState): ICollaborativeFilteringProps {
     return {
-        topCitiesRecommendations: state.recommendation.topCitiesRecommendations,
+        user: state.facebook.user,
+        collaborativeFilteringRecommendations: state.recommendation.collaborativeFilteringRecommendations,
         openRecommendedItem: state.recommendation.openRecommendedItem,
         pointsOfInterestsInfo: state.city.pointsOfInterestsInfo,
         isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo,
         flights: state.city.flights,
         isGettingFlights: state.city.isGettingFlights,
-        isGettingTopCities: state.recommendation.isGettingTopCities,
+        isGettingCollaborativeFiltering: state.recommendation.isGettingCollaborativeFiltering,
         selectedRecommendation: state.recommendation.selectedRecommendation
     };
 }
 
-function mapDispatchToProps(dispatch: any): ITopCitiesProps {
+function mapDispatchToProps(dispatch: any): ICollaborativeFilteringProps {
     return {
         handleOnItemClick: (recommendation: IRecommendation) => dispatch(recommendationActions.openRecommendedItem(recommendation)),
         onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem())
@@ -51,17 +54,17 @@ function mapDispatchToProps(dispatch: any): ITopCitiesProps {
 }
 
 function mergeProps(
-    stateProps: ITopCitiesProps,
-    dispatchProps: ITopCitiesProps
-): ITopCitiesProps {
+    stateProps: ICollaborativeFilteringProps,
+    dispatchProps: ICollaborativeFilteringProps
+): ICollaborativeFilteringProps {
     return {
         ...stateProps,
         ...dispatchProps
     };
 }
 
-class TopCities extends React.PureComponent<ITopCitiesProps, ITopCitiesState> {
-    constructor(props: ITopCitiesProps) {
+class CollaborativeFiltering extends React.PureComponent<ICollaborativeFilteringProps, ICollaborativeFilteringState> {
+    constructor(props: ICollaborativeFilteringProps) {
         super(props);
 
         this.state = {
@@ -69,8 +72,8 @@ class TopCities extends React.PureComponent<ITopCitiesProps, ITopCitiesState> {
         };
     }
 
-    public componentWillReceiveProps(nextProps: ITopCitiesProps) {
-        this.setState({ isLoading: nextProps.isGettingTopCities });
+    public componentWillReceiveProps(nextProps: ICollaborativeFilteringProps) {
+        this.setState({ isLoading: nextProps.isGettingCollaborativeFiltering });
     }
 
     @autobind
@@ -80,10 +83,10 @@ class TopCities extends React.PureComponent<ITopCitiesProps, ITopCitiesState> {
 
     public render() {
         return (
-            <div className="top-cities__container">
-                <span className="top-cities__title">Top Rated Cities on Travel:</span>
+            <div className="collaborative-filtering__container">
+                <span className="collaboratiove-filtering__title">Cities based on what other users liked:</span>
                 <Carousel
-                    recommendations={this.props.topCitiesRecommendations}
+                    recommendations={this.props.collaborativeFilteringRecommendations}
                     handleOnItemClick={this.onHandleOnItemClick}
                     isClickable={true}
                     isLoading={this.state.isLoading}
@@ -92,7 +95,7 @@ class TopCities extends React.PureComponent<ITopCitiesProps, ITopCitiesState> {
                 {
                     this.props.openRecommendedItem &&
                     this.props.selectedRecommendation !== null &&
-                    this.props.selectedRecommendation.recommenderModel === RecommenderModelEnum.TopCitiesOnTravel &&
+                    this.props.selectedRecommendation.recommenderModel === RecommenderModelEnum.CollaborativeFiltering &&
                     <City />
                 }
             </div>
@@ -104,4 +107,4 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps
-)(TopCities);
+)(CollaborativeFiltering);

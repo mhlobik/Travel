@@ -14,10 +14,11 @@ import * as recommendationActions from '../../action/recommendation';
 import { connect } from 'react-redux';
 import CityHotels from './cityHotels';
 import { IRecommendation } from '../../common/recommendationUtilities';
-import { IUser } from '../../common/facebookUtilities';
+import { IUser, IUserProfile } from '../../common/facebookUtilities';
 
 interface ICityProps {
     user?: IUser;
+    userProfile?: IUserProfile;
     selectedRecommendation?: IRecommendation;
     pointsOfInterestsInfo?: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo?: boolean;
@@ -29,6 +30,7 @@ interface ICityProps {
     isGettingHotels?: boolean;
     recommendationRating?: number;
     airports?: Array<IAirport>;
+    isLoggedIn?: boolean;
     onCloseRecommendedItem?(): void;
     onClickCityRating?(cityId: string, user: IUser, rate: number): void;
     onSearchClick?(departureDate: Date, returnDate: Date, originSelected: string, destinationSelected: string): void;
@@ -42,6 +44,7 @@ interface ICityState {
 function mapStateToProps(state: IRootReducerState): ICityProps {
     return {
         user: state.facebook.user,
+        userProfile: state.facebook.userProfile,
         selectedRecommendation: state.recommendation.selectedRecommendation,
         pointsOfInterestsInfo: state.city.pointsOfInterestsInfo,
         isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo,
@@ -51,7 +54,8 @@ function mapStateToProps(state: IRootReducerState): ICityProps {
         isGettingCityRating: state.city.isGettingCityRating,
         hotels: state.city.hotels,
         isGettingHotels: state.city.isGettingHotels,
-        airports: state.city.airports
+        airports: state.city.airports,
+        isLoggedIn: state.facebook.userLoggedIn
     };
 }
 
@@ -128,6 +132,8 @@ class City extends React.PureComponent<ICityProps, ICityState> {
                     flights={this.props.flights}
                     onSearchClick={this.props.onSearchClick}
                     isGettingFlights={this.props.isGettingFlights}
+                    userLocation={this.props.userProfile.locationName}
+                    cityName={this.props.selectedRecommendation.recommendedCity.name}
                 />;
             case CityTabEnum.hotels:
                 return <CityHotels
@@ -148,6 +154,7 @@ class City extends React.PureComponent<ICityProps, ICityState> {
                     onClickCityRating={this.onClickCityRating}
                     recommendationRating={this.props.selectedRecommendation.rating}
                     onClickRecommendationRating={this.handleOnClickRecommendationRating}
+                    isLoggedIn={this.props.isLoggedIn}
                 />;
             case CityTabEnum.recommendationForYou:
                 return <span></span>;

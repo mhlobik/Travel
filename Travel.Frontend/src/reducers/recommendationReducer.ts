@@ -10,6 +10,8 @@ export interface IRecommendationReducerState {
     openRecommendedItem: boolean;
     isGettingTopCities: boolean;
     topCitiesRecommendations: Array<IRecommendation>;
+    collaborativeFilteringRecommendations: Array<IRecommendation>;
+    isGettingCollaborativeFiltering: boolean;
 }
 
 const initialState: IRecommendationReducerState = {
@@ -18,7 +20,9 @@ const initialState: IRecommendationReducerState = {
     selectedRecommendation: null,
     openRecommendedItem: false,
     isGettingTopCities: false,
-    topCitiesRecommendations: []
+    topCitiesRecommendations: [],
+    collaborativeFilteringRecommendations: [],
+    isGettingCollaborativeFiltering: false
 };
 
 export default function facebookReducer(state: IRecommendationReducerState = initialState, action: IAction = { type: '', payload: null }) {
@@ -66,6 +70,22 @@ export default function facebookReducer(state: IRecommendationReducerState = ini
             return {
                 ...state,
                 isGettingTopCities: false
+            };
+        case `${recommendationActions.GET_COLLABORATIVE_FILTERING}_REQUEST`:
+            return {
+                ...state,
+                isGettingCollaborativeFiiltering: true
+            };
+        case `${recommendationActions.GET_COLLABORATIVE_FILTERING}_RESPONSE`:
+            return {
+                ...state,
+                isGettingCollaborativeFiltering: false,
+                collaborativeFilteringRecommendations: action.payload
+            };
+        case `${recommendationActions.GET_COLLABORATIVE_FILTERING}_ERROR`:
+            return {
+                ...state,
+                isGettingCollaborativeFiltering: false
             };
         default:
             return state;

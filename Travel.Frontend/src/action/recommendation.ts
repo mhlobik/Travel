@@ -24,8 +24,8 @@ export function openRecommendedItem(recommendation: IRecommendation) {
     return (dispatch, getState) => {
         dispatch(handleOpenRecommendedItem(recommendation));
         //dispatch(getImageUrls(recommendation.recommendedCity));
-        //dispatch(cityActionsCreator.getAllAirports());
-       // dispatch(cityActionsCreator.getCityRating(recommendation.recommendedCity.cityId, recommendation.userId));
+        dispatch(cityActionsCreator.getAllAirports());
+        dispatch(cityActionsCreator.getCityRating(recommendation.recommendedCity.cityId, recommendation.userId));
         //dispatch(cityActionsCreator.getCityHotels(recommendation.recommendedCity));
     };
 }
@@ -77,6 +77,19 @@ export function getTopCities() {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${recommendationBaseUrl}/get-top-cities`,
             requestActionName: recommendationActions.GET_TOP_CITIES,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'GET'
+            }
+        });
+    };
+}
+
+export function getCollaborativeFiltering(userId: string) {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${recommendationBaseUrl}/get-collaborative-filtering/${userId}`,
+            requestActionName: recommendationActions.GET_COLLABORATIVE_FILTERING,
             jsonResponseExpected: true,
             requestInit: {
                 method: 'GET'

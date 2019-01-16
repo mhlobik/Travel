@@ -152,3 +152,4 @@ export const noFlights = 'We didn\'t find flights for selected dates and cities.
 export const noHotels = (name: string) => { return 'We didn\'t find hotels for city "' + name + '" .'; };
 export const ratingCity = (name: string) => { return 'How much do you like "' + name + '" city?'; };
 export const ratingRecommendation = (name: string) => { return 'How accurate the recommendation of city "' + name + '" is?'; };
+export const ratingCityNotLoggedIn = 'You must be logged in to rate city and recommendation. Please log in.';

@@ -4,6 +4,7 @@ import { IUser } from '../../common/facebookUtilities';
 import UserPreferences from '../../containers/userPreferences/userPreferences';
 import KnowledgeBased from '../recommenders/knowledgeBased';
 import TopCities from '../recommenders/topCities';
+import CollaborativeFiltering from '../recommenders/collaborativeFiltering';
 
 interface IMainContentProps {
     userLoggedIn: boolean;
@@ -19,16 +20,16 @@ export interface ICarouselData {
 }
 
 export default class MainContent extends React.PureComponent<IMainContentProps, {}> {
-    public componentWillReceiveProps(nextProps: IMainContentProps) {
-console.log('componentWillReceivePropsF', nextProps);
-    }
     public render() {
         return (
             <div key="container" className="main-content__container">
                 {this.props.user !== null && this.props.goToPreferences && <UserPreferences />}
                 <TopCities />
                 {this.props.user !== null && !this.props.goToPreferences &&
+                <span>
                     <KnowledgeBased />
+                    <CollaborativeFiltering/>
+                </span>
                 }
             </div>
         );

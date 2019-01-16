@@ -69,7 +69,8 @@ export enum PreferencesCategories {
 export enum RecommenderModelEnum {
     CollaborativeFiltering = 0,
     ContentBased = 1,
-    KnowledgeBased = 2
+    KnowledgeBased = 2,
+    TopCitiesOnTravel = 3
 }
 
 export enum CityTabEnum {

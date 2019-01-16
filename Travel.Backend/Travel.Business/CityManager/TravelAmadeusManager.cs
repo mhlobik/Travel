@@ -20,9 +20,11 @@ namespace Travel.Business.CityManager
             flightClient.BaseAddress = new Uri("https://api.sandbox.amadeus.com/v1.2/flights/affiliate-search");
 
             var flights = new List<FlightViewModel>();
+            var cityDataManager = new ManageCityData();
 
-            var origin = flightInfo.Origin; //"LON";
-            var destination = flightInfo.Destination; //"NYC";
+            var origin = flightInfo.Origin.Length != 3 ? cityDataManager.GetCityAirport(flightInfo.Origin).IATA : flightInfo.Origin; //"LON";
+            var destination = flightInfo.Destination.Length != 3 ? cityDataManager.GetCityAirport(flightInfo.Destination).IATA : flightInfo.Destination;//"NYC";
+
 
             var departureDate = flightInfo.DepartureDate.Date.ToString("yyyy-MM-dd"); //"2019-01-08"; //
             var returnDate = flightInfo.ReturnDate.Date.ToString("yyyy-MM-dd"); //"2019-01-11"; //

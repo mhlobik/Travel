@@ -17,7 +17,7 @@ export interface ICityReducerState {
 
 const initialState: ICityReducerState = {
     isGettingPointsOfInterestsInfo: false,
-    pointsOfInterestsInfo: null,
+    pointsOfInterestsInfo: [],
     flights: null,
     isGettingFlights: false,
     cityRating: null,

@@ -104,6 +104,16 @@ namespace Travel.Database.Utilities
                         }
                         #endregion
 
+                        #region Update Location
+                        var existingLocation = existingUserProfile.LocationName;
+                        var newLocation = userProfile.LocationName.Split(',')[0];
+                        var areLocationsEqual = (existingLocation != null) && (newLocation != null) ? existingLocation.Equals(newLocation) : false;
+                        if (!areLocationsEqual)
+                        {
+                            session.Advanced.Patch(existingUserProfile, x => x.LocationName, newLocation);
+                        }
+                        #endregion
+
                         #region Update Visited Citys Ids
                         /*smisli logiku*/
                         #endregion
