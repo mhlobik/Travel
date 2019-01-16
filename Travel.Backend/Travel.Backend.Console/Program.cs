@@ -31,11 +31,6 @@ namespace Travel.Backend.Console
             System.Console.WriteLine("App started!\n");
             #endregion
 
-            #region Test CF
-            var cfManager = new CollaborativeFiltering();
-            cfManager.GetCollaborativeFiltering("10217912614309441");
-            #endregion
-
             #region read xls
             //Excel.Application xlApp;
             //Excel.Workbook xlWorkBook;
