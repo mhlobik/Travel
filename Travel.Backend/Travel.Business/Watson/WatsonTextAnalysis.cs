@@ -3,13 +3,14 @@ using IBM.WatsonDeveloperCloud.NaturalLanguageUnderstanding.v1.Model;
 using IBM.WatsonDeveloperCloud.Util;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Travel.Database.Model;
 
 namespace Travel.Business.Watson
 {
     public class WatsonTextAnalysis
     {
-        public TextAnalysis GetTextAnalysis(string text)
+        public async Task<TextAnalysis> GetTextAnalysis(string text)
         {
             string apiKey = System.IO.File.ReadAllText(@"D:\Diplomski Rad\IBM_Watson_API_key.txt");
 
@@ -29,15 +30,10 @@ namespace Travel.Business.Watson
                 Features = new Features()
                 {
                     Categories = new CategoriesOptions { },
-                    Concepts = new ConceptsOptions
-                    {
-                    },
-                    Emotion = new EmotionOptions { },
                     Entities = new EntitiesOptions
                     {
-                        Sentiment = true
                     },
-                    Sentiment = new SentimentOptions
+                    Keywords = new KeywordsOptions()
                     {
                     }
                 }
@@ -48,21 +44,10 @@ namespace Travel.Business.Watson
             {
                 var result = naturalLanguageUnderstandingService.Analyze(parameters);
 
-                var concepts = new List<TextAnalysisConcepts>();
-                foreach (var concept in result.Concepts)
-                {
-                    concepts.Add(new TextAnalysisConcepts()
-                    {
-                        DbpediaResource = concept.DbpediaResource,
-                        Relevance = concept.Relevance,
-                        Text = concept.Text
-                    });
-                }
-
-                var entities = new List<TextAnalysisEntities>();
+                var entities = new List<TextAnalysisEntity>();
                 foreach (var entity in result.Entities)
                 {
-                    entities.Add(new TextAnalysisEntities()
+                    entities.Add(new TextAnalysisEntity()
                     {
                         Type = entity.Type,
                         Relevance = entity.Relevance,
@@ -70,22 +55,28 @@ namespace Travel.Business.Watson
                     });
                 }
 
-                //ako je u kategorijama koje me zanimaju idem dalje?
+                var categories = new List<string>();
                 foreach (var category in result.Categories)
                 {
-                    var c = category.Label;
+                    categories.Add(category.Label);
+                }
+
+                var keywords = new List<TextAnalysisKeyword>();
+                foreach (var word in result.Keywords)
+                {
+                    keywords.Add(new TextAnalysisKeyword() {
+                        Text = word.Text,
+                        Relevance = word.Relevance
+                    });
                 }
 
                 var analysis = new TextAnalysis()
                 {
-                    Concepts = concepts,
                     Entities = entities,
-                    Sentiment = new TextAnalysisSentiment()
-                    {
-                        Label = result.Sentiment.Document.Label,
-                        Score = result.Sentiment.Document.Score
-                    }
+                    Categories = categories,
+                    KeyWords = keywords
                 };
+
                 return analysis;
             }
             catch (Exception ex)

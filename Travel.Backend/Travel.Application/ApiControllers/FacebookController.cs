@@ -6,6 +6,7 @@ using Travel.Database.Utilities;
 using Travel.Business.Watson;
 using Travel.Business.Facebook;
 using Travel.Application.DTO;
+using System.Threading.Tasks;
 
 namespace Travel.Application.ApiControllers
 {
@@ -25,7 +26,7 @@ namespace Travel.Application.ApiControllers
         public IHttpActionResult ManageUserProfileFacebookData([FromBody] UserProfile userProfile)
         {
             var userPofileManager = new UserProfileManager();
-            var isStored = userPofileManager.ParseAndStoreUserProfile(userProfile);
+            var isStored = Task.Run(async () => await userPofileManager.ParseAndStoreUserProfile(userProfile)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             return Ok(userProfile);
         }

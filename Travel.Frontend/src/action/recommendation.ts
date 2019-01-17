@@ -23,7 +23,7 @@ export function getKnowledgeBased(userId: string) {
 export function openRecommendedItem(recommendation: IRecommendation) {
     return (dispatch, getState) => {
         dispatch(handleOpenRecommendedItem(recommendation));
-        //dispatch(getImageUrls(recommendation.recommendedCity));
+        dispatch(getImageUrls(recommendation.recommendedCity));
         dispatch(cityActionsCreator.getAllAirports());
         dispatch(cityActionsCreator.getCityRating(recommendation.recommendedCity.cityId, recommendation.userId));
         //dispatch(cityActionsCreator.getCityHotels(recommendation.recommendedCity));

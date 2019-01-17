@@ -54,44 +54,68 @@ namespace Travel.Database.Utilities
                     if (existingUserProfile != null)
                     {
                         #region Update Facebook Events
-                        var existingFbEvents = existingUserProfile.FacebookEvents;
-                        var newFbEvents = userProfile.FacebookEvents;
-                        // ako su eventi razliciti, treba nove dodati u bazu (stare zadržati)
-                        var areFbEventsEqual = (existingFbEvents != null) ? existingFbEvents.SequenceEqual(newFbEvents) : false;
-                        if (!areFbEventsEqual)
+                        var fbEvents = existingUserProfile.FacebookEvents;
+                        if (fbEvents != null)
                         {
-                            session.Advanced.Patch(existingUserProfile, x => x.FacebookEvents, userProfile.FacebookEvents);
+                            foreach (var oldEvent in fbEvents)
+                            {
+                                if (!userProfile.FacebookEvents.Any(x => x.EventId.Equals(oldEvent.EventId)))
+                                {
+                                    userProfile.FacebookEvents.Add(oldEvent);
+                                }
+                            }
                         }
+                        session.Advanced.Patch(existingUserProfile, x => x.FacebookEvents, userProfile.FacebookEvents);
                         #endregion
 
                         #region Update Facebook Groups
-                        var existingFbGroups = existingUserProfile.FacebookGroups;
-                        var newFbGroups = userProfile.FacebookGroups;
-                        var areFbGroupsEqual = (existingFbGroups != null) ? existingFbGroups.SequenceEqual(newFbGroups) : false;
-                        if (!areFbGroupsEqual)
+                        var fbGroups = existingUserProfile.FacebookGroups;
+                        if (fbGroups != null)
                         {
-                            session.Advanced.Patch(existingUserProfile, x => x.FacebookGroups, userProfile.FacebookGroups);
+                            foreach (var oldGroup in fbGroups)
+                            {
+                                if (!userProfile.FacebookGroups.Any(x => x.GroupId.Equals(oldGroup.GroupId)))
+                                {
+                                    userProfile.FacebookGroups.Add(oldGroup);
+                                }
+                            }
                         }
+                        session.Advanced.Patch(existingUserProfile, x => x.FacebookGroups, userProfile.FacebookGroups);
+
                         #endregion
 
                         #region Update Facebook Likes
-                        var existingFbLikes = existingUserProfile.FacebookLikes;
-                        var newFbLikes = userProfile.FacebookLikes;
-                        var areFbLikesEqual = (existingFbLikes != null) ? existingFbLikes.SequenceEqual(newFbLikes) : false;
-                        if (!areFbLikesEqual)
+                        var fbLikes = existingUserProfile.FacebookLikes;
+                        if (fbLikes != null)
                         {
-                            session.Advanced.Patch(existingUserProfile, x => x.FacebookLikes, userProfile.FacebookLikes);
+                            foreach (var oldLike in fbLikes)
+                            {
+                                if (!userProfile.FacebookLikes.Any(x => x.LikedPageId.Equals(oldLike.LikedPageId)))
+                                {
+                                    userProfile.FacebookLikes.Add(oldLike);
+                                }
+                            }
                         }
+
+                        session.Advanced.Patch(existingUserProfile, x => x.FacebookLikes, userProfile.FacebookLikes);
+
                         #endregion
 
                         #region Update Facebook Tagged Places
-                        var existingFbTaggedPlaces = existingUserProfile.FacebookTaggedPlaces;
-                        var newFbTaggedPlaces = userProfile.FacebookTaggedPlaces;
-                        var areFbTaggedPlacesEqual = (existingFbTaggedPlaces != null) ? existingFbTaggedPlaces.SequenceEqual(newFbTaggedPlaces) : false;
-                        if (!areFbTaggedPlacesEqual)
+                        var fbTaggedPlaces = existingUserProfile.FacebookTaggedPlaces;
+                        if(fbTaggedPlaces != null)
                         {
-                            session.Advanced.Patch(existingUserProfile, x => x.FacebookTaggedPlaces, userProfile.FacebookTaggedPlaces);
+                            foreach (var oldPlace in fbTaggedPlaces)
+                            {
+                                if (!userProfile.FacebookTaggedPlaces.Any(x => x.TaggedPlaceId.Equals(oldPlace.TaggedPlaceId)))
+                                {
+                                    userProfile.FacebookTaggedPlaces.Add(oldPlace);
+                                }
+                            }
                         }
+
+                        session.Advanced.Patch(existingUserProfile, x => x.FacebookTaggedPlaces, userProfile.FacebookTaggedPlaces);
+
                         #endregion
 
                         #region Update Preferences
@@ -115,7 +139,21 @@ namespace Travel.Database.Utilities
                         #endregion
 
                         #region Update Visited Citys Ids
-                        /*smisli logiku*/
+                        var existingVisitedCityIds = existingUserProfile.VisitedCityIds;
+
+                        if(existingVisitedCityIds != null)
+                        {
+                            foreach (var old in existingVisitedCityIds)
+                            {
+                                if (!userProfile.VisitedCityIds.Equals(old))
+                                {
+                                    userProfile.VisitedCityIds.Add(old);
+                                }
+                            }
+                        }
+
+
+                        session.Advanced.Patch(existingUserProfile, x => x.VisitedCityIds, userProfile.VisitedCityIds);
                         #endregion
                     }
                     else

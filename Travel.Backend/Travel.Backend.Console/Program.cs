@@ -1,5 +1,8 @@
 ﻿using Google.Cloud.Language.V1;
 using Google.Protobuf.Collections;
+using IBM.WatsonDeveloperCloud.NaturalLanguageUnderstanding.v1;
+using IBM.WatsonDeveloperCloud.NaturalLanguageUnderstanding.v1.Model;
+using IBM.WatsonDeveloperCloud.Util;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raven.Client.Documents;
@@ -177,8 +180,11 @@ namespace Travel.Backend.Console
 
             #region Natural Language Understanding API
             //var url = "https://gateway-fra.watsonplatform.net/natural-language-understanding/api";
-            ////string text = "Always dreamed of a movielike summer exper Kako postati državni uhljeb? Seminar + Neradionica";
+            //string text = "Caen (; French pronunciation: ​[kɑ̃]; Norman: Kaem), (Caen  in French) is a commune in northwestern France. It is the prefecture of the Calvados department. The city proper has 108,365 inhabitants (as of  2012), while its urban area has 420,000, making Caen the largest city in former Lower Normandy. It is also the third largest municipality in all of Normandy after Le Havre and Rouen and the third largest city proper in Normandy, after Rouen and Le Havre,. The metropolitan area of Caen, in turn, is the second largest in Normandy after that of Rouen, the 21st largest in France.\nIt is located 15 kilometres (9.3 miles) inland from the English Channel, 200 kilometres north-west of Paris, and connected to the south of England by the Caen-(Ouistreham)-Portsmouth ferry route. Caen is located in the centre of its northern region, and it is a centre of political, economic and cultural power. Located a few miles from the coast, the landing beaches, the bustling resorts of Deauville and Cabourg, Norman Switzerland and Pays d'Auge, Caen is often considered the archetype of Normandy.\nCaen is known for its historical buildings built during the reign of William the Conqueror, who was buried there, and for the Battle for Caen—heavy fighting that took place in and around Caen during the Battle of Normandy in 1944, destroying much of the city. The city has now preserved the memory by erecting a memorial and a museum dedicated to peace, the Mémorial de Caen.";
 
+            //var lines = System.IO.File.ReadAllLines(@"D:\Diplomski Rad\config.ts");
+            //string apiKey = lines[4];
+            
             //TokenOptions iamAssistantTokenOptions = new TokenOptions()
             //{
             //    IamApiKey = apiKey,

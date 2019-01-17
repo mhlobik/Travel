@@ -11,6 +11,7 @@ namespace Travel.Database.Model
         public string Name { get; set; }
         public List<PointsOfInterest> PointsOfInterest { get; set; }
         public string Description { get; set; }
+        public TextAnalysis DescriptionAnalysis { get; set; }
         public string ImageUrl { get; set; }
     }
 }
