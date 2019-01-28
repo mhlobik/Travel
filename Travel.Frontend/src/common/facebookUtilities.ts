@@ -43,6 +43,10 @@ export interface IUserProfile {
     userId: string;
     preferences?: Array<number>;
     locationName: string;
+    monthSelected?: number;
+    duration?: number;
+    maxFlightPrice?: number;
+    monthPartSelected?: string
 }
 
 export interface IUser {

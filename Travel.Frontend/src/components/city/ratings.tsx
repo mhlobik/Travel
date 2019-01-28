@@ -34,10 +34,12 @@ export default class Ratings extends React.PureComponent<IRatingsProps, {}> {
         return (
             <div className="ratings__container">
                 {!this.props.isLoggedIn &&
-                    <span className="ratings__title">{ratingCityNotLoggedIn}</span>
+                    <div className="ratings__wrapper">
+                        <span className="ratings__title">{ratingCityNotLoggedIn}</span>
+                    </div>
                 }
                 {this.props.isLoggedIn &&
-                    <div  className="ratings__wrapper">
+                    <div className="ratings__wrapper">
                         <span className="ratings__title">{ratingCity(this.props.cityName)}</span>
                         <Rating
                             emptySymbol={<img src={StarEmpty} className="icon" />}

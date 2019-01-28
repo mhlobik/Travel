@@ -35,23 +35,25 @@ namespace Travel.Business.CityManager
                 var results = JObject.Parse(Task.Run(async () => await resp.Content.ReadAsStringAsync()).ConfigureAwait(false).GetAwaiter().GetResult());
                 JArray resultsArray = (JArray)results["results"];
                 System.Console.WriteLine($"\nUkupno rezultata za letove {resultsArray.Count}");
-                
-                foreach(var result in resultsArray)
+                if(resultsArray.Count > 0)
                 {
-                    var flight = mapResultToFlightViewModel(origin, destination, result);
-                    flights.Add(flight);
+                    for (var i = 0; i < 5; i++)
+                    {
+                        var flight = mapResultToFlightViewModel(flightInfo.Origin.Length == 3 ? cityDataManager.GetCityAirport(flightInfo.Origin).City : flightInfo.Origin, flightInfo.Destination.Length == 3 ? cityDataManager.GetCityAirport(flightInfo.Destination).City : flightInfo.Destination, resultsArray[i]);
+                        flights.Add(flight);
+                    }
                 }
             }
 
-            return flights;
+            return flights.OrderByDescending(x=>x.TotalPrice).Distinct().ToList();
         }
 
         private FlightViewModel mapResultToFlightViewModel(string origin, string destination, JToken result)
         {
             return new FlightViewModel()
             {
-                From = origin,
-                To = destination,
+                From = "Zagreb",//origin,
+                To = "Hayman Island",//destination,
                 Currency = result["fare"]["currency"].ToString(),
                 TotalPrice = (decimal)result["fare"]["total_price"],
                 OutboundDuration = result["outbound"]["duration"].ToString(),

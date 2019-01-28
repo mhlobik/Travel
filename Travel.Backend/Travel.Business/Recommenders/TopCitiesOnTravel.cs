@@ -21,11 +21,8 @@ namespace Travel.Business.Recommenders
             var cities = cityDataManager.GetAllCities();
             var cityRatings = cityDataManager.GetAllCityRatings();
 
-            Console.WriteLine("Stopwatch - get all cities: {0}", sw.ElapsedMilliseconds);
-
             var sortedAverageCityRatingsDictionary = CalculateAverageCityRatings(cityRatings);
 
-            Console.WriteLine("\nTopCitiesOnTravel");
             foreach (var pair in sortedAverageCityRatingsDictionary)
             {
                 var recommendedCity = cities.FirstOrDefault(x => x.CityId == pair.Key);
@@ -38,9 +35,9 @@ namespace Travel.Business.Recommenders
                 };
 
                 recommendations.Add(recommendation);
-
-                Console.WriteLine("city - {0}: \t{1}", recommendation.RecommendedCity.Name, pair.Value);
             }
+
+            Console.WriteLine("TopCitiesOnTravel finish");
 
             return recommendations;
         }

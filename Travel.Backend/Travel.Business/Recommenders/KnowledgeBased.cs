@@ -17,10 +17,8 @@ namespace Travel.Business.Recommenders
             var userDataManager = new ManageUserFacebookData();
             var userProfile = userDataManager.GetUserProfile(userId);
 
-            var sw = Stopwatch.StartNew();
             var cityDataManager = new ManageCityData();
             var cities = cityDataManager.GetAllCities();
-            Console.WriteLine("Stopwatch - get all cities: {0}", sw.ElapsedMilliseconds);
 
             var sortedCitySimilarityDictionary = CalculateSimilarity(cities, userProfile);
 
@@ -51,11 +49,9 @@ namespace Travel.Business.Recommenders
                     UserId = userId
                 };
 
-                recommendations.Add(recommendation);
-
-                Console.WriteLine("city - {0}: \t{1}", recommendation.RecommendedCity.Name, pair.Value);
+                recommendations.Add(recommendation);              
             }
-
+            Console.WriteLine("KnowledgeBased finish");
             return recommendations;
         }
 
@@ -64,16 +60,12 @@ namespace Travel.Business.Recommenders
             var numberOfTotalUserCategories = userProfile.Preferences != null ? userProfile.Preferences.Count() : 0;
 
             var citySimilarityDictionary = new Dictionary<string, double>();
-            var sw2 = Stopwatch.StartNew();
-            Console.WriteLine("Stopwatch - similarity started");
-
             foreach (var city in cities)
             {
                 var numberOfEqualCategories = 0;
 
                 if (city.ImageUrl == null)
                 {
-
                     var wikipediaManager = new WikipediaManager();
                     city.ImageUrl = wikipediaManager.GetCityImage(city.Name);
 
@@ -99,9 +91,6 @@ namespace Travel.Business.Recommenders
                 double similarity = (double)numberOfEqualCategories / (double)numberOfTotalUserCategories;
                 citySimilarityDictionary.Add(city.CityId, similarity);
             }
-
-            Console.WriteLine("Stopwatch - similarity: {0}", sw2.ElapsedMilliseconds);
-            Console.WriteLine("\n");
 
             var sortedCitySimilarityDictionary = from pair in citySimilarityDictionary
                                                  orderby pair.Value descending

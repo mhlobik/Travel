@@ -41,6 +41,7 @@ export function manageUserProfileFacebookData(userProfile: IUserProfile, userExi
                 dispatch(getUserProfile(userProfile.userId));
                 dispatch(recommendationActionCreators.getKnowledgeBased(userProfile.userId));
                 dispatch(recommendationActionCreators.getCollaborativeFiltering(userProfile.userId));
+                dispatch(recommendationActionCreators.getContentBased(userProfile.userId));
             }
         });
     };

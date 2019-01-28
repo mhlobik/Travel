@@ -5,3 +5,5 @@ export const SAVE_RECOMMENDATION = '@Recommendation/SAVE_RECOMMENDATION';
 export const GET_RECOMMENDATION_RATING = '@Recommendation/GET_RECOMMENDATION_RATING';
 export const GET_TOP_CITIES = '@Recommendation/GET_TOP_CITIES';
 export const GET_COLLABORATIVE_FILTERING = '@Recommendation/GET_COLLABORATIVE_FILTERING';
+export const GET_CONTENT_BASED = '@Recommendation/GET_CONTENT_BASED';
+export const GET_SPECIFIC_RECOMMENDATION = '@Recommendation/GET_SPECIFIC_RECOMMENDATION';

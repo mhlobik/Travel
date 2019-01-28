@@ -5,22 +5,27 @@ import './userPreferences.scss';
 import { UserPreferencesStrings } from '../../assets/strings/strings';
 import { IUser, IUserProfile } from '../../common/facebookUtilities';
 import { autobind, Button, TextField, Tooltip, DirectionalHint, TreeDataSource, Treeview, ITreeviewItem } from 'quick-react-ts';
-
+import Select from 'react-select';
 import * as mainActions from '../../action/main';
-import { preferenceChoices, checkSavedPreferences } from '../../common/appDataStructures';
+import { preferenceChoices, checkSavedPreferences, months, monthParts } from '../../common/appDataStructures';
+import { ISelection } from '../../components/city/flightDatePicker';
 
 interface IUserPreferencesProps {
     user?: IUser;
     userProfile?: IUserProfile;
-    onSaveUserPreferences?(userPreferences: Array<string>, maxTravelPrice: number, maxFlightPrice: number, user: IUser): void;
+    onSaveUserPreferences?
+        // tslint:disable-next-line:max-line-length
+        (userPreferences: Array<string>, monthSelected: ISelection, monthPartSelected: ISelection, duration: number, maxFlightPrice: number, user: IUser): void;
     onGoToPreferences?(shouldGo: boolean): void;
 }
 
 interface IUserPreferencesState {
     maxFlightPrice: number;
-    maxTravelPrice: number;
     isSaving: boolean;
     userPreferenceChoices: Array<ITreeviewItem>;
+    monthSelected: ISelection;
+    duration: number;
+    monthPartSelected: ISelection;
 }
 
 function mapStateToProps(state: IRootReducerState): IUserPreferencesProps {
@@ -32,8 +37,11 @@ function mapStateToProps(state: IRootReducerState): IUserPreferencesProps {
 
 function mapDispatchToProps(dispatch: any): IUserPreferencesProps {
     return {
-        onSaveUserPreferences: (userPreferences: Array<string>, maxTravelPrice: number, maxFlightPrice: number, user: IUser) =>
-            dispatch(mainActions.saveUserPreferences(userPreferences, maxTravelPrice, maxFlightPrice, user)),
+        onSaveUserPreferences:
+            // tslint:disable-next-line:max-line-length
+            (userPreferences: Array<string>, monthSelected: ISelection, monthPartSelected: ISelection, duration: number, maxFlightPrice: number, user: IUser) =>
+                // tslint:disable-next-line:max-line-length
+                dispatch(mainActions.saveUserPreferences(userPreferences, monthSelected, monthPartSelected, duration, maxFlightPrice, user)),
         onGoToPreferences: (shouldGo: boolean) => dispatch(mainActions.goToPreferences(shouldGo))
     };
 }
@@ -54,15 +62,23 @@ class UserPreferences extends React.Component<IUserPreferencesProps, IUserPrefer
 
         this.state = {
             maxFlightPrice: 0,
-            maxTravelPrice: 0,
             isSaving: false,
-            userPreferenceChoices: preferenceChoices
+            userPreferenceChoices: preferenceChoices,
+            monthSelected: null,
+            duration: 0,
+            monthPartSelected: null
         };
     }
 
     public componentDidMount() {
         if (this.props.userProfile.preferences !== null) {
-            this.setState({ userPreferenceChoices: checkSavedPreferences(this.props.userProfile.preferences) });
+            this.setState({
+                userPreferenceChoices: checkSavedPreferences(this.props.userProfile.preferences),
+                maxFlightPrice: this.props.userProfile.maxFlightPrice,
+                duration: this.props.userProfile.duration,
+                monthSelected: months.find((month) => this.props.userProfile.monthSelected.toString() === month.value),
+                monthPartSelected: monthParts.find((month) => this.props.userProfile.monthPartSelected === month.value)
+            });
         }
     }
 
@@ -79,25 +95,59 @@ class UserPreferences extends React.Component<IUserPreferencesProps, IUserPrefer
         this.setState({ userPreferenceChoices: newUserPReferencesChoices });
     }
 
+    @autobind
+    private handleOnMonthClick(selection: ISelection) {
+        this.setState({ monthSelected: selection });
+    }
+
+    @autobind
+    private handleOnMonthPartClick(selection: ISelection) {
+        this.setState({ monthPartSelected: selection });
+    }
+
     private _renderPriceChoices(): JSX.Element {
         return (
             <div className="user-preferences__price-choices">
-                <Tooltip
-                    content={UserPreferencesStrings.userPReferencesMaxTravelPriceTooltip}
-                    directionalHint={DirectionalHint.rightBottomEdge}>
-                    <TextField
-                        label={UserPreferencesStrings.userPReferencesMaxTravelPrice}
-                        className="max-travel-number-input"
-                        type="number"
-                        value={this.state.maxTravelPrice.toString()}
-                        onChanged={this._onMaxTravelPriceChange}
-                        disabled={this.state.isSaving}
-                    />
-                </Tooltip>
+                <div className="user-preferences__month">
+                    <Tooltip
+                        content={UserPreferencesStrings.userPreferenceMonthTooltip}
+                        directionalHint={DirectionalHint.rightCenter}
+                    >
+                        <div className="user-preferences__month-label">{UserPreferencesStrings.userPreferenceMonth}</div>
+                        <Select
+                            value={this.state.monthSelected}
+                            onChange={this.handleOnMonthClick}
+                            options={months}
+                            isSearchable={true}
+                        />
+                    </Tooltip>
+                    <div className="user-preferences__month-label">{UserPreferencesStrings.userPreferencePartOfMonth}</div>
+                        <Select
+                            value={this.state.monthPartSelected}
+                            onChange={this.handleOnMonthPartClick}
+                            options={monthParts}
+                            isSearchable={true}
+                        />
+                </div>
 
                 <Tooltip
+                    content={UserPreferencesStrings.userPreferenceDurationTooltip}
+                    directionalHint={DirectionalHint.rightCenter}
+                >
+                    <TextField
+                        label={UserPreferencesStrings.userPreferenceDuration}
+                        className="user-preferences__duration"
+                        type="number"
+                        value={this.state.duration.toString()}
+                        onChanged={this._oDurationChange}
+                        disabled={this.state.isSaving}
+                        height={30}
+                    />
+                </Tooltip>
+                <Tooltip
                     content={UserPreferencesStrings.userPreferencesMaxFlightPriceTooltip}
-                    directionalHint={DirectionalHint.rightCenter}>
+                    directionalHint={DirectionalHint.rightCenter}
+                >
                     <TextField
                         label={UserPreferencesStrings.userPreferencesMaxFlightPrice}
                         className="max-fligt-number-input"
@@ -105,6 +155,7 @@ class UserPreferences extends React.Component<IUserPreferencesProps, IUserPrefer
                         value={this.state.maxFlightPrice.toString()}
                         onChanged={this._onMaxFlightPriceChange}
                         disabled={this.state.isSaving}
+                        height={30}
                     />
                 </Tooltip>
             </div >
@@ -130,8 +181,8 @@ class UserPreferences extends React.Component<IUserPreferencesProps, IUserPrefer
     }
 
     @autobind
-    private _onMaxTravelPriceChange(newValue: number) {
-        this.setState({ maxTravelPrice: newValue });
+    private _oDurationChange(newValue: number) {
+        this.setState({ duration: newValue });
     }
 
     @autobind
@@ -148,7 +199,8 @@ class UserPreferences extends React.Component<IUserPreferencesProps, IUserPrefer
             }
         });
 
-        this.props.onSaveUserPreferences(filteredPreferences, this.state.maxTravelPrice, this.state.maxFlightPrice, this.props.user);
+        // tslint:disable-next-line:max-line-length
+        this.props.onSaveUserPreferences(filteredPreferences, this.state.monthSelected, this.state.monthPartSelected, this.state.duration, this.state.maxFlightPrice, this.props.user);
     }
 
     @autobind

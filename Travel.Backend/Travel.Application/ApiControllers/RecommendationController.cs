@@ -40,6 +40,15 @@ namespace Travel.Application.ApiControllers
             return Ok(recommendations);
         }
 
+        [Route("api/recommendation/get-content-based/{userId}")]
+        [HttpGet]
+        public IHttpActionResult GetContentBased(string userId)
+        {
+            var manager = new ContentBased();
+            var recommendations = manager.GetContentBased(userId);
+            return Ok(recommendations);
+        }
+
         [Route("api/recommendation/save-recommendation")]
         [HttpPost]
         public IHttpActionResult SaveRecommendationRating([FromBody] Recommendation recommendation)
@@ -56,6 +65,15 @@ namespace Travel.Application.ApiControllers
             var manager = new ManageCityData();
             var recommendationDatabase = manager.GetRecommendation(recommendation);
             return Ok(recommendationDatabase);
+        }
+
+        [Route("api/recommendation/get-specific-recommendation")]
+        [HttpPost]
+        public IHttpActionResult GetSpecificRecommendation([FromBody] Recommendation recommendation)
+        {
+            var specificRecommendations = new SpecificRecommendations();
+            var recommendations = Task.Run(async () => await specificRecommendations.GetSpecificRecommendations(recommendation)).ConfigureAwait(false).GetAwaiter().GetResult();
+            return Ok(recommendations);
         }
     }
 }

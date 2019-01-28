@@ -11,7 +11,9 @@ namespace Travel.Application.DTO
     {
         public string UserId { get; set; }
         public List<string> Preferences { get; set; }
-        public int MaxTravelPrice { get; set; }
+        public string MonthSelected { get; set; }
+        public string MonthPartSelected { get; set; }
+        public int Duration { get; set; }
         public int MaxFlightPrice { get; set; }
     }
 }

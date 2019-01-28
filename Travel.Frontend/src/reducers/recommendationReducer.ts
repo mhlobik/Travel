@@ -12,6 +12,10 @@ export interface IRecommendationReducerState {
     topCitiesRecommendations: Array<IRecommendation>;
     collaborativeFilteringRecommendations: Array<IRecommendation>;
     isGettingCollaborativeFiltering: boolean;
+    isGettingContentBased: boolean;
+    contentBasedRecommendations: Array<IRecommendation>;
+    isGettingSpecificRecommendation: boolean;
+    specificRecommendation: ICity;
 }
 
 const initialState: IRecommendationReducerState = {
@@ -22,10 +26,15 @@ const initialState: IRecommendationReducerState = {
     isGettingTopCities: false,
     topCitiesRecommendations: [],
     collaborativeFilteringRecommendations: [],
-    isGettingCollaborativeFiltering: false
+    isGettingCollaborativeFiltering: false,
+    isGettingContentBased: false,
+    contentBasedRecommendations: [],
+    isGettingSpecificRecommendation: false,
+    specificRecommendation: null
 };
 
-export default function facebookReducer(state: IRecommendationReducerState = initialState, action: IAction = { type: '', payload: null }) {
+export default function recommendationReducer
+    (state: IRecommendationReducerState = initialState, action: IAction = { type: '', payload: null }) {
     switch (action.type) {
         case `${recommendationActions.GET_KNOWLEDGE_BASED}_REQUEST`:
             return {
@@ -86,6 +95,38 @@ export default function facebookReducer(state: IRecommendationReducerState = ini
             return {
                 ...state,
                 isGettingCollaborativeFiltering: false
+            };
+        case `${recommendationActions.GET_CONTENT_BASED}_REQUEST`:
+            return {
+                ...state,
+                isGettingContentBased: true
+            };
+        case `${recommendationActions.GET_CONTENT_BASED}_RESPONSE`:
+            return {
+                ...state,
+                isGettingContentBased: false,
+                contentBasedRecommendations: action.payload
+            };
+        case `${recommendationActions.GET_CONTENT_BASED}_ERROR`:
+            return {
+                ...state,
+                isGettingContentBased: false
+            };
+        case `${recommendationActions.GET_SPECIFIC_RECOMMENDATION}_REQUEST`:
+            return {
+                ...state,
+                isGettingSpecificRecommendation: true
+            };
+        case `${recommendationActions.GET_SPECIFIC_RECOMMENDATION}_RESPONSE`:
+            return {
+                ...state,
+                isGettingSpecificRecommendation: false,
+                specificRecommendation: action.payload
+            };
+        case `${recommendationActions.GET_SPECIFIC_RECOMMENDATION}_ERROR`:
+            return {
+                ...state,
+                isGettingSpecificRecommendation: false
             };
         default:
             return state;

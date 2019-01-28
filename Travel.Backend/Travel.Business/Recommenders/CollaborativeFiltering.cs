@@ -6,6 +6,7 @@ using Travel.Database.Enums;
 using System;
 using Travel.Business.Utilities;
 using System.IO;
+using Travel.Business.CityManager;
 
 namespace Travel.Business.Recommenders
 {
@@ -55,6 +56,8 @@ namespace Travel.Business.Recommenders
 
             var recommendationList = getRecommendationList(recommendedCityRatings, similarCities, userId);
 
+            Console.WriteLine("CollaborativeFiltering finish");
+
             return recommendationList;
         }
 
@@ -87,8 +90,6 @@ namespace Travel.Business.Recommenders
 
                         if (similarity >= 0.5)
                         {
-                            Console.WriteLine("user susjed {0} - similarity: {1}", neigbhorCityId, similarity);
-
                             filteredCities.Add(neigbhorCities[neigbhorCityId].CityRating);
                         }
                     }
@@ -191,7 +192,7 @@ namespace Travel.Business.Recommenders
             float[,] matrix = userItemMatrix;
             var similarities = calculateCosineSimilarity(item, normalizedMatrix, numOfItems, numOfUsers);
             var sortedSimilarities = similarities.OrderByDescending(x => x.Value).ToList();
-            var recommendedRating = calculateRecommendedRating(item, user, userItemMatrix, sortedSimilarities, numOfItems, numOfUsers, 100); // 100 similar cities
+            var recommendedRating = calculateRecommendedRating(item, user, userItemMatrix, sortedSimilarities, numOfItems, numOfUsers, 4);
 
             return recommendedRating;
         }
@@ -333,7 +334,23 @@ namespace Travel.Business.Recommenders
             {
                 if (rating.Rating < 3) continue;
 
+                var wikipediaManager = new WikipediaManager();
+                var cityManager = new ManageCityData();
+
                 var city = cities.FirstOrDefault(x => x.CityId.Equals(rating.CityId));
+
+                if (city.ImageUrl == null)
+                {
+                    city.ImageUrl = wikipediaManager.GetCityImage(city.Name);
+                    cityManager.UpdateCityImageUrl(city);
+                }
+
+                if (city.Description == null)
+                {
+                    city.Description = wikipediaManager.GetCityDescription(city.Name);
+                    cityManager.UpdateCityDescription(city);
+                }
+
                 result.Add(new Recommendation()
                 {
                     RecommendedCity = city,

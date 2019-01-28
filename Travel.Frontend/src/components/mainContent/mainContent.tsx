@@ -5,6 +5,7 @@ import UserPreferences from '../../containers/userPreferences/userPreferences';
 import KnowledgeBased from '../recommenders/knowledgeBased';
 import TopCities from '../recommenders/topCities';
 import CollaborativeFiltering from '../recommenders/collaborativeFiltering';
+import ContentBased from '../recommenders/contentBased';
 
 interface IMainContentProps {
     userLoggedIn: boolean;
@@ -29,6 +30,7 @@ export default class MainContent extends React.PureComponent<IMainContentProps, 
                 <span>
                     <KnowledgeBased />
                     <CollaborativeFiltering/>
+                    <ContentBased/>
                 </span>
                 }
             </div>

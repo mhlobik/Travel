@@ -24,7 +24,6 @@
     }
 
     .user-preferences__button-wraper {
-        padding: 30px;
         display: flex;
         justify-content: flex-end;
 
@@ -44,17 +43,14 @@
         display: flex;
         padding-top: 30px;
         padding-bottom: 30px;
+        flex-direction: column;
+        color: $primary-grey;
 
-        .max-travel-number-input {
-            width: 150px;
-            color: $primary-grey;
-            padding-left: 30px;
-        }
-
-        .max-fligt-number-input {
-            width: 150px;
-            color: $primary-grey;
-            padding-left: 200px;
+        .user-preferences__month {
+            padding-bottom: 20px;
+            .user-preferences__month-label {
+                padding: 5px;
+            }
         }
     }
 

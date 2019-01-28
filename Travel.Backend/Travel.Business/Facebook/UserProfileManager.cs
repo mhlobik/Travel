@@ -33,42 +33,42 @@ namespace Travel.Business.Facebook
                 }
             }
 
-            var fbEventsAnalysis = textAnalysisManager.FacebookEventsTextAnalysis(updatedUserProfile.FacebookEvents);
-            updatedUserProfile.FacebookEvents = await fbEventsAnalysis;
+            var fbEventsAnalysis = await textAnalysisManager.FacebookEventsTextAnalysis(updatedUserProfile.FacebookEvents);
+            updatedUserProfile.FacebookEvents = fbEventsAnalysis;
             #endregion
 
             #region Parse Facebook Groups
-            if (existingUserProfile != null)
-            {
-                var fbGroups = existingUserProfile.FacebookGroups;
-                foreach (var oldGroup in fbGroups)
-                {
-                    if (!updatedUserProfile.FacebookGroups.Any(x => x.GroupId.Equals(oldGroup.GroupId)))
-                    {
-                        updatedUserProfile.FacebookGroups.Add(oldGroup);
-                    }
-                }
-            }
+            //if (existingUserProfile != null)
+            //{
+            //    var fbGroups = existingUserProfile.FacebookGroups;
+            //    foreach (var oldGroup in fbGroups)
+            //    {
+            //        if (!updatedUserProfile.FacebookGroups.Any(x => x.GroupId.Equals(oldGroup.GroupId)))
+            //        {
+            //            updatedUserProfile.FacebookGroups.Add(oldGroup);
+            //        }
+            //    }
+            //}
 
-            var fbGroupsAnalysis = textAnalysisManager.FacebookGroupsTextAnalysis(updatedUserProfile.FacebookGroups);
-            updatedUserProfile.FacebookGroups = await fbGroupsAnalysis;
+            //var fbGroupsAnalysis = await textAnalysisManager.FacebookGroupsTextAnalysis(updatedUserProfile.FacebookGroups);
+            //updatedUserProfile.FacebookGroups = fbGroupsAnalysis;
             #endregion
 
             #region Parse Facebook Likes
-            if (existingUserProfile != null)
-            {
-                var fbLikes = existingUserProfile.FacebookLikes;
-                foreach (var oldLike in fbLikes)
-                {
-                    if (!updatedUserProfile.FacebookLikes.Any(x => x.LikedPageId.Equals(oldLike.LikedPageId)))
-                    {
-                        updatedUserProfile.FacebookLikes.Add(oldLike);
-                    }
-                }
-            }
+            //if (existingUserProfile != null)
+            //{
+            //    var fbLikes = existingUserProfile.FacebookLikes;
+            //    foreach (var oldLike in fbLikes)
+            //    {
+            //        if (!updatedUserProfile.FacebookLikes.Any(x => x.LikedPageId.Equals(oldLike.LikedPageId)))
+            //        {
+            //            updatedUserProfile.FacebookLikes.Add(oldLike);
+            //        }
+            //    }
+            //}
 
-            var fbLikesAnalysis = textAnalysisManager.FacebookLikesTextAnalysis(updatedUserProfile.FacebookLikes);
-            updatedUserProfile.FacebookLikes = await fbLikesAnalysis;
+            //var fbLikesAnalysis = await textAnalysisManager.FacebookLikesTextAnalysis(updatedUserProfile.FacebookLikes);
+            //updatedUserProfile.FacebookLikes = fbLikesAnalysis;
             #endregion
 
             #region Parse Facebook Tagged Places

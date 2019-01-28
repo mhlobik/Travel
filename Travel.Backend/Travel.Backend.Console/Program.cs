@@ -15,6 +15,7 @@ using Travel.Application;
 using Travel.Business.CityManager;
 using Travel.Business.Recommenders;
 using Travel.Business.Utilities;
+using Travel.Business.Watson;
 using Travel.Database;
 using Travel.Database.Model;
 using Travel.Database.Utilities;
@@ -88,6 +89,26 @@ namespace Travel.Backend.Console
             //Marshal.ReleaseComObject(xlWorkSheet);
             //Marshal.ReleaseComObject(xlWorkBook);
             //Marshal.ReleaseComObject(xlApp);
+            #endregion
+
+            #region
+            //var cityManager = new ManageCityData();
+            //var cities = cityManager.GetAllCities();
+
+            //foreach(var city in cities)
+            //{
+            //    var watson = new WatsonTextAnalysis();
+            //    var descriptionAnalysis = Task.Run(async () => await watson.GetTextAnalysis(city.Description)).ConfigureAwait(false).GetAwaiter().GetResult();
+            //    city.DescriptionAnalysis = descriptionAnalysis;
+            //    System.Console.WriteLine($"\t\t{city.Name} gotova analiza");
+            //    cityManager.UpdateDescriptionAnalysis(city);
+            //}
+
+            #endregion
+
+            #region Test Content-Based RS
+            //var manager = new ContentBased();
+            //var test = manager.GetContentBased("10217668859972898");
             #endregion
 
             #region Test Knowledge Based RS

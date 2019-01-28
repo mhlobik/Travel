@@ -18,7 +18,7 @@ interface IFlightDatePickerState {
     destinationSelected: ISelection;
 }
 
-interface ISelection {
+export interface ISelection {
     value: string;
     label: string;
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Carousel from '../carousel/carousel';
 import { IRecommendation } from '../../common/recommendationUtilities';
-import './collaborativeFiltering.scss';
+import './contentBased.scss';
 import { ICity, IPointOfInterestsCityInfo, IFlight, IFlightViewModel } from '../../common/city';
 import City from '../city/city';
 import { autobind, Spinner, SpinnerType } from 'quick-react-ts';
@@ -13,15 +13,15 @@ import * as cityActions from '../../action/city';
 import { IUser } from '../../common/facebookUtilities';
 import { RecommenderModelEnum } from '../../common/enums';
 
-interface ICollaborativeFilteringProps {
+interface IContentBasedProps {
     user?: IUser;
-    collaborativeFilteringRecommendations?: Array<IRecommendation>;
+    contentBasedRecommendations?: Array<IRecommendation>;
     openRecommendedItem?: boolean;
     pointsOfInterestsInfo?: Array<ICarouselData>;
     isGettingPointsOfInterestsInfo?: boolean;
     flights?: Array<IFlightViewModel>;
     isGettingFlights?: boolean;
-    isGettingCollaborativeFiltering?: boolean;
+    isGettingContentBased?: boolean;
     selectedRecommendation?: IRecommendation;
     isGettingUserProfile?: boolean;
     handleOnItemClick?(recommendation: IRecommendation): void;
@@ -29,26 +29,26 @@ interface ICollaborativeFilteringProps {
     onClickRecommendationRating?(rate: number): void;
 }
 
-interface ICollaborativeFilteringState {
+interface IContentBasedState {
     isLoading: boolean;
 }
 
-function mapStateToProps(state: IRootReducerState): ICollaborativeFilteringProps {
+function mapStateToProps(state: IRootReducerState): IContentBasedProps {
     return {
         user: state.facebook.user,
-        collaborativeFilteringRecommendations: state.recommendation.collaborativeFilteringRecommendations,
+        contentBasedRecommendations: state.recommendation.contentBasedRecommendations,
         openRecommendedItem: state.recommendation.openRecommendedItem,
         pointsOfInterestsInfo: state.city.pointsOfInterestsInfo,
         isGettingPointsOfInterestsInfo: state.city.isGettingPointsOfInterestsInfo,
         flights: state.city.flights,
         isGettingFlights: state.city.isGettingFlights,
-        isGettingCollaborativeFiltering: state.recommendation.isGettingCollaborativeFiltering,
+        isGettingContentBased: state.recommendation.isGettingContentBased,
         selectedRecommendation: state.recommendation.selectedRecommendation,
         isGettingUserProfile: state.facebook.isGettingUserProfile
     };
 }
 
-function mapDispatchToProps(dispatch: any): ICollaborativeFilteringProps {
+function mapDispatchToProps(dispatch: any): IContentBasedProps {
     return {
         handleOnItemClick: (recommendation: IRecommendation) => dispatch(recommendationActions.openRecommendedItem(recommendation)),
         onCloseRecommendedItem: () => dispatch(recommendationActions.closeRecommendedItem())
@@ -56,17 +56,17 @@ function mapDispatchToProps(dispatch: any): ICollaborativeFilteringProps {
 }
 
 function mergeProps(
-    stateProps: ICollaborativeFilteringProps,
-    dispatchProps: ICollaborativeFilteringProps
-): ICollaborativeFilteringProps {
+    stateProps: IContentBasedProps,
+    dispatchProps: IContentBasedProps
+): IContentBasedProps {
     return {
         ...stateProps,
         ...dispatchProps
     };
 }
 
-class CollaborativeFiltering extends React.PureComponent<ICollaborativeFilteringProps, ICollaborativeFilteringState> {
-    constructor(props: ICollaborativeFilteringProps) {
+class ContentBased extends React.PureComponent<IContentBasedProps, IContentBasedState> {
+    constructor(props: IContentBasedProps) {
         super(props);
 
         this.state = {
@@ -74,8 +74,8 @@ class CollaborativeFiltering extends React.PureComponent<ICollaborativeFiltering
         };
     }
 
-    public componentWillReceiveProps(nextProps: ICollaborativeFilteringProps) {
-        this.setState({ isLoading: nextProps.isGettingCollaborativeFiltering || nextProps.isGettingUserProfile });
+    public componentWillReceiveProps(nextProps: IContentBasedProps) {
+        this.setState({ isLoading: nextProps.isGettingContentBased || nextProps.isGettingUserProfile});
     }
 
     @autobind
@@ -85,10 +85,10 @@ class CollaborativeFiltering extends React.PureComponent<ICollaborativeFiltering
 
     public render() {
         return (
-            <div className="collaborative-filtering__container">
-                <span className="collaboratiove-filtering__title">Cities based on what other users liked:</span>
+            <div className="content-based__container">
+                <span className="content-based__title">Cities which you may like based on your Facebook profile:</span>
                 <Carousel
-                    recommendations={this.props.collaborativeFilteringRecommendations}
+                    recommendations={this.props.contentBasedRecommendations}
                     handleOnItemClick={this.onHandleOnItemClick}
                     isClickable={true}
                     isLoading={this.state.isLoading}
@@ -97,7 +97,7 @@ class CollaborativeFiltering extends React.PureComponent<ICollaborativeFiltering
                 {
                     this.props.openRecommendedItem &&
                     this.props.selectedRecommendation !== null &&
-                    this.props.selectedRecommendation.recommenderModel === RecommenderModelEnum.CollaborativeFiltering &&
+                    this.props.selectedRecommendation.recommenderModel === RecommenderModelEnum.ContentBased &&
                     <City />
                 }
             </div>
@@ -109,4 +109,4 @@ export default connect(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps
-)(CollaborativeFiltering);
+)(ContentBased);

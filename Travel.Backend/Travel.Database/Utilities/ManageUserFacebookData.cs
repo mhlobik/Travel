@@ -192,7 +192,9 @@ namespace Travel.Database.Utilities
                         {
                             session.Advanced.Patch(existingUserProfile, x => x.Preferences, userProfile.Preferences);
                             session.Advanced.Patch(existingUserProfile, x => x.MaxFlightPrice, userProfile.MaxFlightPrice);
-                            session.Advanced.Patch(existingUserProfile, x => x.MaxTravelPrice, userProfile.MaxTravelPrice);
+                            session.Advanced.Patch(existingUserProfile, x => x.Duration, userProfile.Duration);
+                            session.Advanced.Patch(existingUserProfile, x => x.MonthSelected, userProfile.MonthSelected);
+                            session.Advanced.Patch(existingUserProfile, x => x.MonthPartSelected, userProfile.MonthPartSelected);
                         }
                         #endregion
                     }

@@ -23,6 +23,7 @@ interface IKnowledgeBasedProps {
     isGettingFlights?: boolean;
     isGettingKnowledgeBased?: boolean;
     selectedRecommendation?: IRecommendation;
+    isGettingUserProfile?: boolean;
     handleOnItemClick?(recommendation: IRecommendation): void;
     onCloseRecommendedItem?(): void;
     onClickRecommendationRating?(rate: number): void;
@@ -42,7 +43,8 @@ function mapStateToProps(state: IRootReducerState): IKnowledgeBasedProps {
         flights: state.city.flights,
         isGettingFlights: state.city.isGettingFlights,
         isGettingKnowledgeBased: state.recommendation.isGettingKnowledgeBased,
-        selectedRecommendation: state.recommendation.selectedRecommendation
+        selectedRecommendation: state.recommendation.selectedRecommendation,
+        isGettingUserProfile: state.facebook.isGettingUserProfile
     };
 }
 
@@ -73,7 +75,7 @@ class KnowledgeBased extends React.PureComponent<IKnowledgeBasedProps, IKnowledg
     }
 
     public componentWillReceiveProps(nextProps: IKnowledgeBasedProps) {
-        this.setState({ isLoading: nextProps.isGettingKnowledgeBased });
+        this.setState({ isLoading: nextProps.isGettingKnowledgeBased || nextProps.isGettingUserProfile });
     }
 
     @autobind

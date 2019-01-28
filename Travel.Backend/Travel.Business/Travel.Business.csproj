@@ -48,7 +48,9 @@
     <Compile Include="Facebook\UserProfileManager.cs" />
     <Compile Include="CityManager\FoursquareManager.cs" />
     <Compile Include="Recommenders\CollaborativeFiltering.cs" />
+    <Compile Include="Recommenders\ContentBased.cs" />
     <Compile Include="Recommenders\KnowledgeBased.cs" />
+    <Compile Include="Recommenders\SpecificRecommendations.cs" />
     <Compile Include="Recommenders\TopCitiesOnTravel.cs" />
     <Compile Include="DTO\CarouselDataDTO.cs" />
     <Compile Include="Utilities\CityHotelsManager.cs" />

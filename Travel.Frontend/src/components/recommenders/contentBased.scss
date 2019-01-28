@@ -1,0 +1,17 @@
+@import './../../assets/styles/variables';
+
+.content-based__container {
+    margin-top: 30px;
+    margin-left: -250px;
+    margin-right: -250px;
+
+    .content-based__title {
+        font-size: 28px;
+        color: $primary-grey;
+    }
+
+    // Fix for jumping arrows
+    .carousel-container {
+        min-height: 210px;
+    }
+}

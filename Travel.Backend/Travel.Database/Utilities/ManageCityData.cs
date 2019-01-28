@@ -247,7 +247,7 @@ namespace Travel.Database.Utilities
             {
                 using (IDocumentSession session = store.OpenSession())
                 {
-                    airport = session.Query<Airport>().FirstOrDefault(x => x.City.Equals(cityName));
+                    airport = session.Query<Airport>().FirstOrDefault(x => x.City.Equals(cityName) || x.IATA.Equals(cityName));
                 }
             }
 
@@ -410,6 +410,30 @@ namespace Travel.Database.Utilities
             #endregion
 
             return ratedCityDictionary;
+        }
+
+        public bool UpdateDescriptionAnalysis(City city)
+        {
+            IDocumentStore store;
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    var existingCity = session.Query<City>().FirstOrDefault(x => x.CityId.Equals(city.CityId));
+                    session.Advanced.Patch(existingCity, x => x.DescriptionAnalysis, city.DescriptionAnalysis);
+
+                    try
+                    {
+                        session.SaveChanges();
+                        System.Console.WriteLine($"\t\t{city.Name} update-ana analiza descriptiona\n");
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        return false;
+                    }
+                }
+            }
         }
     }
 }

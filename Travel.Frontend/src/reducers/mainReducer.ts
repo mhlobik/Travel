@@ -22,7 +22,7 @@ const initialState: IMainReducerState = {
     goToPreferences: false
 };
 
-export default function facebookReducer(state: IMainReducerState = initialState, action: IAction = { type: '', payload: null }) {
+export default function mainReducer(state: IMainReducerState = initialState, action: IAction = { type: '', payload: null }) {
     switch (action.type) {
         case `${mainActions.SAVE_USER_PREFERENCES}_REQUEST`:
             return {

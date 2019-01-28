@@ -4,6 +4,7 @@ import * as mainActions from './../constants/main';
 import { ICityRating } from '../common/city';
 import * as recommendationActionCreators from '../action/recommendation';
 import * as facebookActionCreators from '../action/facebook';
+import { ISelection } from '../components/city/flightDatePicker';
 
 const mainBaseUrl = 'api/main';
 const cityBaseUrl = 'api/city';
@@ -21,7 +22,8 @@ export function getCitiesChooser() {
     };
 }
 
-export function saveUserPreferences(userPreferences: Array<string>, maxTravelPrice: number, maxFlightPrice: number, user: IUser) {
+// tslint:disable-next-line:max-line-length
+export function saveUserPreferences(userPreferences: Array<string>, monthSelected: ISelection, monthPartSelected: ISelection, duration: number, maxFlightPrice: number, user: IUser) {
     return (dispatch, getState) => {
         return fetcher.handleRequestAction(dispatch, {
             requestUrl: `${mainBaseUrl}/save-user-preferences`,
@@ -31,7 +33,9 @@ export function saveUserPreferences(userPreferences: Array<string>, maxTravelPri
                 method: 'POST',
                 body: JSON.stringify({
                     preferences: userPreferences,
-                    maxTravelPrice: maxTravelPrice,
+                    monthSelected: monthSelected.value,
+                    monthPartSelected: monthPartSelected.value,
+                    duration: duration,
                     maxFlightPrice: maxFlightPrice,
                     userId: user.userId
                 })
@@ -40,6 +44,7 @@ export function saveUserPreferences(userPreferences: Array<string>, maxTravelPri
             dispatch(facebookActionCreators.getUserProfile(user.userId)).then(() => {
                 dispatch(recommendationActionCreators.getKnowledgeBased(user.userId));
                 dispatch(recommendationActionCreators.getCollaborativeFiltering(user.userId));
+                dispatch(recommendationActionCreators.getContentBased(user.userId));
             });
         });
     };

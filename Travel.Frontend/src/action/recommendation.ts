@@ -26,7 +26,8 @@ export function openRecommendedItem(recommendation: IRecommendation) {
         dispatch(getImageUrls(recommendation.recommendedCity));
         dispatch(cityActionsCreator.getAllAirports());
         dispatch(cityActionsCreator.getCityRating(recommendation.recommendedCity.cityId, recommendation.userId));
-        //dispatch(cityActionsCreator.getCityHotels(recommendation.recommendedCity));
+       // dispatch(cityActionsCreator.getCityHotels(recommendation.recommendedCity));
+        dispatch(getSpecificRecommendation(recommendation));
     };
 }
 
@@ -93,6 +94,34 @@ export function getCollaborativeFiltering(userId: string) {
             jsonResponseExpected: true,
             requestInit: {
                 method: 'GET'
+            }
+        });
+    };
+}
+
+export function getContentBased(userId: string) {
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${recommendationBaseUrl}/get-content-based/${userId}`,
+            requestActionName: recommendationActions.GET_CONTENT_BASED,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'GET'
+            }
+        });
+    };
+}
+
+export function getSpecificRecommendation(recommendation: IRecommendation) {
+    console.log('getSpecificRecommendation', recommendation);
+    return (dispatch, getState) => {
+        return fetcher.handleRequestAction(dispatch, {
+            requestUrl: `${recommendationBaseUrl}/get-specific-recommendation`,
+            requestActionName: recommendationActions.GET_SPECIFIC_RECOMMENDATION,
+            jsonResponseExpected: true,
+            requestInit: {
+                method: 'POST',
+                body: JSON.stringify(recommendation)
             }
         });
     };

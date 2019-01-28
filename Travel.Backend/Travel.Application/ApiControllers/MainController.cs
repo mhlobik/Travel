@@ -27,7 +27,9 @@ namespace Travel.Application.ApiControllers
                     UserId = userPreferences.UserId,
                     Preferences = prefernceList,
                     MaxFlightPrice = userPreferences.MaxFlightPrice,
-                    MaxTravelPrice = userPreferences.MaxTravelPrice
+                    Duration = userPreferences.Duration,
+                    MonthSelected = Int32.Parse(userPreferences.MonthSelected),
+                    MonthPartSelected = userPreferences.MonthPartSelected
                 });
 
             return Ok();
