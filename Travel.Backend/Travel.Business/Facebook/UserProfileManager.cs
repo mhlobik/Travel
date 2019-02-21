@@ -21,20 +21,23 @@ namespace Travel.Business.Facebook
             var existingUserProfile = userDatabaseManager.GetUserProfile(userProfile.UserId);
 
             #region Parse Facebook Events
-            if (existingUserProfile != null)
+            if (updatedUserProfile.FacebookEvents != null)
             {
-                var fbEvents = existingUserProfile.FacebookEvents;
-                foreach (var oldEvent in fbEvents)
+                if (existingUserProfile != null)
                 {
-                    if (!updatedUserProfile.FacebookEvents.Any(x => x.EventId.Equals(oldEvent.EventId)))
+                    var fbEvents = existingUserProfile.FacebookEvents;
+                    foreach (var oldEvent in fbEvents)
                     {
-                        updatedUserProfile.FacebookEvents.Add(oldEvent);
+                        if (!updatedUserProfile.FacebookEvents.Any(x => x.EventId.Equals(oldEvent.EventId)))
+                        {
+                            updatedUserProfile.FacebookEvents.Add(oldEvent);
+                        }
                     }
                 }
-            }
 
-            var fbEventsAnalysis = await textAnalysisManager.FacebookEventsTextAnalysis(updatedUserProfile.FacebookEvents);
-            updatedUserProfile.FacebookEvents = fbEventsAnalysis;
+                var fbEventsAnalysis = await textAnalysisManager.FacebookEventsTextAnalysis(updatedUserProfile.FacebookEvents);
+                updatedUserProfile.FacebookEvents = fbEventsAnalysis;
+            }
             #endregion
 
             #region Parse Facebook Groups
@@ -74,16 +77,18 @@ namespace Travel.Business.Facebook
             #region Parse Facebook Tagged Places
             var updatedVisitedCityIds = new List<string>();
 
-            var allCities = cityDatabaseManager.GetAllCities();
-            var cityNames = allCities.Select(x=>x.Name).ToList();
-            var userTaggedPlacesCityNames = updatedUserProfile.FacebookTaggedPlaces.Select(x=>x.City).Distinct().ToList();
+            if(updatedUserProfile.FacebookTaggedPlaces != null) {
+                var allCities = cityDatabaseManager.GetAllCities();
+                var cityNames = allCities.Select(x => x.Name).ToList();
+                var userTaggedPlacesCityNames = updatedUserProfile.FacebookTaggedPlaces.Select(x => x.City).Distinct().ToList();
 
-            foreach (var city in userTaggedPlacesCityNames)
-            {
-                var existingCity = allCities.FirstOrDefault(x=>x.Name.Equals(city));
-                if(existingCity != null)
+                foreach (var city in userTaggedPlacesCityNames)
                 {
-                    updatedVisitedCityIds.Add(existingCity.CityId);
+                    var existingCity = allCities.FirstOrDefault(x => x.Name.Equals(city));
+                    if (existingCity != null)
+                    {
+                        updatedVisitedCityIds.Add(existingCity.CityId);
+                    }
                 }
             }
 

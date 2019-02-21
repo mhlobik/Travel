@@ -6,7 +6,7 @@ export interface ICity {
     name: string;
     country: string;
     flights: Array<IFlight>;
-    // Hotels
+    hotels: Array<IHotel>;
     pointsOfInterest: Array<IPointsOfInterest>;
     imageUrl: string;
     description: string;

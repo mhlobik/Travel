@@ -26,7 +26,7 @@ export function openRecommendedItem(recommendation: IRecommendation) {
         dispatch(getImageUrls(recommendation.recommendedCity));
         dispatch(cityActionsCreator.getAllAirports());
         dispatch(cityActionsCreator.getCityRating(recommendation.recommendedCity.cityId, recommendation.userId));
-       // dispatch(cityActionsCreator.getCityHotels(recommendation.recommendedCity));
+        dispatch(cityActionsCreator.getCityHotels(recommendation.recommendedCity));
         dispatch(getSpecificRecommendation(recommendation));
     };
 }

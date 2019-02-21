@@ -19,10 +19,15 @@ namespace Travel.Business.Recommenders
             var userDataManager = new ManageUserFacebookData();
             var userProfile = userDataManager.GetUserProfile(userId);
 
-            var recommendationFromEvents = processFacebookEventAnalysis(userProfile, allCities);
+            List<Recommendation> recommendationFromEvents = null;
+            if (userProfile.FacebookEvents != null)
+            {
+                recommendationFromEvents = processFacebookEventAnalysis(userProfile, allCities);
+
+            }
             var recommendationFromVisitedCities = processVisitedCities(userProfile, allCities);
 
-            var allRecommendations = recommendationFromEvents.Concat(recommendationFromVisitedCities);
+            var allRecommendations = recommendationFromEvents != null ? recommendationFromEvents.Concat(recommendationFromVisitedCities) : recommendationFromVisitedCities;
 
             var sortedRecommendationBySimilarity = allRecommendations.OrderByDescending(x => x.Similarity).Take(400).ToList();
 

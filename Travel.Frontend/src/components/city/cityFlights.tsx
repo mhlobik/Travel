@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Spinner, QuickGrid, GridColumn, DataTypeEnum, SpinnerType } from 'quick-react-ts';
 import FlightDatePicker from './flightDatePicker';
-import { IFlightViewModel, ICity, IAirport } from '../../common/city';
-import { throws } from 'assert';
+import { IFlightViewModel, IAirport } from '../../common/city';
 import { noFlights } from '../../assets/strings/strings';
+import './cityFlights.scss';
 
 interface ICityFlightsProps {
     flights: Array<IFlightViewModel>;

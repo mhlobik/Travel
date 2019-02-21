@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Spinner, QuickGrid, GridColumn, SpinnerType } from 'quick-react-ts';
 import {  IHotel } from '../../common/city';
 import { noHotels } from '../../assets/strings/strings';
+import './cityHotels.scss';
 
 interface ICityHotelsProps {
     hotels: Array<IHotel>;

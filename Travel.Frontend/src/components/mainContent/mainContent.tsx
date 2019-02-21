@@ -25,7 +25,6 @@ export default class MainContent extends React.PureComponent<IMainContentProps, 
         return (
             <div key="container" className="main-content__container">
                 {this.props.user !== null && this.props.goToPreferences && <UserPreferences />}
-                <TopCities />
                 {this.props.user !== null && !this.props.goToPreferences &&
                 <span>
                     <KnowledgeBased />
@@ -33,6 +32,7 @@ export default class MainContent extends React.PureComponent<IMainContentProps, 
                     <ContentBased/>
                 </span>
                 }
+                <TopCities />
             </div>
         );
     }

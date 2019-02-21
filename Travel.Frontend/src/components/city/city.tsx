@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import CityHotels from './cityHotels';
 import { IRecommendation } from '../../common/recommendationUtilities';
 import { IUser, IUserProfile } from '../../common/facebookUtilities';
+import RecommendedForYou from './recommendedForYou';
 
 interface ICityProps {
     user?: IUser;
@@ -31,6 +32,8 @@ interface ICityProps {
     recommendationRating?: number;
     airports?: Array<IAirport>;
     isLoggedIn?: boolean;
+    specificRecommendation?: ICity;
+    isGettingSpecificRecommendation?: boolean;
     onCloseRecommendedItem?(): void;
     onClickCityRating?(cityId: string, user: IUser, rate: number): void;
     onSearchClick?(departureDate: Date, returnDate: Date, originSelected: string, destinationSelected: string): void;
@@ -55,7 +58,9 @@ function mapStateToProps(state: IRootReducerState): ICityProps {
         hotels: state.city.hotels,
         isGettingHotels: state.city.isGettingHotels,
         airports: state.city.airports,
-        isLoggedIn: state.facebook.userLoggedIn
+        isLoggedIn: state.facebook.userLoggedIn,
+        specificRecommendation: state.recommendation.specificRecommendation,
+        isGettingSpecificRecommendation: state.recommendation.isGettingSpecificRecommendation
     };
 }
 
@@ -157,7 +162,12 @@ class City extends React.PureComponent<ICityProps, ICityState> {
                     isLoggedIn={this.props.isLoggedIn}
                 />;
             case CityTabEnum.recommendationForYou:
-                return <span></span>;
+                return <RecommendedForYou
+                    isGettingSpecificRecommendation={this.props.isGettingSpecificRecommendation}
+                    specificRecommendation={this.props.specificRecommendation}
+                    userLocationName={this.props.userProfile.locationName}
+                    userName={this.props.user.firstName}
+                />;
         }
     }
     public render() {

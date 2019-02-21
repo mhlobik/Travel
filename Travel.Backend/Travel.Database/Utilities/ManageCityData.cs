@@ -435,6 +435,22 @@ namespace Travel.Database.Utilities
                 }
             }
         }
+
+        public List<Recommendation> GetAllRecommendations()
+        {
+            IDocumentStore store;
+            var recommendations = new List<Recommendation>();
+
+            using (store = DatabaseConnection.DocumentStoreInitialization())
+            {
+                using (IDocumentSession session = store.OpenSession())
+                {
+                    recommendations = session.Query<Recommendation>().ToList();
+                }
+            }
+
+            return recommendations;
+        }
     }
 }
 

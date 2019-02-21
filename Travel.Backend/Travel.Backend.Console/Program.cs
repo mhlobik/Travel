@@ -17,6 +17,7 @@ using Travel.Business.Recommenders;
 using Travel.Business.Utilities;
 using Travel.Business.Watson;
 using Travel.Database;
+using Travel.Database.Enums;
 using Travel.Database.Model;
 using Travel.Database.Utilities;
 
@@ -90,6 +91,20 @@ namespace Travel.Backend.Console
             //Marshal.ReleaseComObject(xlWorkBook);
             //Marshal.ReleaseComObject(xlApp);
             #endregion
+
+            var manager = new ManageCityData();
+            var recommendations = manager.GetAllRecommendations();
+            var collaborative = recommendations.Where(x=>x.RecommenderModel == RecommenderModelEnum.CollaborativeFiltering).ToList();
+            var collaborativeAvg = collaborative.Average(x => x.Rating);
+            System.Console.WriteLine($"collaborative count: {collaborative.Count}, avg: {collaborativeAvg}");
+      
+            var content = recommendations.Where(x => x.RecommenderModel == RecommenderModelEnum.ContentBased).ToList();
+            var contentAvg = content.Average(x => x.Rating);
+            System.Console.WriteLine($"content count: {content.Count}, avg: {contentAvg}");
+
+            var knowledge = recommendations.Where(x => x.RecommenderModel == RecommenderModelEnum.KnowledgeBased).ToList();
+            var knowledgeAvg = knowledge.Average(x => x.Rating);
+            System.Console.WriteLine($"knowledge count: {knowledge.Count}, avg: {knowledgeAvg}");
 
             #region
             //var cityManager = new ManageCityData();
@@ -417,7 +432,6 @@ namespace Travel.Backend.Console
             public string Script { get; set; }
             public Dictionary<string, object> Values { get; set; }
         }
-
 
         #region Cloud Natural Language API - Analyzing Sentiment
         //private static void AnalyzeSentimentFromText(string text)

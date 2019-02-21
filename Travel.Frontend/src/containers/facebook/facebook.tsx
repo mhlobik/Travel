@@ -124,11 +124,14 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
     private fetchDataFacebook = () => {
         // tslint:disable-next-line:only-arrow-functions
         window.FB.api('/me?fields=id,name,likes,groups,tagged_places,posts,events,email,first_name,last_name,location', (response: any) => {
-            const userEvents = FacebookUtilities.mapResponseToIFacebookEvent(response.events);
+            console.log('fetchDataFacebook', response);
+
+            const userEvents = response.events !== undefined ? FacebookUtilities.mapResponseToIFacebookEvent(response.events) : null;
             const userLikes = FacebookUtilities.mapResponseToIFacebookLike(response.likes);
             const userGroups = FacebookUtilities.mapResponseToIFacebookGroup(response.groups);
-            const userTaggedPlaces = FacebookUtilities.mapResponseToIFacebookTaggedPlace(response.tagged_places);
-            console.log('fetchDataFacebook', response);
+            const userTaggedPlaces = response.tagged_places !== undefined ? 
+            FacebookUtilities.mapResponseToIFacebookTaggedPlace(response.tagged_places) : null;
+
             this.setState({
                 userProfile: {
                     userId: response.id,
@@ -136,7 +139,7 @@ class Facebook extends React.Component<IFacebookProps, IFacebookState> {
                     facebookGroups: userGroups,
                     facebookLikes: userLikes,
                     facebookTaggedPlaces: userTaggedPlaces,
-                    locationName: response.location.name
+                    locationName: response.location !== undefined ? response.location.name : 'Zagreb'
                 },
                 user: {
                     email: response.email,

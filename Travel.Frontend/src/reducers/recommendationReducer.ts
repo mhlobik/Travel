@@ -115,7 +115,8 @@ export default function recommendationReducer
         case `${recommendationActions.GET_SPECIFIC_RECOMMENDATION}_REQUEST`:
             return {
                 ...state,
-                isGettingSpecificRecommendation: true
+                isGettingSpecificRecommendation: true,
+                specificRecommendation: null
             };
         case `${recommendationActions.GET_SPECIFIC_RECOMMENDATION}_RESPONSE`:
             return {
